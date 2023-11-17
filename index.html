@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <!-- Import Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Sleebi</title>
+                <!-- Import local sprite.svg for icons -->
+                <link rel="svg" href="images/sprite.svg">
+                <!-- Import custom CSS -->
+                <link rel="stylesheet" href="css/style.css">
+                <!-- Set page icon -->
+                <link rel="icon" href="images/logo.png">
+            </head>
+            <body>
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="#">
+                        <img src="images/logo_text.png" alt="Sleebi" height="30">
+                    </a>
+                    <form class="form-inline mx-auto">
+                        <div class="input-group rounded">
+                            <input id="search-input" class="form-control rounded-left" type="search" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button id="search-btn" class="btn rounded-right" type="submit">
+                                    <svg class="icon">
+                                        <use xlink:href="images/sprite.svg#icon-search"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <a class="btn rounded" href="https://ko-fi.com/obviouslyluuk" target="_blank">
+                        <div>Tipjar</div>
+                        <svg class="icon">
+                            <use xlink:href="images/sprite.svg#icon-donate"></use>
+                        </svg>
+                    </a>
+                </nav>
+                <div id="content-container" class="grid-container">
+                </div>
+
+            </body>
+            <!-- Import custom helper functions -->
+            <script src="js/helpers.js"></script>
+
+            <!-- Import custom JS -->
+            <script src="js/base.js"></script>
+
+            <!-- JS for Embedding -->
+            <script src="js/embed.js"></script>
+        </html>
