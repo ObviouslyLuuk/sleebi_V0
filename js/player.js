@@ -9,6 +9,7 @@ const fullScreenBtn = document.querySelector(".full-screen-btn")
 const miniPlayerBtn = document.querySelector(".mini-player-btn")
 const muteBtn = document.querySelector(".mute-btn")
 const brightnessBtn = document.querySelector(".brightness-btn")
+const blueFilterBtn = document.querySelector(".blue-filter-btn")
 const captionsBtn = document.querySelector(".captions-btn")
 const speedBtn = document.querySelector(".speed-btn")
 const currentTimeElem = document.querySelector(".current-time")
@@ -215,6 +216,14 @@ function toggleBrightness() {
   video.style.filter = `brightness(${brightnessSlider.value})`
   window.dispatchEvent(new Event('brightnesschange'));
 }
+
+// Blue Light Filter
+blueFilterBtn.addEventListener("click", toggleBlueFilter)
+
+function toggleBlueFilter() {
+  document.body.classList.toggle("blue-filter")
+}
+
 
 // View Modes
 // theaterBtn.addEventListener("click", toggleTheaterMode)

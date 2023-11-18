@@ -25,6 +25,10 @@ body {
     background-color: var(--dark-theme-background-color);
     color: var(--dark-theme-text-color);
 }
+body.blue-filter, body.blue-filter .video-container.full-screen video {
+    /* filter: sepia(0.6); */
+    filter: sepia(.8) saturate(1.5) brightness(.8) hue-rotate(330deg);
+}
 /* Buttons */
 .btn {
     background-color: var(--dark-theme-divider-color);
@@ -56,6 +60,10 @@ body {
 }
 .rounded {
     border-radius: 5rem!important;
+}
+/* Video Tiles */
+.vid_tile {
+    cursor: pointer;
 }
 /* Navbar */
 .navbar {

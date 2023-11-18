@@ -24,16 +24,16 @@ function placeContent() {
 
     let video_info = videos_info[VIDEO_ID];
     console.log(video_info);
-    video_info.download_url = 'videos/' + video_info['id'] + '.mp4';
 
     // Set video src
     video.src = video_info['download_url'];
 
     // Set download button href
-    let download_btn = document.getElementById('vid_download_btn');
-    download_btn.href = video_info['download_url'];
-    download_btn.setAttribute('download', video_info['id'] + '.mp4');
-    
+    // https://stackoverflow.com/questions/62046965/save-as-video-but-how-to-do-it-with-javascript-and-html-instead
+    // let download_btn = document.getElementById('vid_download_btn');
+    // download_btn.href = video_info['download_url'];
+    // download_btn.setAttribute('download', video_info['id'] + '.mp4');
+
     // video.play() // Cannot play before user interaction
 
     // Add js/player.js to the body
@@ -85,10 +85,16 @@ document.head.appendChild(link);
 
 
 function add_rec_vid(parent, info) {
-    let rec_vid = create_and_append('div', parent, null, 'rec_vid')
+    let rec_vid = create_and_append('div', parent, null, 'rec_vid vid_tile')
+    
+    // Add onclick event to rec_vid to change video
+    rec_vid.addEventListener('click', function() {
+        window.location.href = `?v=${info.id}`;
+    });
 
     // Thumbnail
-    let rec_thumb_div = create_and_append('div', rec_vid, null, 'rec_thumb_div')
+    let rec_thumb_div_container = create_and_append('div', rec_vid, null, 'rec_thumb_div_container')
+    let rec_thumb_div = create_and_append('div', rec_thumb_div_container, null, 'rec_thumb_div')
     let rec_thumb_img = create_and_append('img', rec_thumb_div, null, 'rec_thumb_img')
     rec_thumb_img.src = info.thumb_url
     let rec_duration = create_and_append('div', rec_thumb_div, null, 'rec_duration')
@@ -108,3 +114,4 @@ function add_rec_vid(parent, info) {
 
     return rec_vid
 }
+  
