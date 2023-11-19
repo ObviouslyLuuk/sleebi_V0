@@ -27,6 +27,22 @@ function fetch_html(page, selector, event_name) {
 
 
 
+function views_add_commas(views) {
+    return views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function views_abbr(views) {
+    if (views >= 1000000000)
+        return `${(views / 1000000000).toFixed(1)}B`
+    else if (views >= 1000000)
+        return `${(views / 1000000).toFixed(1)}M`
+    else if (views >= 1000)
+        return `${(views / 1000).toFixed(1)}K`
+    else
+        return views
+}
+
+
 function create_and_append(type, parent=null, id=null, class_=null) {
     if (parent == null)
         parent = document.body

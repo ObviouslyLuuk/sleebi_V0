@@ -2,7 +2,6 @@ FIXES:
 
 
 ADDITIONS:
-format viewcounts with commas or K and M
 get the upload dates
 get descriptions
 add link to YouTube Subscribe for channel
@@ -35,6 +34,8 @@ add a "more" button to the description
 replace tipjar link with ko-fi widget and in-page panel
 
 put svgs from player into sprite.svg
+
+optional calming music to play in background of videos, or noise?
 
 download button (doesn't work with YT download link but does work with local file)
 
