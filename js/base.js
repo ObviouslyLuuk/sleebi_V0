@@ -49,3 +49,13 @@ switch (PATHNAME[0]) {
         console.log("error page not yet implemented");
         break;
 }
+
+// When clicking on search_open_btn, set data-mode of navbar to "search"
+let search_open_btn = document.querySelector('#search_open_btn');
+search_open_btn.addEventListener('click', function() {
+    document.querySelector('#navbar').dataset.mode = "search";
+});
+let search_close_btn = document.querySelector('#search_close_btn');
+search_close_btn.addEventListener('click', function() {
+    document.querySelector('#navbar').dataset.mode = "default";
+});
