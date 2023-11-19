@@ -61,14 +61,19 @@ function placeContent() {
     // video_channel.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
 
     // Set youtube subscribe button
-    let yt_sub_div = document.querySelector('#yt_sub_div');
-    // yt_sub_div.dataset.channelid = video_info['channel_id']; // Don't have channel_id yet
-    yt_sub_div.dataset.channelid = "UChXogayC52mlROq-N71_f5g"
+    let yt_sub = document.querySelector('#yt_sub');
+    // yt_sub.href = `https://www.youtube.com/channel/${video_info['channel_id']}?sub_confirmation=1&feature=subscribe-embed-click`; // Don't have channel_id yet
+    yt_sub.href = "https://www.youtube.com/channel/UChXogayC52mlROq-N71_f5g?sub_confirmation=1&feature=subscribe-embed-click";
 
-    // Add script for YouTube Subscribe widget at https://apis.google.com/js/platform.js to the body
-    script = document.createElement('script');
-    script.src = 'https://apis.google.com/js/platform.js';
-    document.body.appendChild(script);
+    // Set video share button
+    let share_btn = document.querySelector('#vid_share_btn');
+    share_btn.addEventListener('click', function() {
+        let share_URL = window.location.origin + window.location.pathname + `?v=${video_info['id']}`;
+        navigator.clipboard.writeText(share_URL).then(function() {
+            console.log('Async: Copying to clipboard was successful!');
+        });
+    });
+
 
     // Set video description
     let video_description = document.querySelector('#vid_description');

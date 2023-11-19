@@ -57,6 +57,13 @@ body.blue-filter, body.blue-filter .video-container.full-screen video {
     height: 20px;
     fill: var(--dark-theme-text-color);
 }
+.clickable_icon {
+    display: flex;
+    cursor: pointer;
+}
+.clickable_icon:hover {
+    filter: brightness(0.5);
+}
 .rounded-left {
     border-top-left-radius: 5rem!important;
     border-bottom-left-radius: 5rem!important;

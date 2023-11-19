@@ -8,7 +8,10 @@ get the upload dates
 get descriptions
 get channel IDs for YouTube sub button
 get channel icon URLs
-share button
+message popups
+screen overlays
+message popup and screen overlay for share button
+start video at specific time based on URL
 add email list signup
 add note that comments will be added soon
 

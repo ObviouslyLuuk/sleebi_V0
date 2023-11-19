@@ -7,11 +7,19 @@
             <div id="vid_channel_info_div">
                 <div id="vid_channel_name">Channel name</div>
                 <div id="vid_channel_btns" class="flex-container">
-                    <div id="yt_sub_div" class="g-ytsubscribe" data-channelid="" data-layout="default" data-count="hidden"></div>
+                    <a id="yt_sub" class="clickable_icon" target="_blank">
+                        <img src="images/yt_subscribe_button.png" style="filter:grayscale()">
+                    </a>
                 </div>
             </div>
         </div>
         <div id="vid_action_div">
+            <button id="vid_share_btn" class="btn rounded">
+                <svg class="icon">
+                    <use xlink:href="images/sprite.svg#icon-share"></use>
+                </svg>
+                <div>Share</div>
+            </button>
             <!-- <a id="vid_download_btn" class="btn rounded" target="_blank">
                 <svg class="icon"><use xlink:href="images/sprite.svg#icon-download"></use></svg>
                 Download
