@@ -67,13 +67,7 @@ function placeContent() {
 
     // Set video share button
     let share_btn = document.querySelector('#vid_share_btn');
-    share_btn.addEventListener('click', function() {
-        let share_URL = window.location.origin + window.location.pathname + `?v=${video_info['id']}`;
-        navigator.clipboard.writeText(share_URL).then(function() {
-            create_message_overlay('Link copied to clipboard');
-        });
-    });
-
+    share_btn.addEventListener('click', add_share_overlay);
 
     // Set video description
     let video_description = document.querySelector('#vid_description');
@@ -136,3 +130,74 @@ function add_rec_vid(parent, info) {
 
     return rec_vid
 }
+
+
+function add_share_overlay() {
+    let video = document.querySelector('video');
+    video.pause();
+    let starttime = format_ms_as_time(video.currentTime * 1000);
+
+    let overlay_content = create_overlay(document.body, 'share_overlay', true, null, true)
+    overlay_content = create_and_append('div', overlay_content, null, 'share_overlay_content')
+    // Include starttime checkbox
+    overlay_content.innerHTML = `
+    <h5>Share</h5>
+    <div id="share_url_container" class="flex-container">
+        <input type="text" id="share_url" class="wide_input" value="${window.location.href}">
+        <button id="copy_url_btn" class="btn">Copy</button>
+    </div>
+    <div id="share_option_container">
+        <input type="checkbox" id="share_starttime_checkbox">
+        <label for="share_starttime_checkbox">Start at:</label>
+        <input type="text" id="share_starttime" class="time_input" disabled value="${starttime}">
+    </div>
+    `
+    // Add onclick event to copy_url_btn
+    let copy_url_btn = document.querySelector('#copy_url_btn');
+    copy_url_btn.addEventListener('click', function() {
+        navigator.clipboard.writeText(document.querySelector('#share_url').value).then(function() {
+            create_message_overlay('Link copied to clipboard');
+        });
+    });
+
+    function update_url() {
+        let incl_time = document.querySelector('#share_starttime_checkbox').checked;
+        let textarea = document.querySelector('#share_url');
+        let val = textarea.value;
+        let index = val.indexOf('&t=');
+        if (index != -1) {
+            val = val.slice(0, index);
+        }
+        let t
+        try {
+            t = calc_ms_from_time(share_starttime.value);
+        } catch (error) {
+            console.log(error);
+            return;
+        }
+        if (t == 0 || !incl_time) {
+            textarea.value = val;
+            return;
+        }
+        val += `&t=${calc_ms_from_time(share_starttime.value)}`;
+        textarea.value = val;
+    }
+
+    // Add onclick event to share_starttime_checkbox
+    let share_starttime_checkbox = document.querySelector('#share_starttime_checkbox');
+    share_starttime_checkbox.addEventListener('click', function() {
+        let share_starttime = document.querySelector('#share_starttime');
+        if (share_starttime_checkbox.checked) {
+            share_starttime.disabled = false;
+            update_url();
+        } else {
+            share_starttime.disabled = true;
+            update_url();
+        }
+    });
+
+    // Add input event to share_starttime
+    let share_starttime = document.querySelector('#share_starttime');
+    share_starttime.addEventListener('input', update_url);
+}
+
