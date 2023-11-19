@@ -36,6 +36,55 @@ body.blue-filter, body.blue-filter .video-container.full-screen video {
     justify-content: space-between;
     align-items: center;
 }
+.overlay_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+}
+.overlay {
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    z-index: 10000000;
+    transform: translate(-50%, -50%);
+    background-color: var(--dark-theme-background-color);
+    color: var(--dark-theme-text-color);
+    border-radius: 10px;
+    padding: 20px;
+    width: 50vw;
+    overflow: auto;
+}
+.overlay_close_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+.message_overlay {
+    background-color: white;
+    color: black;
+    bottom: -100px;
+    animation: slideUpAndAway 2s ease-in-out forwards;
+}
+
+@keyframes slideUpAndAway {
+    0% {
+        bottom: -100px;
+    }
+    20% {
+        bottom: 20px;
+    }
+    80% {
+        bottom: 20px;
+    }
+    100% {
+        bottom: -100px;
+    }
+}
 /* Buttons */
 .btn {
     background-color: var(--dark-theme-divider-color);

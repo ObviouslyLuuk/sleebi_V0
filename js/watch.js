@@ -70,7 +70,7 @@ function placeContent() {
     share_btn.addEventListener('click', function() {
         let share_URL = window.location.origin + window.location.pathname + `?v=${video_info['id']}`;
         navigator.clipboard.writeText(share_URL).then(function() {
-            console.log('Async: Copying to clipboard was successful!');
+            create_message_overlay('Link copied to clipboard');
         });
     });
 
@@ -136,4 +136,3 @@ function add_rec_vid(parent, info) {
 
     return rec_vid
 }
-  
