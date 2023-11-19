@@ -38,6 +38,7 @@ body[data-mobile=true] .video-controls-container::before {
   .video-container {
     position: relative;
     /* width: 90%; */
+    flex: 1;
     max-width: 1000px;
     display: flex;
     justify-content: center;
@@ -75,7 +76,7 @@ body[data-mobile=true] .video-controls-container::before {
     transition: opacity 150ms ease-in-out;
   }
   
-  .video-controls-container::before {
+  body[data-mobile=false] .video-controls-container::before {
     content: "";
     position: absolute;
     bottom: 0;
@@ -88,10 +89,14 @@ body[data-mobile=true] .video-controls-container::before {
     border-radius: 10px;
   }
   
-  .video-container:hover .video-controls-container,
-  .video-container:focus-within .video-controls-container,
-  .video-container.paused .video-controls-container {
+  body[data-mobile=false] .video-container:hover .video-controls-container,
+  /* .video-container:focus-within .video-controls-container, */
+  body[data-mobile=false] .video-container.paused .video-controls-container,
+  body[data-mobile=true] .video-container.controls-active .video-controls-container {
     opacity: 1;
+  }
+  body[data-mobile=true] .video-container.controls-active .video-wrapper {
+    filter: brightness(0.5);
   }
   
   .video-controls-container .controls {
@@ -196,7 +201,8 @@ body[data-mobile=true] .video-controls-container::before {
   }
   
   .video-container .slider {
-    height: 100%;
+    /* height: 100%; */
+    height: 40px;
     width: 0;
     transform-origin: left;
     transform: scaleX(0);
@@ -217,8 +223,8 @@ body[data-mobile=true] .video-controls-container::before {
     transform: scaleX(1);
   }
   
-  .control-container:hover .slider,
-  .video-container .slider:focus-within {
+  body[data-mobile=false] .control-container:hover .slider,
+  body[data-mobile=false] .video-container .slider:focus-within {
     width: 100px;
     margin-left: 10px;
     transform: scaleX(1);
@@ -352,9 +358,9 @@ body[data-mobile=true] .video-controls-container::before {
     display: none;
   }
   
-  .video-container.scrubbing .thumbnail-img {
+  /* .video-container.scrubbing .thumbnail-img {
     display: block;
-  }
+  } */
   
   .video-container.scrubbing .preview-img,
   .timeline-container:hover .preview-img {

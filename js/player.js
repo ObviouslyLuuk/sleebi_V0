@@ -68,6 +68,32 @@ document.addEventListener("mouseup", e => {
 document.addEventListener("mousemove", e => {
   if (isScrubbing) handleTimelineUpdate(e)
 })
+// Add touch events
+timelineContainer.addEventListener("touchmove", e => {
+  // Construct a simulated mouse event from the touch event.
+  e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'}
+  handleTimelineUpdate(e);
+});
+timelineContainer.addEventListener("touchstart", e => {
+  // Construct a simulated mouse event from the touch event.
+  e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchstart'}
+  toggleScrubbing(e);
+});
+document.addEventListener("touchend", e => {
+  if (isScrubbing) {
+    // Construct a simulated mouse event from the touch event.
+    e = {x: e.changedTouches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchend'}
+    toggleScrubbing(e);
+  }
+});
+document.addEventListener("touchmove", e => {
+  if (isScrubbing) {
+    // Construct a simulated mouse event from the touch event.
+    e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'}
+    handleTimelineUpdate(e);
+  }
+});
+
 
 let isScrubbing = false
 let wasPaused
@@ -102,6 +128,10 @@ function handleTimelineUpdate(e) {
     e.preventDefault()
     // thumbnailImg.src = previewImgSrc
     timelineContainer.style.setProperty("--progress-position", percent)
+
+    // Update video current time (could be intensive on performance?)
+    video.currentTime = percent * video.duration
+    currentTimeElem.textContent = formatDuration(video.currentTime)
   }
 }
 
@@ -264,7 +294,13 @@ video.addEventListener("leavepictureinpicture", () => {
 
 // Play/Pause
 playPauseBtn.addEventListener("click", togglePlay)
-video.addEventListener("click", togglePlay)
+video.addEventListener("click", function (e) {
+  if (!mobileCheck()) {
+    togglePlay()
+  } else {
+    toggleControls()
+  }
+})
 
 function togglePlay() {
   video.paused ? video.play() : video.pause()
@@ -276,4 +312,30 @@ video.addEventListener("play", () => {
 
 video.addEventListener("pause", () => {
   videoContainer.classList.add("paused")
+})
+
+
+// Controls on mobile
+let controlsTimeout
+function toggleControls() {
+  videoContainer.classList.toggle("controls-active")
+  clearTimeout(controlsTimeout)
+
+  // Set timeout if video is playing
+  if (!video.paused) {
+    controlsTimeout = setTimeout(() => {
+      videoContainer.classList.remove("controls-active")
+    }, 2000)
+  }
+}
+
+// When you unpause the video, timeout to hide controls
+video.addEventListener("play", () => {
+  controlsTimeout = setTimeout(() => {
+    videoContainer.classList.remove("controls-active")
+  }, 2000)
+})
+// When pausing the video, clear the timeout
+video.addEventListener("pause", () => {
+  clearTimeout(controlsTimeout)
 })

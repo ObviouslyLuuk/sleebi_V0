@@ -81,6 +81,10 @@ function placeContent() {
 
     // Add every video as rec_vid
     for (let vid_info of Object.values(videos_info)) {
+        // If vid_info is the current video, skip
+        if (vid_info.id == VIDEO_ID)
+            continue;
+
         add_rec_vid(
             document.querySelector('.right-column'),
             vid_info,

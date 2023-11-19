@@ -111,6 +111,7 @@ video {
     grid-template-columns: 65% auto;
 }
 .vid_player_container {
+    display: flex;
     width: 100%;
     aspect-ratio: 16 / 9;
     padding: 0;
@@ -133,4 +134,15 @@ body[data-mobile=false] .vid_player_container {
     .right-column {
         padding: 0 20px 20px 20px;
     }
+}
+
+
+
+
+/* HIDDEN TEMPORARILY */
+#vid_channel_icon {
+    display: none;
+}
+.timeline .preview-img {
+    display: none!important;
 }
