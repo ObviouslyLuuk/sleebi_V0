@@ -35,6 +35,12 @@ function placeContent() {
     // download_btn.setAttribute('download', video_info['id'] + '.mp4');
 
     // video.play() // Cannot play before user interaction
+    
+    // If t is in URL, set video.currentTime to t
+    let t = URLPARAMS.get('t');
+    if (t) {
+        video.currentTime = t / 1000;
+    }
 
     // Add js/player.js to the body
     let script = document.createElement('script');
