@@ -68,27 +68,24 @@ document.addEventListener("mouseup", e => {
 document.addEventListener("mousemove", e => {
   if (isScrubbing) handleTimelineUpdate(e)
 })
-// Add touch events
+// Add touch events for mobile
 timelineContainer.addEventListener("touchmove", e => {
   // Construct a simulated mouse event from the touch event.
   e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'}
   handleTimelineUpdate(e);
 });
 timelineContainer.addEventListener("touchstart", e => {
-  // Construct a simulated mouse event from the touch event.
   e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchstart'}
   toggleScrubbing(e);
 });
 document.addEventListener("touchend", e => {
   if (isScrubbing) {
-    // Construct a simulated mouse event from the touch event.
-    e = {x: e.changedTouches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchend'}
+    e = {x: e.changedTouches[0].clientX, buttons: 0, preventDefault: ()=>{}, type: 'touchend'}
     toggleScrubbing(e);
   }
 });
 document.addEventListener("touchmove", e => {
   if (isScrubbing) {
-    // Construct a simulated mouse event from the touch event.
     e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'}
     handleTimelineUpdate(e);
   }

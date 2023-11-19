@@ -73,7 +73,8 @@ body[data-mobile=true] .video-controls-container::before {
     color: white;
     z-index: 100;
     opacity: 0;
-    transition: opacity 150ms ease-in-out;
+    visibility: hidden;
+    transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
   }
   
   body[data-mobile=false] .video-controls-container::before {
@@ -94,6 +95,7 @@ body[data-mobile=true] .video-controls-container::before {
   body[data-mobile=false] .video-container.paused .video-controls-container,
   body[data-mobile=true] .video-container.controls-active .video-controls-container {
     opacity: 1;
+    visibility: visible;
   }
   body[data-mobile=true] .video-container.controls-active .video-wrapper {
     filter: brightness(0.5);
