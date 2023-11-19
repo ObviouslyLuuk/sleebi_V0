@@ -36,6 +36,13 @@ body.blue-filter, body.blue-filter .video-container.full-screen video {
     justify-content: space-between;
     align-items: center;
 }
+.basic_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 .overlay_background {
     position: fixed;
     top: 0;
