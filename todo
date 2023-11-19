@@ -1,10 +1,13 @@
 FIXES:
+Blue screen filter not working on mobile webapp
+webapp video player accessibility for mobile
 
 
 ADDITIONS:
 get the upload dates
 get descriptions
-add link to YouTube Subscribe for channel
+get channel IDs for YouTube sub button
+get channel icon URLs
 share button
 add email list signup
 add note that comments will be added soon
@@ -34,6 +37,8 @@ add a "more" button to the description
 replace tipjar link with ko-fi widget and in-page panel
 
 put svgs from player into sprite.svg
+
+video chapters
 
 optional calming music to play in background of videos, or noise?
 

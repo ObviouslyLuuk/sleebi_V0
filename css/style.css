@@ -29,6 +29,13 @@ body.blue-filter, body.blue-filter .video-container.full-screen video {
     /* filter: sepia(0.6); */
     filter: sepia(.8) saturate(1.5) brightness(.8) hue-rotate(330deg);
 }
+/* General */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 /* Buttons */
 .btn {
     background-color: var(--dark-theme-divider-color);

@@ -49,9 +49,26 @@ function placeContent() {
     let video_views = document.querySelector('#vid_viewcount');
     video_views.innerHTML = `${views_add_commas(video_info['views'])} views`
 
-    // Set video channel
-    let video_channel = document.querySelector('#vid_channel');
+    // Set channel icon
+    let channel_icon = document.querySelector('#vid_channel_icon');
+    // channel_icon.src = video_info['channel_icon_url']; // Don't have channel_icon_url yet
+    channel_icon.src = "https://yt3.googleusercontent.com/G0in2VstE1qVGi8-NRHXHCGxWs4wjEJA55vXPBdVmpNzeV2hBn9j2uwgj19UB8zz8Wmvtmp50w=s176-c-k-c0x00ffffff-no-rj"
+    // channel_icon.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
+
+    // Set video channel name
+    let video_channel = document.querySelector('#vid_channel_name');
     video_channel.innerHTML = video_info['channel_name'];
+    // video_channel.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
+
+    // Set youtube subscribe button
+    let yt_sub_div = document.querySelector('#yt_sub_div');
+    // yt_sub_div.dataset.channelid = video_info['channel_id']; // Don't have channel_id yet
+    yt_sub_div.dataset.channelid = "UChXogayC52mlROq-N71_f5g"
+
+    // Add script for YouTube Subscribe widget at https://apis.google.com/js/platform.js to the body
+    script = document.createElement('script');
+    script.src = 'https://apis.google.com/js/platform.js';
+    document.body.appendChild(script);
 
     // Set video description
     let video_description = document.querySelector('#vid_description');

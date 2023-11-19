@@ -86,3 +86,16 @@
     gap: 1em;
     font-weight: 600;
 }
+
+/* Channel Details */
+.channel_icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin-right: 1em;
+    cursor: pointer;
+}
+#vid_channel_name {
+    cursor: pointer;
+    margin-bottom: 0.2em;
+}
