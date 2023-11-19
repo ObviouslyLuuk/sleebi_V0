@@ -1,40 +1,42 @@
 <div class="left-column">
-    <div id="video-container"></div>
-    <h5 id="vid_title">Video title</h5>
-    <div id="engagement_row">
-        <div id="vid_channel_div" class="flex-container">
-            <img id="vid_channel_icon" class="channel_icon" alt="Channel icon">
-            <div id="vid_channel_info_div">
-                <div id="vid_channel_name">Channel name</div>
-                <div id="vid_channel_btns" class="flex-container">
-                    <a id="yt_sub" class="clickable_icon" target="_blank">
-                        <img src="images/yt_subscribe_button.png" style="filter:grayscale()">
-                    </a>
+    <div class="vid_player_container"></div>
+    <div class="below_video">
+        <h5 id="vid_title">Video title</h5>
+        <div id="engagement_row">
+            <div id="vid_channel_div" class="flex-container">
+                <img id="vid_channel_icon" class="channel_icon" alt="Channel icon">
+                <div id="vid_channel_info_div">
+                    <div id="vid_channel_name">Channel name</div>
+                    <div id="vid_channel_btns" class="flex-container">
+                        <a id="yt_sub" class="clickable_icon" target="_blank">
+                            <img src="images/yt_subscribe_button.png" style="filter:grayscale()">
+                        </a>
+                    </div>
                 </div>
             </div>
+            <div id="vid_action_div">
+                <button id="vid_share_btn" class="btn rounded">
+                    <svg class="icon">
+                        <use xlink:href="images/sprite.svg#icon-share"></use>
+                    </svg>
+                    <div>Share</div>
+                </button>
+                <!-- <a id="vid_download_btn" class="btn rounded" target="_blank">
+                    <svg class="icon"><use xlink:href="images/sprite.svg#icon-download"></use></svg>
+                    Download
+                </a> -->
+            </div>
         </div>
-        <div id="vid_action_div">
-            <button id="vid_share_btn" class="btn rounded">
-                <svg class="icon">
-                    <use xlink:href="images/sprite.svg#icon-share"></use>
-                </svg>
-                <div>Share</div>
-            </button>
-            <!-- <a id="vid_download_btn" class="btn rounded" target="_blank">
-                <svg class="icon"><use xlink:href="images/sprite.svg#icon-download"></use></svg>
-                Download
-            </a> -->
+        <div id="description_div">
+            <div id="vid_views-date">
+                <span id="vid_viewcount">views</span>
+                <span id="vid_date">date</span>
+            </div>
+            <div id="vid_description">Description</div>
         </div>
-    </div>
-    <div id="description_div">
-        <div id="vid_views-date">
-            <span id="vid_viewcount">views</span>
-            <span id="vid_date">date</span>
+        <div id="comments_div" class="basic_div">
+            comments will be added soon
         </div>
-        <div id="vid_description">Description</div>
-    </div>
-    <div id="comments_div" class="basic_div">
-        comments will be added soon
     </div>
 </div>
 <div class="right-column">

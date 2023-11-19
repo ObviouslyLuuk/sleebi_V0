@@ -10,7 +10,7 @@ console.log(VIDEO_ID);
 
 function placePlayer() {
     html_ready = false;
-    fetch_html('player', "#video-container", "player_ready");
+    fetch_html('player', ".vid_player_container", "player_ready");
 }
 
 window.addEventListener('html_ready', placePlayer);
@@ -35,7 +35,7 @@ function placeContent() {
     // download_btn.setAttribute('download', video_info['id'] + '.mp4');
 
     // video.play() // Cannot play before user interaction
-    
+
     // If t is in URL, set video.currentTime to t
     let t = URLPARAMS.get('t');
     if (t) {
@@ -86,6 +86,28 @@ function placeContent() {
             vid_info,
         );
     }
+
+    if (mobileCheck()) {
+        // Scroll to video element
+        // console.log("scrolling to video");
+        // video.scrollIntoView();
+    }
+
+    // Listen for resize events
+    window.addEventListener('resize', function() {
+        // document.body.dataset.mobile = window.mobileCheck();
+        // if (!document.body.dataset.mobile) return;
+        if (!window.mobileCheck()) return;
+
+        // If mobile and width is greater than height, turn on fullscreen for video
+        if (window.innerWidth > window.innerHeight) {
+            // document.querySelector(".video-container").requestFullscreen(); // Can only be called by user interaction
+            document.body.dataset.landscape = "true";
+        } else {
+            // document.exitFullscreen();
+            document.body.dataset.landscape = "false";
+        }
+    });
 }
 
 // Call placeContent() after player_ready and videos_info_loaded events

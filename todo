@@ -1,6 +1,4 @@
 FIXES:
-Blue screen filter not working on mobile webapp
-webapp video player accessibility for mobile
 
 
 ADDITIONS:
@@ -11,6 +9,7 @@ get channel icon URLs
 add email list signup
 
 make mobile friendly
+    tap mobile player to show/hide controls, not play/pause, and show play/pause button in the middle of the screen
 
 triggers as tags
 
