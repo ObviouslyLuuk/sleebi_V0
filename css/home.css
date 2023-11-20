@@ -1,0 +1,14 @@
+
+#search_results {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+.vid_tile {
+    display: flex;
+    flex-direction: column;
+}
+.vid_tile img {
+    width: 100%;
+    height: 100%;
+}

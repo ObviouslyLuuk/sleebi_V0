@@ -41,11 +41,13 @@ body.blue-filter, body.blue-filter .video-container.full-screen video {
     flex-grow: 1;
 }
 .basic_div {
+    padding: 20px;
+}
+.basic_div.center {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
 .overlay_background {
     position: fixed;
