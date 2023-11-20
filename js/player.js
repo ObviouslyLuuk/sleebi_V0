@@ -22,6 +22,9 @@ const videoContainer = document.querySelector(".video-container")
 const timelineContainer = document.querySelector(".timeline-container")
 const video = document.querySelector("video")
 
+const skipBackOverlay = document.querySelector(".skip-back")
+const skipForwardOverlay = document.querySelector(".skip-forward")
+
 document.addEventListener("keydown", e => {
   const tagName = document.activeElement.tagName.toLowerCase()
 
@@ -183,6 +186,23 @@ function formatDuration(time) {
 
 function skip(duration) {
   video.currentTime += duration
+
+  if (duration < 0) {
+    skipBackOverlay.classList.remove("active")
+    // Force a reflow to restart the animation
+    void skipBackOverlay.offsetWidth
+    skipBackOverlay.classList.add("active")
+    setTimeout(() => {
+      skipBackOverlay.classList.remove("active")
+    }, 500)
+  } else {
+    skipForwardOverlay.classList.remove("active")
+    void skipForwardOverlay.offsetWidth
+    skipForwardOverlay.classList.add("active")
+    setTimeout(() => {
+      skipForwardOverlay.classList.remove("active")
+    }, 500)
+  }
 }
 
 // Volume
@@ -335,4 +355,22 @@ video.addEventListener("play", () => {
 // When pausing the video, clear the timeout
 video.addEventListener("pause", () => {
   clearTimeout(controlsTimeout)
+})
+
+
+// Double tap to skip. Tapping on the left side of the video will skip backwards, and tapping on the right side will skip forwards.
+// We listen for touchstart events on the video element, and first determine if there's a double tap in quick succession
+// To do this, we check if the time between the current tap and the last tap is less than 300ms
+let lastTap = 0
+video.addEventListener("touchstart", e => {
+  const timeSinceLastTap = Date.now() - lastTap
+  if (timeSinceLastTap < 300) {
+    const rect = video.getBoundingClientRect()
+    if (e.touches[0].clientX < rect.width / 2) {
+      skip(-5)
+    } else {
+      skip(5)
+    }
+  }
+  lastTap = Date.now()
 })

@@ -401,3 +401,73 @@ body[data-mobile=true] .video-controls-container::before {
   .timeline-container:hover .timeline {
     height: 100%;
   }
+
+
+  /* Skip overlays */
+  .skip-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: white;
+    width: 35vw;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
+  }
+  .skip-back {
+    left: 0;
+    border-radius: 0 100% 100% 0;
+  }
+  .skip-forward {
+    right: 0;
+    border-radius: 100% 0 0 100%;
+  }
+
+  .skip-back .icon {
+    transform: rotate(180deg);
+  }
+  .skip-back .flex-container {
+    /* This is important for the animation */
+    flex-direction: row-reverse;
+  }
+
+  .skip-overlay.active {
+    opacity: 1;
+  }
+
+  /* There are three icons in both .skip-overlay elements. 
+  When activated, we want to transition such that each icon becomes visible one after the other, using a delay. */
+  @keyframes skip-animation {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  .skip-overlay .icon {
+    opacity: 0;
+  }
+  .skip-overlay.active .icon {
+    animation: skip-animation 500ms ease-in-out;
+  }
+  .skip-overlay .icon:nth-child(1) {
+    animation-delay: 0ms;
+  }
+  .skip-overlay .icon:nth-child(2) {
+    animation-delay: 100ms;
+  }
+  .skip-overlay .icon:nth-child(3) {
+    animation-delay: 200ms;
+  }
+
