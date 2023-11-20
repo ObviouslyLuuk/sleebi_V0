@@ -313,6 +313,9 @@ body[data-mobile=true] .video-controls-container::before {
     display: flex;
     align-items: center;
   }
+  body[data-mobile=true] .timeline-container {
+    height: 20px;
+  }
   
   .timeline {
     background-color: rgba(100, 100, 100, .5);
@@ -399,7 +402,7 @@ body[data-mobile=true] .video-controls-container::before {
   
   .video-container.scrubbing .timeline,
   .timeline-container:hover .timeline {
-    height: 100%;
+    height: 7px;
   }
 
 

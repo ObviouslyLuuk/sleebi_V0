@@ -1,23 +1,23 @@
 FIXES:
+sometimes blue filter doesn't work on mobile?
+thumbnails look very low res on mobile
 
 
 ADDITIONS:
 get the upload dates
 get descriptions
-get channel IDs for YouTube sub button
-get channel icon URLs
 add email list signup
 
 make mobile friendly
-    thicker scrub bar?
     looping
     download?
 
 add channel screen
 
-filter based on triggers
-
 triggers as tags
+
+filter based on triggers
+sort search results by date, views, like-ratio, etc
 
 have video preview GIFs when hovering over a video. Scrape from YT in the mouseover-overlay:
 https://i.ytimg.com/an_webp/wS7IPxLZrR4/mqdefault_6s.webp?du=3000&sqp=COKD5KoG&rs=AOn4CLCUw0a8np8UJZynr4pfEB4_ARjqPg
@@ -61,6 +61,8 @@ user authentication and database
     notifications
     donation leaderboard
 more channels
+    get channel IDs for YouTube sub button
+    get channel icon URLs
     creator donation link (to one big account?)
     creator profile page
     video upload page
