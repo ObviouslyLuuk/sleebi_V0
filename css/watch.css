@@ -116,6 +116,10 @@ video {
     aspect-ratio: 16 / 9;
     padding: 0;
 }
+body[data-mobile=true][data-landscape=true] .vid_player_container {
+    aspect-ratio: unset;
+    background-color: black;
+}
 body[data-mobile=false] .vid_player_container {
     padding: 20px 20px 0 20px;
 }

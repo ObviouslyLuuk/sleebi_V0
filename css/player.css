@@ -62,6 +62,7 @@ body[data-mobile=true] .video-controls-container::before {
   
   video {
     width: 100%;
+    max-height: 100vh;
     border-radius: 10px;
   }
   
@@ -109,6 +110,7 @@ body[data-mobile=true] .video-controls-container::before {
     height: 40px;
   }
   
+  .video-container button,
   .video-controls-container .controls button {
     background: none;
     border: none;
@@ -120,17 +122,33 @@ body[data-mobile=true] .video-controls-container::before {
     cursor: pointer;
     opacity: .85;
     transition: opacity 150ms ease-in-out;
-  }  
+  }
   .video-controls-container .controls button svg {
     max-width: 30px;
     max-height: 30px;
   }
+
+  body[data-mobile=true] .video-container .small-play-pause-btn,
+  .video-container .big-play-pause-btn {
+    display: none;
+  }
+  body[data-mobile=true] .video-container.controls-active .big-play-pause-btn {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100px;
+    width: 100px;
+    z-index: 1;
+  }
+  
   
   .video-controls-container .controls button:hover {
     opacity: 1;
   }
   
-  .video-controls-container .controls button:focus {
+  .video-container button:focus {
     outline: none;
   }
   

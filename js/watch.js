@@ -103,16 +103,23 @@ function placeContent() {
         // if (!document.body.dataset.mobile) return;
         if (!window.mobileCheck()) return;
 
-        // If mobile and width is greater than height, turn on fullscreen for video
-        if (window.innerWidth > window.innerHeight) {
-            // document.querySelector(".video-container").requestFullscreen(); // Can only be called by user interaction
-            document.body.dataset.landscape = "true";
-        } else {
-            // document.exitFullscreen();
-            document.body.dataset.landscape = "false";
-        }
+        // If mobile and width is greater than height, set landscape to true
+        updateLandscape();
     });
 }
+
+
+function updateLandscape() {
+    if (window.innerWidth > window.innerHeight) {
+        // document.querySelector(".video-container").requestFullscreen(); // Can only be called by user interaction
+        document.body.dataset.landscape = "true";
+    } else {
+        // document.exitFullscreen();
+        document.body.dataset.landscape = "false";
+    }
+}
+updateLandscape();
+
 
 // Call placeContent() after player_ready and videos_info_loaded events
 window.addEventListener('player_ready', placeContent);
