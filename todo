@@ -16,12 +16,9 @@ make mobile friendly
 Add Home screen
 add channel screen
 
-implement search
 filter based on triggers
 
 triggers as tags
-
-when skipping, show a little icon
 
 have video preview GIFs when hovering over a video. Scrape from YT in the mouseover-overlay:
 https://i.ytimg.com/an_webp/wS7IPxLZrR4/mqdefault_6s.webp?du=3000&sqp=COKD5KoG&rs=AOn4CLCUw0a8np8UJZynr4pfEB4_ARjqPg

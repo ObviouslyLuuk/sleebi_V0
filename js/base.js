@@ -32,6 +32,11 @@ switch (PATHNAME[0]) {
             let script = document.createElement('script');
             script.src = 'js/watch.js';
             document.body.appendChild(script);
+        } else if (URLPARAMS.get('q')) {
+            // Append js/results.js to the body
+            let script = document.createElement('script');
+            script.src = 'js/results.js';
+            document.body.appendChild(script);
         } else {
             // Append js/home.js to the body
             let script = document.createElement('script');

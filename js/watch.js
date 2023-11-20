@@ -79,8 +79,12 @@ function placeContent() {
     let video_description = document.querySelector('#vid_description');
     // video_description.innerHTML = video_info['description'];
 
+
+    // Sort recommended videos by relevance using get_search_results() and title as query
+    let rec_vids = get_search_results(video_info['title'], Object.values(videos_info));
+
     // Add every video as rec_vid
-    for (let vid_info of Object.values(videos_info)) {
+    for (let vid_info of rec_vids) {
         // If vid_info is the current video, skip
         if (vid_info.id == VIDEO_ID)
             continue;
