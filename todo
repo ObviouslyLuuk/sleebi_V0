@@ -30,6 +30,13 @@ replace tipjar link with ko-fi widget and in-page panel
 
 put svgs from player into sprite.svg
 
+add share on:
+    whatsapp: https://faq.whatsapp.com/general/chats/how-to-use-click-to-chat/?lang=en
+    facebook: https://developers.facebook.com/docs/sharing/reference/share-dialog/
+    twitter: https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
+    reddit: https://www.reddit.com/r/learnprogramming/comments/3z6z5v/how_to_share_a_link_to_reddit/
+    email: https://stackoverflow.com/questions/2102433/send-email-via-gmail
+
 video chapters
 
 have watch page be an overlay on non-watch pages, on mobile, so the user can swipe the viewer into the bottom to keep browsing
