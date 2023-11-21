@@ -21,6 +21,7 @@ body[data-mobile=true] .volume-container {
 body[data-mobile=true] .video-container {
   width: 100vw;
 }
+body[data-mobile=true] .thumbnail-img,
 body[data-mobile=true] video,
 body[data-mobile=true] .video-controls-container::before {
   border-radius: 0;
@@ -60,6 +61,7 @@ body[data-mobile=true] .video-controls-container::before {
     max-height: 100vh;
   }
   
+  .thumbnail-img,
   video {
     width: 100%;
     max-height: 100vh;
@@ -98,6 +100,7 @@ body[data-mobile=true] .video-controls-container::before {
     opacity: 1;
     visibility: visible;
   }
+  body[data-mobile=true] .video-container.controls-active .thumbnail-img,
   body[data-mobile=true] .video-container.controls-active .video-wrapper {
     filter: brightness(0.5);
   }
@@ -397,6 +400,7 @@ body[data-mobile=true] .video-controls-container::before {
     width: 100%;
     height: 100%;
     z-index: 1;
+    pointer-events: none;
   }
   /* When video element has a src, make thumbnail display none */
   .video-container.src-loaded .thumbnail-img {

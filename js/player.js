@@ -340,9 +340,9 @@ video.addEventListener("pause", () => {
 
 // Controls on mobile
 let controlsTimeout
-function toggleControls() {
-  videoContainer.classList.toggle("controls-active")
+function toggleControls(force=undefined) {
   clearTimeout(controlsTimeout)
+  videoContainer.classList.toggle("controls-active", force)
 
   // Set timeout if video is playing
   if (!video.paused) {
@@ -354,10 +354,31 @@ function toggleControls() {
 
 // When you unpause the video, timeout to hide controls
 video.addEventListener("play", () => {
-  controlsTimeout = setTimeout(() => {
-    videoContainer.classList.remove("controls-active")
-  }, 2000)
+  toggleControls(true)
 })
+// // Any touch interaction with the controls in videoContainer should reset the timeout
+// const control_elements = [
+//   videoContainer.querySelector(".controls"),
+//   videoContainer.querySelector(".timeline-container"),
+//   videoContainer.querySelector(".play-pause-btn"),
+//   videoContainer.querySelector(".volume-slider"),
+//   videoContainer.querySelector(".brightness-slider"),
+//   // videoContainer.querySelector(".playback-rate-slider"),
+//   // videoContainer.querySelector(".captions-btn"),
+//   videoContainer.querySelector(".full-screen-btn"),
+//   // videoContainer.querySelector(".mini-player-btn"),
+//   // videoContainer.querySelector(".theater-btn"),
+//   videoContainer.querySelector(".mute-btn"),
+//   videoContainer.querySelector(".blue-filter-btn"),
+//   videoContainer.querySelector(".loop-btn"),
+//   // videoContainer.querySelector(".speed-btn"),
+//   videoContainer.querySelector(".current-time"),
+//   videoContainer.querySelector(".total-time"),
+// ]
+// control_elements.forEach(e=>{e.addEventListener("touchstart", () => {toggleControls(true)})})
+// control_elements.forEach(e=>{e.addEventListener("touchmove", () => {toggleControls(true)})})
+// control_elements.forEach(e=>{e.addEventListener("touchend", () => {toggleControls(true)})})
+
 // When pausing the video, clear the timeout
 video.addEventListener("pause", () => {
   clearTimeout(controlsTimeout)

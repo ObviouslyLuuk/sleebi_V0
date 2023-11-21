@@ -1,6 +1,7 @@
 FIXES:
 thumbnails look very low res on mobile (the URLs are lower res too)
-
+thumbnail before starting video is stretched to full height when doing fullscreen
+controls disappearing timeout doesn't reset when using controls
 
 ADDITIONS:
 get the upload dates
@@ -13,6 +14,7 @@ add channel screen
 triggers as tags
 
 filter based on triggers
+filter based on duration
 sort search results by date, views, like-ratio, etc
 
 have video preview GIFs when hovering over a video. Scrape from YT in the mouseover-overlay:
