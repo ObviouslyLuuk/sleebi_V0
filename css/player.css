@@ -143,6 +143,15 @@ body[data-mobile=true] .video-controls-container::before {
     z-index: 1;
   }
   
+  body.blue-filter .icon-glasses,
+  .icon-sunglasses {
+    display: none;
+  }
+  .icon-glasses,
+  body.blue-filter .icon-sunglasses {
+    display: block;
+  }
+  
   
   .video-controls-container .controls button:hover {
     opacity: 1;
