@@ -396,6 +396,10 @@ body[data-mobile=true] .video-controls-container::before {
     bottom: 0;
     width: 100%;
     height: 100%;
+    z-index: 1;
+  }
+  /* When video element has a src, make thumbnail display none */
+  .video-container.src-loaded .thumbnail-img {
     display: none;
   }
   

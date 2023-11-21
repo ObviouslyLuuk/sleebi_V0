@@ -236,6 +236,7 @@ video.addEventListener("volumechange", () => {
 brightnessBtn.addEventListener("click", toggleBrightness)
 brightnessSlider.addEventListener("input", e => {
   video.style.filter = `brightness(${e.target.value})`
+  thumbnailImg.style.filter = `brightness(${e.target.value})`
   window.dispatchEvent(new Event('brightnesschange'));
 })
 
@@ -252,16 +253,19 @@ window.addEventListener("brightnesschange", () => {
   videoContainer.setAttribute("data-brightness-level", brightnessLevel)
 })
 
+let lastBrightness = 0
 function toggleBrightness() {
   switch (brightnessSlider.value) {
     case "0":
-      brightnessSlider.value = 0.5
+      brightnessSlider.value = lastBrightness
       break;
     default:
+      lastBrightness = brightnessSlider.value
       brightnessSlider.value = 0
       break;
   }
   video.style.filter = `brightness(${brightnessSlider.value})`
+  thumbnailImg.style.filter = `brightness(${brightnessSlider.value})`
   window.dispatchEvent(new Event('brightnesschange'));
 }
 
@@ -321,6 +325,7 @@ video.parentElement.addEventListener("click", function (e) { // We use parentEle
 })
 
 function togglePlay() {
+  window.dispatchEvent(new Event('play_requested'));
   video.paused ? video.play() : video.pause()
 }
 

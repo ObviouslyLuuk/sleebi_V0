@@ -1,10 +1,11 @@
 FIXES:
-thumbnails look very low res on mobile
+thumbnails look very low res on mobile (the URLs are lower res too)
 
 
 ADDITIONS:
 get the upload dates
 get descriptions
+get actual high res thumbnails
 add email list signup
 
 add channel screen
@@ -74,9 +75,9 @@ Volume adjustment
 Fullscreen
 Scrubbing
 Play/Pause
-Skip forward/backward
+Skip forward/backward (with double tap too)
 
-Looping (webapp only for now)
+Looping
 Download video (webapp only for now)
 Picture in Picture (webapp only for now)
 No Ads

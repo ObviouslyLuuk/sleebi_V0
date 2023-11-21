@@ -25,8 +25,17 @@ function placeContent() {
     let video_info = videos_info[VIDEO_ID];
     console.log(video_info);
 
-    // Set video src
-    video.src = video_info['download_url'];
+    // Set thumbnail src
+    let video_thumb = document.querySelector('.thumbnail-img');
+    video_thumb.src = video_info['thumb_url'];
+
+    // Set video src once play is requested
+    window.addEventListener('play_requested', function() {
+        if (video.src != "") return;
+
+        video.src = video_info['download_url'];
+        document.querySelector('.video-container').classList.add('src-loaded');
+    });
 
     // Set download button href
     // https://stackoverflow.com/questions/62046965/save-as-video-but-how-to-do-it-with-javascript-and-html-instead
