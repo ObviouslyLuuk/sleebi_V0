@@ -151,6 +151,15 @@ body[data-mobile=true] .video-controls-container::before {
   body.blue-filter .icon-sunglasses {
     display: block;
   }
+  body[data-mobile=false] .loop-btn,
+  .loop-btn.active .icon-loop,
+  .icon-loop-active {
+    display: none;
+  }
+  .icon-loop,
+  .loop-btn.active .icon-loop-active {
+    display: block;
+  }
   
   
   .video-controls-container .controls button:hover {

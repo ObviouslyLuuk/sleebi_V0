@@ -72,4 +72,12 @@
     <symbol id="icon-play" viewBox="0 0 24 24">
         <path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
     </symbol>
+    <symbol id="icon-loop" viewBox="0 0 24 24">
+        <path d="M7 7H17V10L21 6L17 2V5H5V11H7V7ZM17 17H7V14L3 18L7 22V19H19V13H17V17Z"></path>
+    </symbol>
+    <symbol id="icon-loop-active" viewBox="0 0 24 24">
+        <path d="M 10 8.57 V 15.57 L 15.5 12.07 L 10 8.57 Z M7 7H17V10L21 6L17 2V5H5V11H7V7ZM17 17H7V14L3 18L7 22V19H19V13H17V17Z"></path>
+    </symbol>
 </svg>
+
+

@@ -10,6 +10,7 @@ const miniPlayerBtn = document.querySelector(".mini-player-btn")
 const muteBtn = document.querySelector(".mute-btn")
 const brightnessBtn = document.querySelector(".brightness-btn")
 const blueFilterBtn = document.querySelector(".blue-filter-btn")
+const loopBtn = document.querySelector(".loop-btn")
 const captionsBtn = document.querySelector(".captions-btn")
 const speedBtn = document.querySelector(".speed-btn")
 const currentTimeElem = document.querySelector(".current-time")
@@ -374,3 +375,13 @@ video.addEventListener("touchstart", e => {
   }
   lastTap = Date.now()
 })
+
+
+// Loop button
+loopBtn.addEventListener("click", toggleLoop)
+
+function toggleLoop() {
+  video.loop = !video.loop
+  loopBtn.classList.toggle("active", video.loop)
+}
+
