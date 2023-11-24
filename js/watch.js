@@ -26,8 +26,7 @@ function placeContent() {
     console.log(video_info);
 
     // Set thumbnail src
-    let video_thumb = document.querySelector('.thumbnail-img');
-    video_thumb.src = get_thumb_url(video_info);
+    video.style.backgroundImage = `url(${get_thumb_url(video_info)})`;
 
     // Set video src once play is requested
     window.addEventListener('play_requested', function() {
