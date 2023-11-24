@@ -319,16 +319,18 @@ function toggle_fake_fullscreen() {
 
 function toggleIOSViewerMode() {
   // Remove properties that prevent the video from playing fullscreen on iOS
+  let waspaused = video.paused
   video.pause()
-  video.removeAttribute("playsinline")
-  video.removeAttribute("webkit-playsinline")
-  video.play()
+  // video.removeAttribute("playsinline")
+  // video.removeAttribute("webkit-playsinline")
+  video.webkitEnterFullscreen()
+  if (!waspaused) {video.play()}
 
   // There's no controls to turn this off because iOS takes over
   // So we add the properties back when the video exits fullscreen
   video.addEventListener("webkitendfullscreen", () => {
-    video.setAttribute("playsinline", "")
-    video.setAttribute("webkit-playsinline", "")
+    // video.setAttribute("playsinline", "")
+    // video.setAttribute("webkit-playsinline", "")
   })
 }
 

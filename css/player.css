@@ -532,7 +532,7 @@ body[data-mobile=true][data-iOS=true] .video-container .flex-container {
 .video-container .full-screen-ios-btn {
   display: none;
 }
-body[data-mobile=true][data-iOS=true] .video-container:not(.fake-full-screen) .full-screen-ios-btn {
+body[data-mobile=true][data-iOS=true] .video-container:not(.fake-full-screen).src-loaded .full-screen-ios-btn {
   display: block;
 }
 
@@ -545,7 +545,6 @@ body[data-mobile=true][data-iOS=true] .video-container:not(.fake-full-screen) .f
   bottom: 0;
   z-index: 9999999999999999;
   width: 100vw;
-  height: 100vh;
   background-color: black;
 }
 
