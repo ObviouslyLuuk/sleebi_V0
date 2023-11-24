@@ -208,9 +208,12 @@ body[data-mobile=true] .video-controls-container::before {
   }
 
   .video-container .mute-btn, .video-container .brightness-btn {
-    width: 24px!important;
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+  .video-container .mute-btn svg, .video-container .brightness-btn svg {
+    width: 24px;
   }
   
   .volume-high-icon,
@@ -273,14 +276,14 @@ body[data-mobile=true] .video-controls-container::before {
   body[data-mobile=true] .video-container .slider {
     flex: 1;
     max-width: 150px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     transform: scaleX(1);
   }
   
   body[data-mobile=false][data-tablet=false] .control-container:hover .slider,
   body[data-mobile=false][data-tablet=false] .video-container .slider:focus-within {
     width: 100px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     transform: scaleX(1);
   }
 
@@ -532,8 +535,38 @@ body[data-mobile=true] .video-controls-container::before {
 
 
 
+.video-container button {
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 100%;
+}
+.video-container button.clicked {
+  animation: whitePulse 250ms ease-in-out;
+}
+
+@keyframes whitePulse {
+  0% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  50% {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+
+
+/* Full screen button */
+/* .video-container .full-screen-btn {
+  transition: transform 150ms ease-in-out;
+}
+.video-container .full-screen-btn:hover {
+  transform: scale(1.1);
+} */
+
+
 /* iOS fullscreen button */
-body[data-mobile=true][data-iOS=true] .video-container .flex-container {
+body[data-mobile=true] .video-container .flex-container {
   gap: 0;
 }
 .video-container .full-screen-ios-btn {

@@ -486,3 +486,16 @@ window.addEventListener("keydown", e => {
     e.preventDefault()
   }
 })
+
+// When a button is clicked, start whitePulse animation by adding .clicked class, then remove it after animation is done
+const buttons = document.querySelectorAll(".video-container button")
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    button.classList.add("clicked")
+  })
+  button.addEventListener("animationend", () => {
+    button.classList.remove("clicked")
+  })
+})
+
+
