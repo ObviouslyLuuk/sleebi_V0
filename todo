@@ -1,8 +1,5 @@
 FIXES:
 thumbnail before starting video is not stretched anymore but now doesn't cover
-showing "5 seconds" for 5 and 10 second skips
-overlays don't stay in the middle if css filter on body (fixed by applying filter to direct children, not body itself)
-message saying blue light filter en/disabled wasn't showing up, requestAnimationFrame fixed it
 
 Mac issues:
     volume icon not showing

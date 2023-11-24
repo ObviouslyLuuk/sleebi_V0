@@ -50,12 +50,16 @@ document.addEventListener("keydown", e => {
       toggleMute()
       break
     case "arrowleft":
-    case "j":
       skip(-5)
       break
+    case "j":
+      skip(-10)
+      break
     case "arrowright":
-    case "l":
       skip(5)
+      break
+    case "l":
+      skip(10)
       break
     case "c":
       toggleCaptions()
@@ -188,22 +192,16 @@ function formatDuration(time) {
 function skip(duration) {
   video.currentTime += duration
 
-  if (duration < 0) {
-    skipBackOverlay.classList.remove("active")
-    // Force a reflow to restart the animation
-    void skipBackOverlay.offsetWidth
-    skipBackOverlay.classList.add("active")
-    setTimeout(() => {
-      skipBackOverlay.classList.remove("active")
-    }, 500)
-  } else {
-    skipForwardOverlay.classList.remove("active")
-    void skipForwardOverlay.offsetWidth
-    skipForwardOverlay.classList.add("active")
-    setTimeout(() => {
-      skipForwardOverlay.classList.remove("active")
-    }, 500)
-  }
+  let skipOverlay = duration < 0 ? skipBackOverlay : skipForwardOverlay
+
+  skipOverlay.querySelector('span').textContent = `${duration < 0 ? "" : "+"}${duration} seconds`
+  skipOverlay.classList.remove("active")
+  // Force a reflow to restart the animation
+  void skipOverlay.offsetWidth
+  skipOverlay.classList.add("active")
+  setTimeout(() => {
+    skipOverlay.classList.remove("active")
+  }, 500)
 }
 
 // Volume
