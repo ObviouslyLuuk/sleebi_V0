@@ -119,7 +119,11 @@ function placeContent() {
         updateLandscape();
     });
 
-    onYouTubeIframeAPIReady();
+    // Wait 2 seconds to load embedding functionality
+    setTimeout(function() {
+        onYouTubeIframeAPIReady();
+    }, 2000);
+
 }
 
 

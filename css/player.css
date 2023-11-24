@@ -436,8 +436,10 @@ body[data-mobile=true] .video-controls-container::before {
   .video-container.src-loading .spinner {
     display: block;
   }
+  /* .video-container.src-loading .video-controls-container, */
+  .video-container.src-loading .big-play-pause-btn,
   .video-container.src-loaded .spinner {
-    display: none;
+    visibility: hidden;
   }
   
   /* .video-container.scrubbing .thumbnail-img {
