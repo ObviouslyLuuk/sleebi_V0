@@ -61,6 +61,9 @@ body[data-mobile=true] .video-controls-container::before {
     max-height: 100vh;
   }
   
+  .video-wrapper {
+    width: 100%;
+  }
   .thumbnail-img,
   video {
     width: 100%;
@@ -244,10 +247,11 @@ body[data-mobile=true] .video-controls-container::before {
   .video-container .slider {
     /* height: 100%; */
     height: 40px;
-    width: 0;
+    /* Under 13px the slider thumb jumps up in Firefox for some goddamn reason */
+    width: 13px;
     transform-origin: left;
     transform: scaleX(0);
-    transition: width 150ms ease-in-out, transform 150ms ease-in-out;
+    transition: width 200ms ease-in-out, transform 200ms ease-in-out;
 
     -webkit-appearance: none;
     appearance: none;
@@ -304,7 +308,9 @@ body[data-mobile=true] .video-controls-container::before {
 .video-container .slider::-moz-range-thumb {
   border: none; /*Removes extra border that FF applies*/
   border-radius: 5rem; /*Removes default border-radius that FF applies*/
-  transform: translateY(-40%);
+  /* In Firefox it's already in the middle, 
+  but for some reason this is necessary to keep the thumb in front of the slider */
+  transform: translateY(0%); 
   background-color: white;
   height: 0.8rem;
   width: 0.8rem;
@@ -391,16 +397,22 @@ body[data-mobile=true] .video-controls-container::before {
     display: none;
   }
   
-  .thumbnail-img {
+  .thumbnail-wrapper {
     position: absolute;
     top: 0;
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
+    aspect-ratio: 16 / 9;
+    pointer-events: none;
+  }
+  .thumbnail-img {
+    width: 100%;
     height: 100%;
     z-index: 1;
-    pointer-events: none;
   }
   /* When video element has a src, make thumbnail display none */
   .video-container.src-loaded .thumbnail-img {

@@ -25,7 +25,8 @@ body {
     background-color: var(--dark-theme-background-color);
     color: var(--dark-theme-text-color);
 }
-body.blue-filter, body.blue-filter .video-container.full-screen {
+/* Don't apply filters to the body itself; it messed up fixed positioning */
+body.blue-filter > *, body.blue-filter .video-container.full-screen {
     /* filter: sepia(0.6); */
     filter: sepia(.8) saturate(1.5) brightness(.8) hue-rotate(330deg);
 }
@@ -82,7 +83,7 @@ body.blue-filter, body.blue-filter .video-container.full-screen {
     background-color: white;
     color: black;
     bottom: -100px;
-    animation: slideUpAndAway 2s ease-in-out forwards;
+    /* animation: slideUpAndAway 2s ease-in-out forwards; */
 }
 
 @keyframes slideUpAndAway {
@@ -90,13 +91,25 @@ body.blue-filter, body.blue-filter .video-container.full-screen {
         bottom: -100px;
     }
     20% {
-        bottom: 20px;
+        bottom: 10%;
     }
     80% {
-        bottom: 20px;
+        bottom: 10%;
     }
     100% {
         bottom: -100px;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
     }
 }
 

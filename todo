@@ -1,13 +1,24 @@
 FIXES:
-thumbnails look very low res on mobile (the URLs are lower res too)
-thumbnail before starting video is stretched to full height when doing fullscreen
-controls disappearing timeout doesn't reset when using controls
+thumbnail before starting video is not stretched anymore but now doesn't cover
+showing "5 seconds" for 5 and 10 second skips
+overlays don't stay in the middle if css filter on body (fixed by applying filter to direct children, not body itself)
+message saying blue light filter en/disabled wasn't showing up, requestAnimationFrame fixed it
+
+Mac issues:
+    volume icon not showing
+    low brightness icon not showing (this seems to have to do with the svg element)
+    those two sliders always taking up space even when not showing (this isn't a problem with display none/block, but is with using width)
+    fullscreen button not working (on Safari and Firefox it's simply a different function. On iOS there's no function, but you can switch to their native player)
+iPhone:
+    make two separate buttons for fullscreen:
+        one for iOS fullscreen
+        one for webapp fullscreen (which is just a div that takes up the whole screen)
 
 ADDITIONS:
-get the upload dates
-get descriptions
-get actual high res thumbnails
+make urls in description clickable
 add email list signup
+
+make loading spinner for video player
 
 add channel screen
 
@@ -29,6 +40,9 @@ add a "more" button to the description
 replace tipjar link with ko-fi widget and in-page panel
 
 put svgs from player into sprite.svg
+
+prevent space bar from scrolling
+    https://stackoverflow.com/questions/22559830/html-prevent-space-bar-from-scrolling-page
 
 add share on:
     whatsapp: https://faq.whatsapp.com/general/chats/how-to-use-click-to-chat/?lang=en

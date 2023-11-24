@@ -8,6 +8,7 @@
  * @param {string} [class_=null] - The class name to add to the overlay.
  * @param {boolean} [add_close_btn=true] - Whether or not to add a close button to the overlay.
  * @param {number} [timer=null] - The amount of time in milliseconds to wait before automatically closing the overlay.
+ * @param {boolean} [add_background=true] - Whether or not to add a background to the overlay.
  * @returns {HTMLElement} The content element of the created overlay.
  */
 function create_overlay(parent=document.body, class_=null, add_close_btn=true, timer=null, add_background=true) {
@@ -68,9 +69,46 @@ function create_overlay(parent=document.body, class_=null, add_close_btn=true, t
     return overlay_content
 }
 
-function create_message_overlay(message, parent=document.body) {
-    let overlay_content = create_overlay(parent, 'message_overlay', false, null, false)
+function create_message_overlay(message, parent=document.body, duration=2000) {
+    let ani_str = `${duration/1000}s ease-in-out 0s 1 normal forwards running slideUpAndAway`
+    let overlay_content = create_overlay(parent, 'message_overlay', false, undefined, false)
+    overlay_content.parentElement.style.animation = ani_str
     let overlay_message = create_and_append('div', overlay_content, null, 'overlay_message')
     overlay_message.innerText = message
     return overlay_content
+}
+
+
+
+
+
+function add_rec_vid(parent, info) {
+    let rec_vid = create_and_append('div', parent, null, 'rec_vid vid_tile')
+    
+    // Add onclick event to rec_vid to change video
+    rec_vid.addEventListener('click', function() {
+        window.location.href = `?v=${info.id}`;
+    });
+
+    // Thumbnail
+    let rec_thumb_div_container = create_and_append('div', rec_vid, null, 'rec_thumb_div_container')
+    let rec_thumb_div = create_and_append('div', rec_thumb_div_container, null, 'rec_thumb_div')
+    let rec_thumb_img = create_and_append('img', rec_thumb_div, null, 'rec_thumb_img')
+    rec_thumb_img.src = get_thumb_url(info)
+    let rec_duration = create_and_append('div', rec_thumb_div, null, 'rec_duration')
+    rec_duration.innerText = format_ms_as_time(info.duration*1000)
+
+    // Metadata
+    let rec_metadata = create_and_append('div', rec_vid, null, 'rec_metadata')
+    let rec_title = create_and_append('h3', rec_metadata, null, 'rec_title')
+    rec_title.innerText = info.title
+    let rec_channel = create_and_append('div', rec_metadata, null, 'rec_channel')
+    rec_channel.innerText = info.channel_name
+    let rec_views_date = create_and_append('div', rec_metadata, null, 'rec_views-date')
+    let rec_views = create_and_append('span', rec_views_date, null, 'rec_views')
+    rec_views.innerText = views_abbr(info.views) + ' views'
+    let rec_date = create_and_append('span', rec_views_date, null, 'rec_date date-span')
+    rec_date.innerText = get_date(info, format='DD-MM-YYYY')
+
+    return rec_vid
 }

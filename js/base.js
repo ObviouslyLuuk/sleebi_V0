@@ -1,4 +1,18 @@
 
+// Uploaded videos
+VIDEO_IDS = [
+    'TpvoB80j3Zo',
+    'w1QPVe9jqlM',
+    '5JN3o0Q-IgA',
+    'PjaBwZkamDQ',
+    'XIcjH3a98-c',
+    'uOXj-T5D4jQ',
+    'xD90_Gh-IKo',
+    'JoLI3GYuB_A',
+    'pXIXpfWyUNE'
+]
+
+
 // Load video_basics.json
 var videos_info;
 let video_basics_request = new XMLHttpRequest();
@@ -6,7 +20,15 @@ video_basics_request.open('GET', 'data/video_basics.json');
 video_basics_request.onload = function() {
     if (video_basics_request.status >= 200 && video_basics_request.status < 400) {
         // Success!
-        videos_info = JSON.parse(video_basics_request.responseText);
+        videos_info = JSON.parse(video_basics_request.responseText); // This is an object with key: video_id, value: video_info
+
+        // Only keep video_infos that are in VIDEO_IDS
+        let video_ids = Object.keys(videos_info);
+        for (let video_id of video_ids) {
+            if (!VIDEO_IDS.includes(video_id)) {
+                delete videos_info[video_id];
+            }
+        }
 
         // Fire event
         window.dispatchEvent(new Event('videos_info_loaded'));

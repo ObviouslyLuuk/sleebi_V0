@@ -108,3 +108,41 @@ function create_and_append(type, parent=null, id=null, class_=null) {
     parent.appendChild(element)
     return element
 }
+
+
+
+function get_thumb_url(video_info) {
+    // let video_id = video_info.id
+    // return `https://i.ytimg.com/vi/${video_id}/maxresdefault.jpg`
+    return video_info['thumbnail_url']
+}
+
+function get_download_url(video_info) {
+    let video_id = video_info['id']
+    return `https://sleebi-video-bucket.s3.eu-west-3.amazonaws.com/ObviouslyASMR/${video_id}.mp4`
+}
+
+function get_date(video_info, format='Mon DD, YYYY') {
+    let date = new Date(video_info['published'])
+    if (format == 'Mon DD, YYYY') {
+        let day = date.getDate()
+        let month = date.toLocaleString('default', { month: 'short' })
+        let year = date.getFullYear()
+        return `${month} ${day}, ${year}`
+    } else if (format == 'DD-MM-YYYY') {
+        let day = date.getDate()
+        let month = date.getMonth() + 1
+        let year = date.getFullYear()
+        return `${day}-${month}-${year}`
+    }
+}
+
+function get_description(video_info) {
+    // Find string "Go ahead and " and return everything before it
+    let description = video_info['description']
+    let index = description.indexOf('Go ahead and ')
+    if (index != -1)
+        description = description.substring(0, index)
+    return description
+}
+

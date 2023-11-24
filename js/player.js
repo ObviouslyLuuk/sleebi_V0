@@ -242,7 +242,7 @@ brightnessSlider.addEventListener("input", e => {
 
 window.addEventListener("brightnesschange", () => {
   let brightnessLevel
-  if (brightnessSlider.value === 0) {
+  if (brightnessSlider.value < 0.01) {
     brightnessLevel = "muted"
   } else if (brightnessSlider.value >= 0.5) {
     brightnessLevel = "high"
@@ -273,7 +273,13 @@ function toggleBrightness() {
 blueFilterBtn.addEventListener("click", toggleBlueFilter)
 
 function toggleBlueFilter() {
-  document.body.classList.toggle("blue-filter")
+  let bf = document.body.classList.toggle("blue-filter")
+  requestAnimationFrame(() => {
+    if (create_message_overlay) {
+      let message = `Blue light filter ${bf ? 'enabled' : 'disabled'}`
+      create_message_overlay(message, document.body, 2000);
+    }
+  });
 }
 
 
