@@ -2,10 +2,12 @@
  * https://github.com/WebDevSimplified/youtube-video-player-clone/tree/main
  */
 
+const videoPlayerContainer = document.querySelector(".vid_player_container")
 
 const playPauseBtns = document.querySelectorAll(".play-pause-btn")
 const theaterBtn = document.querySelector(".theater-btn")
 const fullScreenBtn = document.querySelector(".full-screen-btn")
+const fullScreenIosBtn = document.querySelector(".full-screen-ios-btn")
 const miniPlayerBtn = document.querySelector(".mini-player-btn")
 const muteBtn = document.querySelector(".mute-btn")
 const brightnessBtn = document.querySelector(".brightness-btn")
@@ -275,7 +277,7 @@ function toggleBlueFilter() {
   requestAnimationFrame(() => {
     if (create_message_overlay) {
       let message = `Blue light filter ${bf ? 'enabled' : 'disabled'}`
-      create_message_overlay(message, document.body, 2000);
+      create_message_overlay(message);
     }
   });
 }
@@ -285,18 +287,51 @@ function toggleBlueFilter() {
 // theaterBtn.addEventListener("click", toggleTheaterMode)
 fullScreenBtn.addEventListener("click", toggleFullScreenMode)
 // miniPlayerBtn.addEventListener("click", toggleMiniPlayerMode)
+fullScreenIosBtn.addEventListener("click", toggleIOSViewerMode)
 
 function toggleTheaterMode() {
   videoContainer.classList.toggle("theater")
 }
 
 function toggleFullScreenMode() {
+  // Check if iOS
+  if (iOSCheck()) {
+    toggle_fake_fullscreen()
+    return
+  }
+
   if (document.fullscreenElement == null) {
     videoContainer.requestFullscreen()
   } else {
     document.exitFullscreen()
   }
 }
+function toggle_fake_fullscreen() {
+  videoContainer.classList.toggle("fake-full-screen")
+  if (videoContainer.classList.contains("fake-full-screen")) {
+    // Disable scrolling
+    document.body.style.overflow = "hidden"
+  } else {
+    // Enable scrolling
+    document.body.style.overflow = ""
+  }
+}
+
+function toggleIOSViewerMode() {
+  // Remove properties that prevent the video from playing fullscreen on iOS
+  video.pause()
+  video.removeAttribute("playsinline")
+  video.removeAttribute("webkit-playsinline")
+  video.play()
+
+  // There's no controls to turn this off because iOS takes over
+  // So we add the properties back when the video exits fullscreen
+  video.addEventListener("webkitendfullscreen", () => {
+    video.setAttribute("playsinline", "")
+    video.setAttribute("webkit-playsinline", "")
+  })
+}
+
 
 function toggleMiniPlayerMode() {
   if (videoContainer.classList.contains("mini-player")) {

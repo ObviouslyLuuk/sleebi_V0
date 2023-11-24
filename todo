@@ -3,6 +3,12 @@ iPhone:
     make two separate buttons for fullscreen:
         one for iOS fullscreen, that uses the native player
         one for webapp fullscreen (which is just a div that takes up the whole screen)
+iPad:
+    registers as non-mobile apparently, so it has trouble with hovering
+        it should probably have the layout of the desktop version, but with the mobile player
+    does allow for fullscreen though
+    trouble with sliders? on iOS too
+    also weirdly, the message for blue filter does show, but for link copied doesn't
 
 ADDITIONS:
 remove bootstrap and replace with custom css

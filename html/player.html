@@ -84,15 +84,15 @@
             <input class="brightness-slider slider" type="range" min="0" max="1" step="any" value="1">
           </div>
           <div class="duration-container">
-            <div class="current-time">0:00</div>
-            /
-            <div class="total-time"></div>
             <button class="loop-btn">
               <svg class="icon" viewBox="0 3 24 24">
                 <use xlink:href="images/sprite.svg#icon-loop" class="icon-loop"></use>
                 <use xlink:href="images/sprite.svg#icon-loop-active" class="icon-loop-active"></use>
               </svg>
             </button>
+            <div class="current-time">0:00</div>
+            /
+            <div class="total-time"></div>
           </div>
         </div>
         <!-- <button class="captions-btn">
@@ -129,6 +129,12 @@
             </svg>
             <svg class="close_" viewBox="0 0 24 24">
               <path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+            </svg>
+          </button>
+          <button class="full-screen-ios-btn">
+            <!-- <img style="filter:invert(); width: 18px" src="images/iOS_fullscreen.svg"> -->
+            <svg class="icon" style="transform:scale(1.2) translateY(-1px)">
+              <use xlink:href="images/sprite.svg#icon-apple"></use>
             </svg>
           </button>
         </div>

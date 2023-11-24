@@ -61,6 +61,9 @@ a:not(.btn):hover {
         transform: translate(-50%, -50%) rotate(1440deg);
     }
 }
+.flex {
+    display: flex;
+}
 .flex-container {
     display: flex;
     flex-direction: row;

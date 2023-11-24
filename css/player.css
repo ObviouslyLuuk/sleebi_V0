@@ -193,12 +193,13 @@ body[data-mobile=true] .video-controls-container::before {
   .video-container:not(.theater) .wide {
     display: none;
   }
-  
+
+  .video-container.fake-full-screen .open,
   .video-container.full-screen .open {
     display: none;
   }
   
-  .video-container:not(.full-screen) .close_ {
+  .video-container:not(.full-screen):not(.fake-full-screen) .close_ {
     display: none;
   }
 
@@ -340,7 +341,7 @@ body[data-mobile=true] .video-controls-container::before {
     margin-inline: .5rem;
     cursor: pointer;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
   }
   body[data-mobile=true] .timeline-container {
     height: 20px;
@@ -521,4 +522,30 @@ body[data-mobile=true] .video-controls-container::before {
   .skip-overlay .icon:nth-child(3) {
     animation-delay: 200ms;
   }
+
+
+
+/* iOS fullscreen button */
+body[data-mobile=true][data-iOS=true] .video-container .flex-container {
+  gap: 0;
+}
+.video-container .full-screen-ios-btn {
+  display: none;
+}
+body[data-mobile=true][data-iOS=true] .video-container:not(.fake-full-screen) .full-screen-ios-btn {
+  display: block;
+}
+
+/* Fake Fullscreen for iOS */
+.video-container.fake-full-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999999999999999;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
 
