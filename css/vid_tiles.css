@@ -2,6 +2,7 @@
 .rec_vid {
     display: flex;
     flex-direction: row;
+    transition: transform 0.2s ease-in-out;
 }
 .rec_thumb_div_container {
     padding: 5px;
@@ -67,6 +68,13 @@
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
 }
-.rec_thumb_div:hover .rec_play_btn {
+.rec_vid:hover .rec_play_btn {
     opacity: .8;
+}
+.rec_vid:hover {
+    transform: scale(0.98);
+}
+/* When clicked, make brighter */
+.rec_vid:active {
+    transform: scale(0.7);
 }
