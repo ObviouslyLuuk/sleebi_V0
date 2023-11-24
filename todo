@@ -1,5 +1,4 @@
 FIXES:
-thumbnail before starting video is not stretched anymore but now doesn't cover
 
 Mac issues:
     volume icon not showing
@@ -14,8 +13,6 @@ iPhone:
 ADDITIONS:
 remove bootstrap and replace with custom css
 add email list signup
-
-make loading spinner for video player
 
 add channel screen
 

@@ -421,6 +421,13 @@ body[data-mobile=true] .video-controls-container::before {
   .video-container.src-loaded video {
     background-image: none!important;
   }
+
+  .video-container.src-loading .spinner {
+    display: block;
+  }
+  .video-container.src-loaded .spinner {
+    display: none;
+  }
   
   /* .video-container.scrubbing .thumbnail-img {
     display: block;

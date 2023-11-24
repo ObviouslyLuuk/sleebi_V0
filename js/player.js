@@ -429,3 +429,15 @@ window.seekTo = function(time) {
   video.scrollIntoView()
   toggleControls(true)
 }
+
+
+// Add class when the video starts loading
+video.addEventListener('loadstart', () => {
+  videoContainer.classList.add('src-loading');
+});
+
+// Add class when the video has loaded
+video.addEventListener('loadeddata', () => {
+  videoContainer.classList.remove('src-loading');
+  videoContainer.classList.add('src-loaded');
+});

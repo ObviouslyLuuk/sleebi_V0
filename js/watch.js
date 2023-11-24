@@ -33,7 +33,6 @@ function placeContent() {
         if (video.src != "") return;
 
         video.src = get_download_url(video_info);
-        document.querySelector('.video-container').classList.add('src-loaded');
     });
 
     // Set download button href

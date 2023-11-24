@@ -39,6 +39,28 @@ a:not(.btn):hover {
     color: #0056b3!important;
     text-decoration: underline!important;
 }
+.spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 100;
+}
+.spinner img {
+    width: 100px;
+    height: 100px;
+}
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(1440deg);
+    }
+}
 .flex-container {
     display: flex;
     flex-direction: row;
