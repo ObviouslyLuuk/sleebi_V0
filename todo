@@ -4,19 +4,23 @@ iPad:
     also weirdly, the message for blue filter does show, but for link copied doesn't
 
 ADDITIONS:
-clean up controls on mobile (maybe with a settings button toggle)
-    move timeline to the bottom of video and enable scrubbing at all times
-    thinner version of fullscreen button
-remove bootstrap and replace with custom css
 add email list signup
 
 add channel screen
+
+replace tipjar link with ko-fi widget and in-page panel
 
 triggers as tags
 
 filter based on triggers
 filter based on duration
 sort search results by date, views, like-ratio, etc
+    
+have watch page be an overlay on non-watch pages, on mobile, so the user can swipe the viewer into the bottom to keep browsing
+
+optional calming music to play in background of videos, or noise?
+
+video chapters
 
 have video preview GIFs when hovering over a video. Scrape from YT in the mouseover-overlay:
 https://i.ytimg.com/an_webp/wS7IPxLZrR4/mqdefault_6s.webp?du=3000&sqp=COKD5KoG&rs=AOn4CLCUw0a8np8UJZynr4pfEB4_ARjqPg
@@ -25,12 +29,6 @@ Apparently these expire as well..
 
 add previews to the video player scrubber (where to host these? potentially one big sprite to save on requests)
 
-add a "more" button to the description
-
-replace tipjar link with ko-fi widget and in-page panel
-
-put svgs from player into sprite.svg
-
 add share on:
     whatsapp: https://faq.whatsapp.com/general/chats/how-to-use-click-to-chat/?lang=en
     facebook: https://developers.facebook.com/docs/sharing/reference/share-dialog/
@@ -38,15 +36,26 @@ add share on:
     reddit: https://www.reddit.com/r/learnprogramming/comments/3z6z5v/how_to_share_a_link_to_reddit/
     email: https://stackoverflow.com/questions/2102433/send-email-via-gmail
 
-video chapters
-
-have watch page be an overlay on non-watch pages, on mobile, so the user can swipe the viewer into the bottom to keep browsing
-
-optional calming music to play in background of videos, or noise?
-
 download button (doesn't work with YT download link but does work with local file)
 
 only play automatically when the user has wifi: https://coyotess.medium.com/how-to-get-information-about-user-network-connection-in-javascript-4d63fd58f15f
+
+
+AESTHETIC:
+clean up controls on mobile (maybe with a settings button toggle)
+    move timeline to the bottom of video and enable scrubbing at all times
+    thinner version of fullscreen button
+    add navbar back
+    keep brightness slider in view? it's nice
+    when double tapping for skip, don't activate controls
+    somehow "comments will be added later" is split into two lines on mobile
+
+remove bootstrap and replace with custom css
+
+put svgs from player into sprite.svg
+
+add a "more" button to the description
+
 
 
 BIGGER STEPS:
