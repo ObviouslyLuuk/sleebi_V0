@@ -1,6 +1,8 @@
 html {
   /* --player-color: red; */
   --player-color: #f1f1f1;
+  --controls-delay: 200ms;
+  --fade_duration: 150ms;
 }
 
 /* Responsive to mobile */
@@ -63,6 +65,10 @@ body[data-mobile=true] .video-controls-container::before {
   
   .video-wrapper {
     width: 100%;
+    filter: brightness(1);
+    /* We use fade-duration here because it goes along with the controls fading */
+    transition: filter var(--fade_duration) ease-in-out;
+    transition-delay: var(--controls-delay);
   }
   video {
     width: 100%;
@@ -82,7 +88,13 @@ body[data-mobile=true] .video-controls-container::before {
     z-index: 100;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
+    transition: opacity var(--fade_duration) ease-in-out, visibility var(--fade_duration) ease-in-out;
+  }
+  .video-container .big-play-pause-btn,
+  body[data-tablet=true] .video-controls-container,
+  body[data-mobile=true] .video-controls-container {
+    /* We delay on mobile for the double tap (not necessary, but aesthetic) */
+    transition-delay: var(--controls-delay)!important;
   }
   
   body[data-mobile=false][data-tablet=false] .video-controls-container::before {
@@ -120,8 +132,7 @@ body[data-mobile=true] .video-controls-container::before {
     height: 40px;
   }
   
-  .video-container button,
-  .video-controls-container .controls button {
+  .video-container button {
     background: none;
     border: none;
     color: inherit;
@@ -139,13 +150,10 @@ body[data-mobile=true] .video-controls-container::before {
   }
 
   body[data-tablet=true] .video-container .small-play-pause-btn,
-  body[data-mobile=true] .video-container .small-play-pause-btn,
-  .video-container .big-play-pause-btn {
+  body[data-mobile=true] .video-container .small-play-pause-btn {
     display: none;
   }
-  body[data-tablet=true] .video-container.controls-active .big-play-pause-btn,
-  body[data-mobile=true] .video-container.controls-active .big-play-pause-btn {
-    display: block;
+  .video-container .big-play-pause-btn {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -153,6 +161,14 @@ body[data-mobile=true] .video-controls-container::before {
     height: 100px;
     width: 100px;
     z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--fade_duration) ease-in-out, visibility var(--fade_duration) ease-in-out;
+  }
+  body[data-tablet=true] .video-container.controls-active .big-play-pause-btn,
+  body[data-mobile=true] .video-container.controls-active .big-play-pause-btn {
+    opacity: 0.85;
+    visibility: visible;
   }
   
   body.blue-filter .icon-glasses,

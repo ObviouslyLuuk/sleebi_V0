@@ -431,9 +431,14 @@ video.addEventListener("pause", () => {
 // To do this, we check if the time between the current tap and the last tap is less than 300ms
 let lastTap = 0
 video.addEventListener("touchstart", e => {
+  // If in the center third of video, don't count the tap
+  const rect = video.getBoundingClientRect()
+  if (e.touches[0].clientX > rect.width / 3 && e.touches[0].clientX < rect.width * 2 / 3) {
+    return
+  }
+
   const timeSinceLastTap = Date.now() - lastTap
   if (timeSinceLastTap < 300) {
-    const rect = video.getBoundingClientRect()
     if (e.touches[0].clientX < rect.width / 2) {
       skip(-5)
     } else {

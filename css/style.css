@@ -295,9 +295,9 @@ input[type=text] {
     }
 }
 
-body[data-mobile=true][data-landscape=true][data-ios=false] #navbar {
+/* body[data-mobile=true][data-landscape=true][data-ios=false] #navbar {
     display: none;
-}
+} */
 body[data-mobile=true] #navbar {
     padding: 0.2rem 1rem;
 }

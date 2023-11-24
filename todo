@@ -45,10 +45,9 @@ AESTHETIC:
 clean up controls on mobile (maybe with a settings button toggle)
     move timeline to the bottom of video and enable scrubbing at all times
     thinner version of fullscreen button
-    add navbar back
     keep brightness slider in view? it's nice
-    when double tapping for skip, don't activate controls
     somehow "comments will be added later" is split into two lines on mobile
+    maaaaybe don't have as much controls delay in the middle as on the sides (like on YouTube)
 
 remove bootstrap and replace with custom css
 
