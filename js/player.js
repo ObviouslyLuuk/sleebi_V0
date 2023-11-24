@@ -478,3 +478,11 @@ video.addEventListener('loadeddata', () => {
   videoContainer.classList.remove('src-loading');
   videoContainer.classList.add('src-loaded');
 });
+
+
+// Make space bar not scroll the page
+window.addEventListener("keydown", e => {
+  if (e.key === " ") {
+    e.preventDefault()
+  }
+})

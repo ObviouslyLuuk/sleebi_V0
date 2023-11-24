@@ -31,9 +31,6 @@ replace tipjar link with ko-fi widget and in-page panel
 
 put svgs from player into sprite.svg
 
-prevent space bar from scrolling
-    https://stackoverflow.com/questions/22559830/html-prevent-space-bar-from-scrolling-page
-
 add share on:
     whatsapp: https://faq.whatsapp.com/general/chats/how-to-use-click-to-chat/?lang=en
     facebook: https://developers.facebook.com/docs/sharing/reference/share-dialog/
