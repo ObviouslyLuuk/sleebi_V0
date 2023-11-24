@@ -25,7 +25,7 @@ sort search results by date, views, like-ratio, etc
 have video preview GIFs when hovering over a video. Scrape from YT in the mouseover-overlay:
 https://i.ytimg.com/an_webp/wS7IPxLZrR4/mqdefault_6s.webp?du=3000&sqp=COKD5KoG&rs=AOn4CLCUw0a8np8UJZynr4pfEB4_ARjqPg
 https://i.ytimg.com/an_webp/ULN1PfvG3GE/mqdefault_6s.webp?du=3000&sqp=CPeq5KoG&rs=AOn4CLAx8sH8z08wQPdLK3ZnIQUvnGVU5w
-or if not available, just a playbutton icon
+Apparently these expire as well..
 
 add previews to the video player scrubber (where to host these? potentially one big sprite to save on requests)
 

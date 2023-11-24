@@ -97,7 +97,12 @@ function add_rec_vid(parent, info) {
     rec_thumb_img.src = get_thumb_url(info)
     let rec_duration = create_and_append('div', rec_thumb_div, null, 'rec_duration')
     rec_duration.innerText = format_ms_as_time(info.duration*1000)
-
+    let rec_play_btn = create_and_append('div', rec_thumb_div, null, 'rec_play_btn')
+    rec_play_btn.innerHTML = `
+        <svg class="play-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+        </svg>
+    `
     // Metadata
     let rec_metadata = create_and_append('div', rec_vid, null, 'rec_metadata')
     let rec_title = create_and_append('h3', rec_metadata, null, 'rec_title')
