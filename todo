@@ -12,7 +12,7 @@ iPhone:
         one for webapp fullscreen (which is just a div that takes up the whole screen)
 
 ADDITIONS:
-make urls in description clickable
+remove bootstrap and replace with custom css
 add email list signup
 
 make loading spinner for video player

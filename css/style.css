@@ -31,6 +31,14 @@ body.blue-filter > *, body.blue-filter .video-container.full-screen {
     filter: sepia(.8) saturate(1.5) brightness(.8) hue-rotate(330deg);
 }
 /* General */
+a:not(.btn) {
+    color: #007bff!important;
+    cursor: pointer;
+}
+a:not(.btn):hover {
+    color: #0056b3!important;
+    text-decoration: underline!important;
+}
 .flex-container {
     display: flex;
     flex-direction: row;

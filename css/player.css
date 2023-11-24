@@ -99,7 +99,7 @@ body[data-mobile=true] .video-controls-container::before {
   body[data-mobile=false] .video-container:hover .video-controls-container,
   /* .video-container:focus-within .video-controls-container, */
   body[data-mobile=false] .video-container.paused .video-controls-container,
-  body[data-mobile=true] .video-container.controls-active .video-controls-container {
+  .video-container.controls-active .video-controls-container {
     opacity: 1;
     visibility: visible;
   }

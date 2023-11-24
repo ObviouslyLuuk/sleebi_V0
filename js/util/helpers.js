@@ -137,12 +137,35 @@ function get_date(video_info, format='Mon DD, YYYY') {
     }
 }
 
+
 function get_description(video_info) {
     // Find string "Go ahead and " and return everything before it
     let description = video_info['description']
     let index = description.indexOf('Go ahead and ')
     if (index != -1)
         description = description.substring(0, index)
+
+    // Replace all links with <a> tags
+    let regex = /https?:\/\/[^\s]+/g
+    let matches = description.match(regex)
+    if (matches != null) {
+        for (let match of matches) {
+            description = description.replace(match, `<a href="${match}">${match}</a>`)
+        }
+    }
+
+    // Replace all timestamps with <a> tags that do video.seekTo()
+    regex = /\d{1,2}:\d{2}(:\d{2})?/g
+    matches = description.match(regex)
+    if (matches != null) {
+        for (let match of matches) {
+            description = description.replace(match, `<a onclick="seekTo(calc_ms_from_time('${match}'))">${match}</a>`)
+        }
+    }
+
+    // Replace all newlines with <br>
+    description = description.replace(/\n/g, '<br>')
+
     return description
 }
 

@@ -415,3 +415,17 @@ function toggleLoop() {
   loopBtn.classList.toggle("active", video.loop)
 }
 
+
+
+/**
+ * Sets the video time to the given time in milliseconds. Scrolls the video into view.
+ * Shows the video controls if they are hidden.
+ * 
+ * @param {number} time - The time in milliseconds.
+ * @returns {void}
+ */
+window.seekTo = function(time) {
+  video.currentTime = time / 1000
+  video.scrollIntoView()
+  toggleControls(true)
+}
