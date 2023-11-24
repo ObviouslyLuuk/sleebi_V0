@@ -1,15 +1,7 @@
 FIXES:
-
-Mac issues:
-    volume icon not showing
-    low brightness icon not showing (this seems to have to do with the svg element)
-    those two sliders always taking up space even when not showing (this isn't a problem with display none/block, but is with using width)
-        magically solved itself
-    fullscreen button not working (on Safari and Firefox it's simply a different function. On iOS there's no function, but you can switch to their native player)
-        magically fixed except on iOS
 iPhone:
     make two separate buttons for fullscreen:
-        one for iOS fullscreen
+        one for iOS fullscreen, that uses the native player
         one for webapp fullscreen (which is just a div that takes up the whole screen)
 
 ADDITIONS:
