@@ -358,10 +358,10 @@ video.addEventListener("leavepictureinpicture", () => {
 // Play/Pause
 playPauseBtns.forEach(e => {e.addEventListener("click", togglePlay)});
 video.parentElement.addEventListener("click", function (e) { // We use parentElement because in fullscreen the video could be smaller than the container
-  if (!mobileCheck()) {
-    togglePlay()
-  } else {
+  if (mobileCheck() || tabletCheck()) {
     toggleControls()
+  } else {
+    togglePlay()
   }
 })
 

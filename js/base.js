@@ -88,4 +88,5 @@ search_close_btn.addEventListener('click', function() {
 });
 
 document.body.dataset.mobile = mobileCheck();
+document.body.dataset.tablet = tabletCheck();
 document.body.dataset.ios = iOSCheck();
