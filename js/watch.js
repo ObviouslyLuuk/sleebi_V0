@@ -118,6 +118,8 @@ function placeContent() {
         // If mobile and width is greater than height, set landscape to true
         updateLandscape();
     });
+
+    onYouTubeIframeAPIReady();
 }
 
 
