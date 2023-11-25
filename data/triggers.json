@@ -4,20 +4,25 @@
         "foreign accent": {}
     },
     "affirmations": {},
+    "anticipatory": {
+        "setting the pattern": {},
+        "breaking the pattern": {}
+    },
     "blowing": {},
     "brushing": {
         "face brushing": {},
         "hair brushing": {}
     },
     "candle": {},
-    "chaotic": {},
     "clicking": {},
     "computer": {
         "keyboard": {},
         "programming": {}
     },
     "crinkling": {
-        "shirt crinkling": {}
+        "fabric crinkling": {},
+        "leather crinkling": {},
+        "plastic crinkling": {}
     },
     "cutting": {
         "haircut": {},
@@ -27,8 +32,22 @@
         "ear cleaning": {},
         "ear cupping": {}
     },
+    "environmental": {
+        "rain": {},
+        "fire crackling": {},
+        "wind": {},
+        "wind chimes": {},
+        "coast": {},
+        "birds": {},
+        "crickets": {},
+        "city": {},
+        "forest": {},
+        "thunder": {},
+        "train": {}
+    },
     "face attention": {
         "face brushing": {},
+        "face inspection": {},
         "face touching": {}
     },
     "foam sounds": {},
@@ -39,7 +58,11 @@
         "other": {}
     },
     "gripping": {},
-    "guided meditation": {},
+    "guided": {
+        "guided meditation": {},
+        "hypnosis": {},
+        "breathing exercise": {}
+    },
     "hair triggers": {
         "hair brushing": {},
         "haircut": {},
@@ -60,9 +83,9 @@
             "lotion sounds": {},
             "gripping": {}
         },
-        "finger tracing": {}
+        "finger tracing": {},
+        "gloves": {}
     },
-    "hypnosis": {},
     "instructions": {},
     "language": {
         "foreign language": {
@@ -89,6 +112,7 @@
         }
     },
     "layered sounds": {},
+    "lid sounds": {},
     "light triggers": {
         "follow the light": {}
     },
@@ -102,7 +126,8 @@
         "NOTRIGGER":null,
         "in bed": {},
         "in car": {},
-        "public": {}
+        "public": {},
+        "outdoors": {}
     },
     "makeup": {
         "grwm": {},
@@ -132,6 +157,19 @@
         "skin": {}
     },
     "measuring": {},
+    "mic setup": {
+        "NOTRIGGER":null,
+        "mono": {},
+        "stereo": {
+            "blue yeti": {}
+        },
+        "binaural": {
+            "3dio": {},
+            "dummy head": {},
+            "rode mics": {}
+        },
+        "ear to ear": {}
+    },
     "mic triggers": {
         "mic brushing": {},
         "mic scratching": {},
@@ -149,6 +187,8 @@
         "lofi": {},
         "highly produced": {}
     },
+    "propless": {},
+    "ramble": {},
     "reiki": {
         "reiki roleplay": {},
         "singing bowl": {}
@@ -156,6 +196,8 @@
     "roleplay": {
         "makeup roleplay": {},
         "medical": {
+            "gloves": {},
+            "sharp or dull": {},
             "doctor": {
                 "cranial nerve exam": {}
             },
@@ -163,14 +205,17 @@
             "dentist": {},
             "eye exam": {
                 "light triggers": {}
-            }
+            },
+            "optometrist": {}
         },
+        "fixing you": {},
         "flight attendant": {},
         "friend": {},
         "haircut": {},
         "interview": {},
         "luxury": {},
         "personal attention": {},
+        "photoshoot": {},
         "reiki roleplay": {},
         "school": {},
         "shave": {},
@@ -185,11 +230,16 @@
         "mic scratching": {},
         "visual scratching": {}
     },
-    "speed": {
+    "vibe/speed": {
         "NOTRIGGER":null,
+        "aggressive": {},
+        "chaotic": {},
+        "deliberate": {},
         "fast": {
             "fast tapping": {}
         },
+        "gentle": {},
+        "sassy": {},
         "slow": {}
     },
     "sticky sounds": {},
@@ -208,6 +258,7 @@
         "sensory games": {}
     },
     "tracing": {
+        "face tracing": {},
         "finger tracing": {},
         "letter tracing": {},
         "pointy tracing": {}
@@ -223,9 +274,13 @@
     },
     "voice": {
         "NOTRIGGER":null,
-        "inaudible": {},
         "soft spoken": {},
-        "whisper": {},
+        "whisper": {
+            "breathy whisper": {},
+            "ear to ear whisper": {},
+            "inaudible whisper": {},
+            "mouth soundsy whisper": {}
+        },
         "no talking": {},
         "singing": {}
     }
