@@ -1,8 +1,4 @@
 {
-    "accent": {
-        "fake accent": {},
-        "foreign accent": {}
-    },
     "affirmations": {},
     "anticipatory": {
         "setting the pattern": {},
@@ -46,17 +42,11 @@
         "train": {}
     },
     "face attention": {
-        "face brushing": {},
+        "face brushing": null,
         "face inspection": {},
         "face touching": {}
     },
     "foam sounds": {},
-    "gender": {
-        "NOTRIGGER": null,
-        "male": {},
-        "female": {},
-        "other": {}
-    },
     "gripping": {},
     "guided": {
         "guided meditation": {},
@@ -64,8 +54,8 @@
         "breathing exercise": {}
     },
     "hair triggers": {
-        "hair brushing": {},
-        "haircut": {},
+        "hair brushing": null,
+        "haircut": null,
         "hair play": {},
         "hair sounds": {},
         "hair styling": {}
@@ -73,7 +63,7 @@
     "hand triggers": {
         "hand movements": {
             "plucking": {},
-            "reiki": {},
+            "reiki hands": {},
             "stipple": {},
             "visual scratching": {}
         },
@@ -81,13 +71,130 @@
             "finger fluttering": {},
             "finger tapping": {},
             "lotion sounds": {},
-            "gripping": {}
+            "gripping": null
         },
         "finger tracing": {},
         "gloves": {}
     },
     "instructions": {},
-    "language": {
+    "layered sounds": {},
+    "lid sounds": {},
+    "light triggers": {
+        "follow the light": {}
+    },
+    "liquid sounds": {
+        "water sounds": {},
+        "liquid pouring": {},
+        "liquid shaking": {},
+        "spraying": {}
+    },
+    "makeup": {
+        "grwm": {},
+        "makeup application": {}
+    },
+    "massage": {
+        "face massage": {},
+        "head massage": {},
+        "real massage": {}
+    },
+    "measuring": {},
+    "mic triggers": {
+        "mic brushing": {},
+        "mic scratching": {},
+        "mic tapping": {}
+    },
+    "mouth sounds": {
+        "gum chewing": {},
+        "subtle mouth sounds": {}
+    },
+    "page turning": {},
+    "painting": {},
+    "personal attention": {},
+    "propless": {},
+    "ramble": {},
+    "reiki": {
+        "reiki hands": null,
+        "reiki roleplay": {},
+        "singing bowl": {}
+    },
+    "roleplay": {
+        "makeup roleplay": {},
+        "medical": {
+            "gloves": null,
+            "sharp or dull": {},
+            "doctor": {
+                "cranial nerve exam": {}
+            },
+            "nurse": {},
+            "dentist": {},
+            "eye exam": {
+                "light triggers": null
+            },
+            "optometrist": {}
+        },
+        "fixing you": {},
+        "flight attendant": {},
+        "friend": {},
+        "haircut": null,
+        "interview": {},
+        "luxury": {},
+        "personal attention": null,
+        "photoshoot": {},
+        "reiki roleplay": null,
+        "school": {},
+        "shave": {},
+        "sleep clinic": {},
+        "spa": {},
+        "tailor": {},
+        "teacher": {},
+        "vampire": {}
+    },
+    "scratching": {
+        "fabric scratching": {},
+        "mic scratching": null,
+        "visual scratching": null
+    },
+    "sticky sounds": {},
+    "studying": {},
+    "tapping": {
+        "gentle tapping": {},
+        "fast tapping": {},
+        "finger tapping": null,
+        "nail tapping": {},
+        "mic tapping": null
+    },
+    "touching": {
+        "face touching": null,
+        "mic touching": {},
+        "hair play": null,
+        "sensory games": {}
+    },
+    "tracing": {
+        "face tracing": {},
+        "finger tracing": null,
+        "letter tracing": {},
+        "pointy tracing": {}
+    },
+    "trigger words": {
+        "sk": {}
+    },
+    "visual": {
+        "hand movements": null,
+        "light triggers": null,
+        "face touching": null,
+        "tracing": null
+    },
+
+    "_accent": {
+        "fake accent": {},
+        "foreign accent": {}
+    },
+    "_gender": {
+        "male": {},
+        "female": {},
+        "other": {}
+    },
+    "_language": {
         "foreign language": {
             "dutch": {},
             "french": {},
@@ -111,38 +218,16 @@
             "spanish lesson": {}
         }
     },
-    "layered sounds": {},
-    "lid sounds": {},
-    "light triggers": {
-        "follow the light": {}
-    },
-    "liquid sounds": {
-        "water sounds": {},
-        "liquid pouring": {},
-        "liquid shaking": {},
-        "spraying": {}
-    },
-    "location": {
-        "NOTRIGGER":null,
+    "_location": {
         "in bed": {},
         "in car": {},
         "public": {},
         "outdoors": {}
     },
-    "makeup": {
-        "grwm": {},
-        "makeup application": {}
-    },
-    "massage": {
-        "face massage": {},
-        "head massage": {},
-        "real massage": {}
-    },
-    "material": {
-        "NOTRIGGER":null,
+    "_material": {
         "fabric": {
             "fabric sounds": {},
-            "fabric scratching": {}
+            "fabric scratching": null
         },
         "leather": {},
         "metal": {},
@@ -156,9 +241,7 @@
         "stone": {},
         "skin": {}
     },
-    "measuring": {},
-    "mic setup": {
-        "NOTRIGGER":null,
+    "_mic setup": {
         "mono": {},
         "stereo": {
             "blue yeti": {}
@@ -170,110 +253,24 @@
         },
         "ear to ear": {}
     },
-    "mic triggers": {
-        "mic brushing": {},
-        "mic scratching": {},
-        "mic tapping": {}
-    },
-    "mouth sounds": {
-        "gum chewing": {},
-        "subtle mouth sounds": {}
-    },
-    "page turning": {},
-    "painting": {},
-    "personal attention": {},
-    "production quality": {
-        "NOTRIGGER":null,
+    "_production quality": {
         "lofi": {},
         "highly produced": {}
     },
-    "propless": {},
-    "ramble": {},
-    "reiki": {
-        "reiki roleplay": {},
-        "singing bowl": {}
-    },
-    "roleplay": {
-        "makeup roleplay": {},
-        "medical": {
-            "gloves": {},
-            "sharp or dull": {},
-            "doctor": {
-                "cranial nerve exam": {}
-            },
-            "nurse": {},
-            "dentist": {},
-            "eye exam": {
-                "light triggers": {}
-            },
-            "optometrist": {}
-        },
-        "fixing you": {},
-        "flight attendant": {},
-        "friend": {},
-        "haircut": {},
-        "interview": {},
-        "luxury": {},
-        "personal attention": {},
-        "photoshoot": {},
-        "reiki roleplay": {},
-        "school": {},
-        "shave": {},
-        "sleep clinic": {},
-        "spa": {},
-        "tailor": {},
-        "teacher": {},
-        "vampire": {}
-    },
-    "scratching": {
-        "fabric scratching": {},
-        "mic scratching": {},
-        "visual scratching": {}
-    },
-    "vibe/speed": {
-        "NOTRIGGER":null,
+    "_vibe/speed": {
         "aggressive": {},
         "chaotic": {},
         "deliberate": {},
         "fast": {
-            "fast tapping": {}
+            "fast tapping": null
         },
-        "gentle": {},
+        "gentle": {
+            "gentle tapping": null
+        },
         "sassy": {},
         "slow": {}
     },
-    "sticky sounds": {},
-    "studying": {},
-    "tapping": {
-        "gentle tapping": {},
-        "fast tapping": {},
-        "finger tapping": {},
-        "nail tapping": {},
-        "mic tapping": {}
-    },
-    "touching": {
-        "face touching": {},
-        "mic touching": {},
-        "hair play": {},
-        "sensory games": {}
-    },
-    "tracing": {
-        "face tracing": {},
-        "finger tracing": {},
-        "letter tracing": {},
-        "pointy tracing": {}
-    },
-    "trigger words": {
-        "sk": {}
-    },
-    "visual": {
-        "hand movements": null,
-        "light triggers": null,
-        "face touching": null,
-        "tracing": null
-    },
-    "voice": {
-        "NOTRIGGER":null,
+    "_voice": {
         "soft spoken": {},
         "whisper": {
             "breathy whisper": {},
