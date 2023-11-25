@@ -10,7 +10,7 @@ add channel screen
 
 replace tipjar link with ko-fi widget and in-page panel
 
-triggers as tags
+triggers as tags (triggertree)
 
 filter based on triggers
 filter based on duration
@@ -55,6 +55,8 @@ put svgs from player into sprite.svg
 
 add a "more" button to the description
 
+make brightness and volume sliders go up instead of sideways
+
 
 
 BIGGER STEPS:
@@ -74,11 +76,12 @@ user authentication and database
     subscriptions
     notifications
     donation leaderboard
+    tingle button, that logs whether the user got tingles at a certain point in the video
 more channels
-    get channel IDs for YouTube sub button
-    get channel icon URLs
     creator donation link (to one big account?)
     creator profile page
+    YouTube channel creation date
+    Oldest YouTube video
     video upload page
     analytics page
     payment system

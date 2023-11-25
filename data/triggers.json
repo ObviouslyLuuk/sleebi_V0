@@ -1,0 +1,232 @@
+{
+    "accent": {
+        "fake accent": {},
+        "foreign accent": {}
+    },
+    "affirmations": {},
+    "blowing": {},
+    "brushing": {
+        "face brushing": {},
+        "hair brushing": {}
+    },
+    "candle": {},
+    "chaotic": {},
+    "clicking": {},
+    "computer": {
+        "keyboard": {},
+        "programming": {}
+    },
+    "crinkling": {
+        "shirt crinkling": {}
+    },
+    "cutting": {
+        "haircut": {},
+        "scissors": {}
+    },
+    "ear attention": {
+        "ear cleaning": {},
+        "ear cupping": {}
+    },
+    "face attention": {
+        "face brushing": {},
+        "face touching": {}
+    },
+    "foam sounds": {},
+    "gender": {
+        "NOTRIGGER": null,
+        "male": {},
+        "female": {},
+        "other": {}
+    },
+    "gripping": {},
+    "guided meditation": {},
+    "hair triggers": {
+        "hair brushing": {},
+        "haircut": {},
+        "hair play": {},
+        "hair sounds": {},
+        "hair styling": {}
+    },
+    "hand triggers": {
+        "hand movements": {
+            "plucking": {},
+            "reiki": {},
+            "stipple": {},
+            "visual scratching": {}
+        },
+        "hand sounds": {
+            "finger fluttering": {},
+            "finger tapping": {},
+            "lotion sounds": {},
+            "gripping": {}
+        },
+        "finger tracing": {}
+    },
+    "hypnosis": {},
+    "instructions": {},
+    "language": {
+        "foreign language": {
+            "dutch": {},
+            "french": {},
+            "german": {},
+            "italian": {},
+            "japanese": {},
+            "korean": {},
+            "portuguese": {},
+            "russian": {},
+            "spanish": {}
+        },
+        "language learning": {
+            "english lesson": {},
+            "french lesson": {},
+            "german lesson": {},
+            "italian lesson": {},
+            "japanese lesson": {},
+            "korean lesson": {},
+            "portuguese lesson": {},
+            "russian lesson": {},
+            "spanish lesson": {}
+        }
+    },
+    "layered sounds": {},
+    "light triggers": {
+        "follow the light": {}
+    },
+    "liquid sounds": {
+        "water sounds": {},
+        "liquid pouring": {},
+        "liquid shaking": {},
+        "spraying": {}
+    },
+    "location": {
+        "NOTRIGGER":null,
+        "in bed": {},
+        "in car": {},
+        "public": {}
+    },
+    "makeup": {
+        "grwm": {},
+        "makeup application": {}
+    },
+    "massage": {
+        "face massage": {},
+        "head massage": {},
+        "real massage": {}
+    },
+    "material": {
+        "NOTRIGGER":null,
+        "fabric": {
+            "fabric sounds": {},
+            "fabric scratching": {}
+        },
+        "leather": {},
+        "metal": {},
+        "plastic": {},
+        "wood": {},
+        "glass": {},
+        "paper": {},
+        "cardboard": {},
+        "ceramic": {},
+        "rubber": {},
+        "stone": {},
+        "skin": {}
+    },
+    "measuring": {},
+    "mic triggers": {
+        "mic brushing": {},
+        "mic scratching": {},
+        "mic tapping": {}
+    },
+    "mouth sounds": {
+        "gum chewing": {},
+        "subtle mouth sounds": {}
+    },
+    "page turning": {},
+    "painting": {},
+    "personal attention": {},
+    "production quality": {
+        "NOTRIGGER":null,
+        "lofi": {},
+        "highly produced": {}
+    },
+    "reiki": {
+        "reiki roleplay": {},
+        "singing bowl": {}
+    },
+    "roleplay": {
+        "makeup roleplay": {},
+        "medical": {
+            "doctor": {
+                "cranial nerve exam": {}
+            },
+            "nurse": {},
+            "dentist": {},
+            "eye exam": {
+                "light triggers": {}
+            }
+        },
+        "flight attendant": {},
+        "friend": {},
+        "haircut": {},
+        "interview": {},
+        "luxury": {},
+        "personal attention": {},
+        "reiki roleplay": {},
+        "school": {},
+        "shave": {},
+        "sleep clinic": {},
+        "spa": {},
+        "tailor": {},
+        "teacher": {},
+        "vampire": {}
+    },
+    "scratching": {
+        "fabric scratching": {},
+        "mic scratching": {},
+        "visual scratching": {}
+    },
+    "speed": {
+        "NOTRIGGER":null,
+        "fast": {
+            "fast tapping": {}
+        },
+        "slow": {}
+    },
+    "sticky sounds": {},
+    "studying": {},
+    "tapping": {
+        "gentle tapping": {},
+        "fast tapping": {},
+        "finger tapping": {},
+        "nail tapping": {},
+        "mic tapping": {}
+    },
+    "touching": {
+        "face touching": {},
+        "mic touching": {},
+        "hair play": {},
+        "sensory games": {}
+    },
+    "tracing": {
+        "finger tracing": {},
+        "letter tracing": {},
+        "pointy tracing": {}
+    },
+    "trigger words": {
+        "sk": {}
+    },
+    "visual": {
+        "hand movements": null,
+        "light triggers": null,
+        "face touching": null,
+        "tracing": null
+    },
+    "voice": {
+        "NOTRIGGER":null,
+        "inaudible": {},
+        "soft spoken": {},
+        "whisper": {},
+        "no talking": {},
+        "singing": {}
+    }
+}
