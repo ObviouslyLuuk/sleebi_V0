@@ -1,14 +1,14 @@
 
-#content-container #search_results {
+#content-container[data-page=home] #search_results {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
-#content-container .vid_tile {
+#content-container[data-page=home] .vid_tile {
     display: flex;
     flex-direction: column;
 }
-#content-container .vid_tile img {
+#content-container[data-page=home] .vid_tile img {
     width: 100%;
     height: 100%;
 }

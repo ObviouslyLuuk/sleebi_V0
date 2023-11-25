@@ -134,6 +134,12 @@ function create_and_append(type, parent=null, id=null, class_=null) {
     return element
 }
 
+function empty_element(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
 
 
 function get_thumb_url(video_info) {

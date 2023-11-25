@@ -30,7 +30,7 @@
       </div>
       <span>+5 seconds</span>
     </div>
-    <button class="play-pause-btn big-play-pause-btn">
+    <button class="play-pause-btn big-play-pause-btn clickable_icon">
       <svg class="play-icon" viewBox="0 0 24 24">
         <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
       </svg>
@@ -47,7 +47,7 @@
       </div>
       <div class="controls">
         <div id="player_controls_left" class="flex-container flex-grow">
-          <button class="play-pause-btn small-play-pause-btn">
+          <button class="play-pause-btn small-play-pause-btn clickable_icon">
             <svg class="play-icon" viewBox="0 0 24 24">
               <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
             </svg>
@@ -56,7 +56,7 @@
             </svg>
           </button>
           <div class="volume-container control-container">
-            <button class="mute-btn">
+            <button class="mute-btn clickable_icon">
               <svg class="volume-high-icon" width="100" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
               </svg>
@@ -70,7 +70,7 @@
             <input class="volume-slider slider" type="range" min="0" max="1" step="any" value="1">
           </div>
           <div class="brightness-container control-container">
-            <button class="brightness-btn">
+            <button class="brightness-btn clickable_icon">
                 <svg class="brightness-high-icon" x="0px" y="0px" width="100" height="100" viewBox="0 0 64 64">
                   <path fill="currentColor" d="M32 19c7.18 0 13 5.82 13 13s-5.82 13-13 13-13-5.82-13-13S24.82 19 32 19zM32 41c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9S27.029 41 32 41zM34 8c0 .366 0 5.634 0 6 0 1.105-.895 2-2 2s-2-.895-2-2c0-.366 0-5.634 0-6 0-1.105.895-2 2-2S34 6.895 34 8zM50.385 16.444c-.259.259-3.984 3.984-4.243 4.243-.781.781-2.047.781-2.828 0-.781-.781-.781-2.047 0-2.828.259-.259 3.984-3.984 4.243-4.243.781-.781 2.047-.781 2.828 0S51.166 15.663 50.385 16.444zM56 34c-.366 0-5.634 0-6 0-1.105 0-2-.895-2-2s.895-2 2-2c.366 0 5.634 0 6 0 1.105 0 2 .895 2 2S57.105 34 56 34zM47.556 50.385c-.259-.259-3.984-3.984-4.243-4.243-.781-.781-.781-2.047 0-2.828s2.047-.781 2.828 0c.259.259 3.984 3.984 4.243 4.243.781.781.781 2.047 0 2.828S48.337 51.166 47.556 50.385zM30 56c0-.366 0-5.634 0-6 0-1.105.895-2 2-2s2 .895 2 2c0 .366 0 5.634 0 6 0 1.105-.895 2-2 2S30 57.105 30 56zM13.615 47.556c.259-.259 3.984-3.984 4.243-4.243.781-.781 2.047-.781 2.828 0 .781.781.781 2.047 0 2.828-.259.259-3.984 3.984-4.243 4.243-.781.781-2.047.781-2.828 0S12.834 48.337 13.615 47.556zM8 30c.366 0 5.634 0 6 0 1.105 0 2 .895 2 2s-.895 2-2 2c-.366 0-5.634 0-6 0-1.105 0-2-.895-2-2S6.895 30 8 30zM16.444 13.615c.259.259 3.984 3.984 4.243 4.243.781.781.781 2.047 0 2.828-.781.781-2.047.781-2.828 0-.259-.259-3.984-3.984-4.243-4.243-.781-.781-.781-2.047 0-2.828S15.663 12.834 16.444 13.615z"></path>
               </svg>
@@ -84,8 +84,8 @@
             <input class="brightness-slider slider" type="range" min="0" max="1" step="any" value="1">
           </div>
           <div class="duration-container">
-            <button class="loop-btn">
-              <svg class="icon" viewBox="0 2 24 24">
+            <button class="loop-btn clickable_icon">
+              <svg class="icon" viewBox="0 0 24 24">
                 <use xlink:href="images/sprite.svg#icon-loop" class="icon-loop"></use>
                 <use xlink:href="images/sprite.svg#icon-loop-active" class="icon-loop-active"></use>
               </svg>
@@ -117,13 +117,13 @@
           </svg>
         </button> -->
         <div id="player_controls_right" class="flex-container">
-          <button class="blue-filter-btn">
-            <svg class="icon" viewBox="0 0 24 24" style="width: 30px; height: 30px; transform: translateX(-0.5px)">
+          <button class="blue-filter-btn clickable_icon">
+            <svg class="icon" viewBox="0 0 24 24" style="width: 30px; height: 30px; transform: translateX(0.5px)">
               <use xlink:href="images/sprite.svg#icon-sunglasses" class="icon-sunglasses"></use>
               <use xlink:href="images/sprite.svg#icon-glasses" class="icon-glasses"></use>
             </svg>
           </button>
-          <button class="full-screen-btn">
+          <button class="full-screen-btn clickable_icon">
             <svg class="open" viewBox="0 0 24 24">
               <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
             </svg>
@@ -131,7 +131,7 @@
               <path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
             </svg>
           </button>
-          <button class="full-screen-ios-btn">
+          <button class="full-screen-ios-btn clickable_icon">
             <!-- <img style="filter:invert(); width: 18px" src="images/iOS_fullscreen.svg"> -->
             <svg class="icon" style="transform:scale(1.2) translateY(-1px)">
               <use xlink:href="images/sprite.svg#icon-apple"></use>
@@ -148,5 +148,26 @@
       <video autoplay playsinline webkit-playsinline>
         <!-- <track kind="captions" srclang="en" src="assets/subtitles.vtt"> -->
       </video>
+    </div>
+    <div class="pip-player-controls flex">
+      <div class="pip-player-info flex-grow">
+        <div class="pip-player-title">Video title</div>
+        <div class="pip-player-channel-name rec_channel">Channel</div>
+      </div>
+      <div class="flex">
+        <button class="pip-play-pause-btn play-pause-btn clickable_icon">
+          <svg class="play-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+          </svg>
+          <svg class="pause-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
+          </svg>
+        </button>
+        <button class="pip-close-btn clickable_icon">
+          <svg class="icon" viewBox="0 0 24 24">
+            <use xlink:href="images/sprite.svg#icon-cross"></use>
+          </svg>
+        </button>
+      </div>
     </div>
 </div>

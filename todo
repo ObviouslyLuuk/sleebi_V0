@@ -1,6 +1,5 @@
 FIXES:
 iPad:
-    trouble with sliders? on iOS too
     also weirdly, the message for blue filter does show, but for link copied doesn't
 
 ADDITIONS:
@@ -13,8 +12,6 @@ triggers as tags (triggertree)
 filter based on triggers
 filter based on duration
 sort search results by date, views, like-ratio, etc
-    
-have watch page be an overlay on non-watch pages, on mobile, so the user can swipe the viewer into the bottom to keep browsing
 
 optional calming music to play in background of videos, or noise?
 
@@ -64,6 +61,8 @@ put svgs from player into sprite.svg
 add a "more" button to the description
 
 make brightness and volume sliders go up instead of sideways
+
+custom right-click menu
 
 
 

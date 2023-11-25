@@ -29,11 +29,3 @@ function get_search_results(query, videos) {
     results = results.map(result => result[0]);
     return results;
 }
-
-// Make search bar work by directing to /?q=QUERY
-let search_bar = document.querySelector('#search_bar');
-search_bar.addEventListener('submit', function(e) {
-    e.preventDefault();
-    let query = document.querySelector('#search-input').value;
-    window.location.href = `/?q=${query}`;
-});

@@ -88,7 +88,7 @@ function add_rec_vid(parent, info) {
     
     // Add onclick event to rec_vid to change video
     rec_vid.addEventListener('click', function() {
-        window.location.href = `?v=${info.id}`;
+        redirect_watch(info.id)
     });
 
     // Thumbnail

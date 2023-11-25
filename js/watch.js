@@ -1,57 +1,81 @@
 
-let watch_overlay = create_and_append('div', document.body, 'watch_overlay', 'grid-container');
-document.body.classList.add('watch');
 
 // Fetch the HTML content
 HTML_TEMPLATES['watch'] = null;
-fetch_html('watch', "#watch_overlay");
+fetch_html('watch');
 
-// Get video_id from URL
-const VIDEO_ID = URLPARAMS.get('v');
-console.log(VIDEO_ID);
 
-function placePlayer() {
+function loadPlayer() {
+    if (!HTML_TEMPLATES['watch']) {
+        window.addEventListener('watch_html_ready', loadPlayer);
+        return;
+    }
     HTML_TEMPLATES['player'] = null;
-    fetch_html('player', ".vid_player_container");
+    fetch_html('player');
 }
 
-window.addEventListener('watch_html_ready', placePlayer);
+window.addEventListener('watch_html_ready', loadPlayer);
 
 function placeWatchContent() {
-    if (!HTML_TEMPLATES['player'])
-        return
-    // Copy navbar element to the start of watch_overlay if not mobile
-    if (!mobileCheck()) {
-        let navbar = document.querySelector('#navbar');
-        watch_overlay.prepend(navbar);
-        navbar_copy = navbar.cloneNode(true);
-        navbar_copy.id = 'navbar_copy';
-        document.body.prepend(navbar_copy);
-    }
-    if (!videos_info)
-        return
-    let video = document.querySelector('video');
-    if (document.querySelector('video').src != "")
-        return
+    // Get video_id from URL
+    URLSPARAMS = new URLSearchParams(window.location.search);
+    VIDEO_ID = URLPARAMS.get('v');
+    console.log(VIDEO_ID);
 
+    if (!HTML_TEMPLATES['player']) {
+        window.addEventListener('player_html_ready', placeWatchContent);
+        return;
+    }
+    let watch_overlay = document.querySelector('#watch_overlay');
+    if (!watch_overlay) {
+        watch_overlay = create_and_append('div', document.body, 'watch_overlay');
+        document.querySelector('#watch_overlay').innerHTML = HTML_TEMPLATES['watch'];
+        document.querySelector('.vid_player_container').innerHTML = HTML_TEMPLATES['player'];
+
+        // Set video src once play is requested
+        window.addEventListener('play_requested', function() {
+            let video = document.querySelector('video');
+            if (video.src != "") return;
+
+            let video_info = videos_info[VIDEO_ID]
+            video.src = get_download_url(video_info);
+        });
+    }
+    if (!document.querySelector('#player_script')) {
+        let script = document.createElement('script');
+        script.src = 'js/player.js';
+        script.id = 'player_script';
+        document.body.appendChild(script);
+
+        setTimeout(function() { // Wait for player.js to load (important for exitpip event)
+            placeWatchContent();
+        }, 50);
+        return;
+    }
+
+    document.body.classList.add('watch');
+    window.dispatchEvent(new Event('exitpip'));
+
+    if (!videos_info) {
+        window.addEventListener('videos_info_loaded', placeWatchContent);
+        return;
+    }
     let video_info = videos_info[VIDEO_ID];
     console.log(video_info);
 
     // Set thumbnail src
+    let video = document.querySelector('video');
     video.style.backgroundImage = `url(${get_thumb_url(video_info)})`;
 
-    // Set video src once play is requested
-    window.addEventListener('play_requested', function() {
-        if (video.src != "") return;
+    // Prepare video src for when play is requested
+    video.removeAttribute('src');
+    video.load();
+    let elem_to_scroll = mobileCheck() ? video : document.querySelector('#navbar');
+    elem_to_scroll.scrollIntoView();
+    document.querySelector('.video-container').classList.remove('src-loaded');
+    document.querySelector('.video-container').classList.add('paused');
+    document.querySelector('.video-container').classList.add('controls-active');
 
-        video.src = get_download_url(video_info);
-    });
-
-    // Set download button href
-    // https://stackoverflow.com/questions/62046965/save-as-video-but-how-to-do-it-with-javascript-and-html-instead
-    // let download_btn = document.getElementById('vid_download_btn');
-    // download_btn.href = get_download_url(video_info);
-    // download_btn.setAttribute('download', video_info['id'] + '.mp4');
 
     // video.play() // Cannot play before user interaction
 
@@ -60,37 +84,16 @@ function placeWatchContent() {
     if (t) {
         video.currentTime = t / 1000;
     }
-
-    // Add js/player.js to the body
-    let script = document.createElement('script');
-    script.src = 'js/player.js';
-    document.body.appendChild(script);
     
     // Set video title
     let video_title = document.querySelector('#vid_title');
     video_title.innerHTML = video_info['title'];
+    let pip_video_title = document.querySelector('.pip-player-title');
+    pip_video_title.innerHTML = video_info['title'];
 
     // Set video views
     let video_views = document.querySelector('#vid_viewcount');
     video_views.innerHTML = `${views_add_commas(video_info['views'])} views`
-
-    // Set channel icon
-    let channel_icon = document.querySelector('#vid_channel_icon');
-    channel_icon.src = video_info['channel_icon_url']; // Don't have channel_icon_url yet
-    channel_icon.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
-
-    // Set video channel name
-    let video_channel = document.querySelector('#vid_channel_name');
-    video_channel.innerHTML = video_info['channel_name'];
-    video_channel.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
-
-    // Set youtube subscribe button
-    let yt_sub = document.querySelector('#yt_sub');
-    yt_sub.href = `https://www.youtube.com/channel/${video_info['channel_id']}?sub_confirmation=1&feature=subscribe-embed-click`; // Don't have channel_id yet
-
-    // Set video share button
-    let share_btn = document.querySelector('#vid_share_btn');
-    share_btn.addEventListener('click', add_share_overlay);
 
     // Set video description
     let video_description = document.querySelector('#vid_description');
@@ -100,8 +103,36 @@ function placeWatchContent() {
     let video_date = document.querySelector('#vid_date');
     video_date.innerHTML = get_date(video_info);
 
+    // Set video channel name
+    let video_channel = document.querySelector('#vid_channel_name');
+    video_channel.innerHTML = video_info['channel_name'];
+    video_channel.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
+    let pip_video_channel = document.querySelector('.pip-player-channel-name');
+    pip_video_channel.innerHTML = video_info['channel_name'];
+
+    // Set channel icon
+    let channel_icon = document.querySelector('#vid_channel_icon');
+    channel_icon.src = video_info['channel_icon_url']; // Don't have channel_icon_url yet
+    channel_icon.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
+
+    // Set youtube subscribe button
+    let yt_sub = document.querySelector('#yt_sub');
+    yt_sub.href = `https://www.youtube.com/channel/${video_info['channel_id']}?sub_confirmation=1&feature=subscribe-embed-click`; // Don't have channel_id yet
+
+    // Set video share button
+    let share_btn = document.querySelector('#vid_share_btn');
+    share_btn.addEventListener('click', add_share_overlay);
+    
+    // Set download button href
+    // https://stackoverflow.com/questions/62046965/save-as-video-but-how-to-do-it-with-javascript-and-html-instead
+    // let download_btn = document.getElementById('vid_download_btn');
+    // download_btn.href = get_download_url(video_info);
+    // download_btn.setAttribute('download', video_info['id'] + '.mp4');
+
     // Sort recommended videos by relevance using get_search_results() and title as query
     let rec_vids = get_search_results(video_info['title'], Object.values(videos_info));
+    let rec_div = document.querySelector('.right-column');
+    empty_element(rec_div);
 
     // Add every video as rec_vid
     for (let vid_info of rec_vids) {
@@ -110,63 +141,16 @@ function placeWatchContent() {
             continue;
 
         add_rec_vid(
-            document.querySelector('.right-column'),
+            rec_div,
             vid_info,
         );
     }
-
-    if (mobileCheck()) {
-        // Scroll to video element
-        // console.log("scrolling to video");
-        // video.scrollIntoView();
-    }
-
-    // Listen for resize events
-    window.addEventListener('resize', function() {
-        // document.body.dataset.mobile = window.mobileCheck();
-        // if (!document.body.dataset.mobile) return;
-        if (!window.mobileCheck()) return;
-
-        // If mobile and width is greater than height, set landscape to true
-        updateLandscape();
-    });
 
     // Wait 2 seconds to load embedding functionality
     setTimeout(function() {
         onYouTubeIframeAPIReady();
     }, 2000);
-
 }
-
-
-function updateLandscape() {
-    if (window.innerWidth > window.innerHeight) {
-        // document.querySelector(".video-container").requestFullscreen(); // Can only be called by user interaction
-        document.body.dataset.landscape = "true";
-    } else {
-        // document.exitFullscreen();
-        document.body.dataset.landscape = "false";
-    }
-}
-updateLandscape();
-
-
-// Call placeContent() after player_ready and videos_info_loaded events
-window.addEventListener('player_html_ready', placeWatchContent);
-window.addEventListener('videos_info_loaded', placeWatchContent);
-
-// Add css/watch.css to the head
-link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = 'css/watch.css';
-document.head.appendChild(link);
-
-// Add css/player.css to the head
-link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = 'css/player.css';
-document.head.appendChild(link);
-
 
 
 

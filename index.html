@@ -12,20 +12,26 @@
         <meta property="og:image:height" content="1000">
         <meta property="og:url" content="https://sleebi.net">
         <title>Sleebi - To Make You Sleepy</title>
+        <!-- Set page icon -->
+        <link rel="icon" href="images/logo.png">
         <!-- Import Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <!-- Import local sprite.svg for icons -->
         <link rel="svg" href="images/sprite.svg">
         <!-- Import custom CSS -->
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/home.css">
+        <link rel="stylesheet" href="css/results.css">
+        <link rel="stylesheet" href="css/watch.css">
+        <link rel="stylesheet" href="css/player.css">
         <!-- Vid Tiles CSS -->
         <link rel="stylesheet" href="css/vid_tiles.css">
-        <!-- Set page icon -->
-        <link rel="icon" href="images/logo.png">
+        <!-- Style element we want to edit with JS -->
+        <style id="pipplayer"></style>
     </head>
     <body>
         <nav id="navbar" class="navbar navbar-expand-lg">
-            <a id="logo_text" class="navbar-brand" href="/">
+            <a id="logo_text" class="navbar-brand" onclick="redirect_home()">
                 <img src="images/logo_text.png" alt="Sleebi" height="30">
             </a>
             <div id="search_close_btn" class="clickable_icon wide">
@@ -60,11 +66,12 @@
                 </a>
             </div>
         </nav>
-        <div id="content-container" class="grid-container">
+        <div id="content-container">
         </div>
 
     </body>
     <!-- Import custom helper functions -->
+    <script src="js/util/redirect.js"></script>
     <script src="js/util/helpers.js"></script>
     <script src="js/util/elements.js"></script>
 
@@ -76,5 +83,8 @@
     <script src="js/util/embed.js"></script>
 
     <!-- Import custom JS -->
+    <script src="js/home.js"></script>
+    <script src="js/results.js"></script>
+    <script src="js/watch.js"></script>
     <script src="js/base.js"></script>
 </html>

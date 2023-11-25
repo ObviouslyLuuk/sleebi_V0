@@ -43,38 +43,23 @@ video_basics_request.onerror = function() {
 };
 video_basics_request.send();
 
+
 // Get params from URL
-const URLPARAMS = new URLSearchParams(window.location.search);
-const PATHNAME = window.location.pathname.split("/").splice(1);
+var URLPARAMS = new URLSearchParams(window.location.search);
+var PATHNAME = window.location.pathname.split("/").splice(1);
+var VIDEO_ID
+var QUERY
 
-switch (PATHNAME[0]) {
-    case "":
-        if (URLPARAMS.get('v')) {
-            // Append js/home.js to the body
-            let script = document.createElement('script');
-            script.src = 'js/home.js';
-            document.body.appendChild(script);
+update_page_based_on_url();
 
-            // Append js/watch.js to the body
-            script = document.createElement('script');
-            script.src = 'js/watch.js';
-            document.body.appendChild(script);
-        } else if (URLPARAMS.get('q')) {
-            // Append js/results.js to the body
-            let script = document.createElement('script');
-            script.src = 'js/results.js';
-            document.body.appendChild(script);
-        } else {
-            // Append js/home.js to the body
-            let script = document.createElement('script');
-            script.src = 'js/home.js';
-            document.body.appendChild(script);
-        }
-        break;
-    default:
-        console.log("error page not yet implemented");
-        break;
-}
+
+// Make search bar work by directing to /?q=QUERY
+let search_bar = document.querySelector('#search_bar');
+search_bar.addEventListener('submit', function(e) {
+    e.preventDefault();
+    let query = document.querySelector('#search-input').value;
+    redirect_results(query);
+});
 
 // When clicking on search_open_btn, set data-mode of navbar to "search"
 let search_open_btn = document.querySelector('#search_open_btn');
@@ -91,7 +76,7 @@ search_close_btn.addEventListener('click', function() {
 let tip_btn = document.querySelector('#tip_btn');
 tip_btn.addEventListener('click', function() {
     let overlay_content = create_overlay(document.body, 'tip_overlay', true, null, true);
-    overlay_content = create_and_append('div', overlay_content);
+    overlay_content = create_and_append('div', overlay_content); // This div is needed to not mess up the function of the close btn
     overlay_content.innerHTML = `
         <iframe 
             id='kofiframe' 
@@ -116,8 +101,70 @@ tip_btn.addEventListener('click', function() {
     overlay_content.parentElement.parentElement.style['background-color'] = "black";
 });
 
+
+
+
 let link // declaring link here so it can be used in multiple places
 
 document.body.dataset.mobile = mobileCheck();
 document.body.dataset.tablet = tabletCheck();
 document.body.dataset.ios = iOSCheck();
+
+
+// If mobile, set landscape to true if width is greater than height
+function updateLandscape() {
+    if (window.innerWidth > window.innerHeight) {
+        // document.querySelector(".video-container").requestFullscreen(); // Can only be called by user interaction
+        document.body.dataset.landscape = "true";
+    } else {
+        // document.exitFullscreen();
+        document.body.dataset.landscape = "false";
+    }
+}
+updateLandscape();
+
+
+// Listen for resize events
+window.addEventListener('resize', function() {
+    // document.body.dataset.mobile = window.mobileCheck();
+    // if (!document.body.dataset.mobile) return;
+    if (!window.mobileCheck()) return;
+
+    // If mobile and width is greater than height, set landscape to true
+    updateLandscape();
+});
+
+
+
+
+function update_page_based_on_url() {
+    // Get params from URL
+    URLPARAMS = new URLSearchParams(window.location.search);
+    PATHNAME = window.location.pathname.split("/").splice(1);
+
+    // Depending on the pathname and urlparams, place different content
+    switch (PATHNAME[0]) {
+        case "":
+            if (URLPARAMS.get('v')) {
+                placeHomeContent();
+                placeWatchContent();
+            } else if (URLPARAMS.get('q')) {
+                placeResultsContent();
+                window.dispatchEvent(new Event('enterpip'));
+            } else {
+                placeHomeContent();
+                window.dispatchEvent(new Event('enterpip'));
+            }
+            break;
+        default:
+            console.log("error page not yet implemented");
+            break;
+    }
+}
+
+
+
+// Every time something is pushed or popped from history, place content
+window.addEventListener('pushstate', update_page_based_on_url);
+window.addEventListener('popstate', update_page_based_on_url);
+

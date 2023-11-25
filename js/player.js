@@ -26,6 +26,10 @@ const timelineContainer = document.querySelector(".timeline-container")
 const videoWrapper = document.querySelector(".video-wrapper")
 const video = document.querySelector("video")
 
+const pipPlayer = document.querySelector(".pip-player-controls")
+const pipPlayerStyle = document.querySelector("style#pipplayer")
+const pipCloseBtn = document.querySelector(".pip-close-btn")
+
 const skipBackOverlay = document.querySelector(".skip-back")
 const skipForwardOverlay = document.querySelector(".skip-forward")
 
@@ -267,6 +271,10 @@ function toggleBrightness() {
   }
   video.style.filter = `brightness(${brightnessSlider.value})`
   thumbnailImg.style.filter = `brightness(${brightnessSlider.value})`
+  if (brightnessSlider.value == 1) {
+    video.style.filter = ''
+    thumbnailImg.style.filter = ''
+  }
   window.dispatchEvent(new Event('brightnesschange'));
 }
 
@@ -456,12 +464,13 @@ video.addEventListener("touchstart", e => {
 // Otherwise, we reset the translation
 var startY = 0
 var isDragging = false
-video.addEventListener("touchstart", e => {
+let drag_elems = [pipPlayer.querySelector('.pip-player-info'),video]
+drag_elems.forEach(e=>{e.addEventListener("touchstart", e => {
   startY = e.touches[0].clientY
   watch_overlay.classList.add("dragging")
   document.body.style.overflow = "hidden"
-})
-video.addEventListener("touchmove", e => {
+})})
+drag_elems.forEach(e=>{e.addEventListener("touchmove", e => {
   let deltaY = e.touches[0].clientY - startY
 
   if (isDragging && !document.body.classList.contains("pip")) {
@@ -470,27 +479,92 @@ video.addEventListener("touchmove", e => {
   } else if (isDragging && document.body.classList.contains("pip")) {
     let translation = Math.max(Math.min(Math.min(0, deltaY), window.innerHeight), -window.innerHeight)
     watch_overlay.style.top = `${window.innerHeight + translation}px`
-    videoWrapper.style.bottom = `${-translation}px`
+
+    pipPlayerStyle.innerHTML = `
+      .video-wrapper {
+        bottom: ${-translation}px!important;
+        opacity: ${1 - Math.min(Math.abs(translation) / (window.innerHeight/2), 1)};
+      }
+      .pip-player-controls {
+        bottom: ${-translation}px;
+        opacity: ${1 - Math.min(Math.abs(translation) / (window.innerHeight/2), 1)};
+      }
+    `
   } else {
     isDragging = true
   }
-})
-video.addEventListener("touchend", e => {
+})})
+drag_elems.forEach(e=>{e.addEventListener("touchend", e => {
   if (!isDragging) return
 
   let deltaY = e.changedTouches[0].clientY - startY
 
   if (deltaY > window.innerHeight / 4) {
-    document.body.classList.add("pip")
-    watch_overlay.style.top = "100vh"
+    window.dispatchEvent(new Event('enterpip'));
   } else {
-    document.body.classList.remove("pip")
-    watch_overlay.style.top = "0"
+    window.dispatchEvent(new Event('exitpip'));
   }
-  videoWrapper.style.bottom = "0"
+})})
+drag_elems[0].addEventListener("click", () => {
+  window.dispatchEvent(new Event('exitpip'));
+})
+
+function pip_refresh() {
+  pipPlayerStyle.innerHTML = ''
   watch_overlay.classList.remove("dragging")
   document.body.style.overflow = ""
   isDragging = false
+}
+function switch_navbar_parent(to_parent, from_parent) {
+  let navbar = document.querySelector('#navbar');
+  to_parent.prepend(navbar);
+  let navbar_copy = document.querySelector('#navbar_copy');
+  if (!navbar_copy) {
+    navbar_copy = navbar.cloneNode(true);
+    navbar_copy.id = 'navbar_copy';
+  }
+  from_parent.prepend(navbar_copy);
+}
+
+window.addEventListener("enterpip", () => {
+  // Copy navbar element back to the start of body if not mobile
+  if (!mobileCheck()) {
+    switch_navbar_parent(document.body, watch_overlay);
+  }
+  let content_container = document.querySelector('#content-container');
+  if (content_container.dataset.page == "home") {
+    window.history.pushState(null, null, '/');
+  } else if (content_container.dataset.page == "results") {
+    window.history.pushState(null, null, '/?q=' + QUERY);
+  }
+
+  document.body.classList.add("pip");
+  watch_overlay.style.top = "100vh";
+  pip_refresh();
+})
+window.addEventListener("exitpip", () => {
+  // Copy navbar element to the start of watch_overlay if not mobile
+  if (!mobileCheck()) {
+    switch_navbar_parent(watch_overlay, document.body);
+  }
+
+  document.body.classList.remove("pip");
+  watch_overlay.style.top = "0";
+  pip_refresh();
+})
+pipCloseBtn.addEventListener("click", () => { // Close button on pip player
+  video.pause();
+  document.body.classList.remove("pip");
+  document.body.classList.remove("watch");
+  document.body.style.overflow = "";
+  pipPlayerStyle.innerHTML = `
+    .video-wrapper {
+      bottom: ${-100}px!important;
+    }
+    .pip-player-controls {
+      bottom: ${-100}px;
+    }
+  `
 })
 
 
@@ -538,15 +612,15 @@ window.addEventListener("keydown", e => {
   }
 })
 
-// When a button is clicked, start whitePulse animation by adding .clicked class, then remove it after animation is done
-const buttons = document.querySelectorAll(".video-container button")
-buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    button.classList.add("clicked")
-  })
-  button.addEventListener("animationend", () => {
-    button.classList.remove("clicked")
-  })
-})
 
+// When a button is clicked, start whitePulse animation by adding .clicked class, then remove it after animation is done
+const buttons = document.querySelectorAll(".clickable_icon")
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        button.classList.add("clicked")
+    })
+    button.addEventListener("animationend", () => {
+        button.classList.remove("clicked")
+    })
+})
 

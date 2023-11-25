@@ -553,27 +553,6 @@ body[data-mobile=true] .video-controls-container::before {
 
 
 
-.video-container button {
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 100%;
-}
-.video-container button.clicked {
-  animation: whitePulse 250ms ease-in-out;
-}
-
-@keyframes whitePulse {
-  0% {
-    background-color: rgba(255, 255, 255, 0);
-  }
-  50% {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-  100% {
-    background-color: rgba(255, 255, 255, 0);
-  }
-}
-
-
 /* Full screen button */
 /* .video-container .full-screen-btn {
   transition: transform 150ms ease-in-out;
@@ -609,17 +588,62 @@ body[data-mobile=true][data-iOS=true] .video-container:not(.fake-full-screen).sr
 
 
 /* Miniplayer (Picture in Picture) */
+.pip-player-controls {
+  display: none;
+  position: fixed;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  background-color: var(--dark-theme-background-color);
+  cursor: pointer;
+}
+body.pip .pip-player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem;
+}
+body.pip .pip-player-controls .pip-player-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: min(35vw, 200px);
+  height: 100%;
+}
+body.pip .pip-player-controls .pip-player-info .pip-player-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+  height: 40%;
+}
 body.pip .video-wrapper {
   position: fixed;
   width: 35vw;
   max-width: 200px;
-  aspect-ratio: 3/1;
-  bottom: 0;
+  /* aspect-ratio: 3/1; */
+  bottom: -2px;
   left: 0;
-  z-index: 1;
+  z-index: 102;
+  pointer-events: none;
+}
+body.pip[data-tablet=true] .video-container.controls-active .video-wrapper,
+body.pip[data-mobile=true] .video-container.controls-active .video-wrapper {
+  /* No controls with pip, so no need to be dimmed */
+  filter: brightness(1);
 }
 body.pip video {
   border-radius: 0;
   object-fit: cover;
+}
+body[data-mobile=true].pip .video-wrapper,
+body[data-mobile=true].pip .pip-player-controls {
+  height: 50px;
+}
+body[data-mobile=false].pip .video-wrapper,
+body[data-mobile=false].pip .pip-player-controls {
+  height: 65px;
 }
 
