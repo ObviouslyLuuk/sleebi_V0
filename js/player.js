@@ -495,6 +495,7 @@ drag_elems.forEach(e=>{e.addEventListener("touchmove", e => {
   }
 })})
 drag_elems.forEach(e=>{e.addEventListener("touchend", e => {
+  watch_overlay.classList.remove("dragging")
   if (!isDragging) return
 
   let deltaY = e.changedTouches[0].clientY - startY
