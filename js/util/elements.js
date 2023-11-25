@@ -11,7 +11,7 @@
  * @param {boolean} [add_background=true] - Whether or not to add a background to the overlay.
  * @returns {HTMLElement} The content element of the created overlay.
  */
-function create_overlay(parent=document.body, class_=null, add_close_btn=true, timer=null, add_background=true) {
+function create_overlay(parent=document.body, class_='', add_close_btn=true, timer=null, add_background=true) {
     let overlay_background, overlay
     if (add_background) {
         overlay_background = create_and_append('div', parent, null, 'overlay_background')
@@ -28,6 +28,7 @@ function create_overlay(parent=document.body, class_=null, add_close_btn=true, t
             <use xlink:href="images/sprite.svg#icon-cross"></use>
         </svg>
         `
+        // When close button is clicked, remove the overlay
         overlay_close_btn.addEventListener('click', function() {
             overlay_background.remove()
         })

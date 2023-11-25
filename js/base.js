@@ -87,6 +87,38 @@ search_close_btn.addEventListener('click', function() {
     document.querySelector('#navbar').dataset.mode = "default";
 });
 
+
+// When clicking the donate button, show overlay with iframe for ko-fi
+let tip_btn = document.querySelector('#tip_btn');
+tip_btn.addEventListener('click', function() {
+    let overlay_content = create_overlay(document.body, 'tip_overlay', true, null, true);
+    overlay_content = create_and_append('div', overlay_content);
+    overlay_content.innerHTML = `
+        <iframe 
+            id='kofiframe' 
+            src='https://ko-fi.com/obviouslyluuk/?hidefeed=true&widget=true&embed=true&preview=true' 
+            style='
+                /* position: absolute;
+                top: -120px;
+                left: 0;
+                right: 0; */
+                transform: translateY(-125px);
+                border: none;
+                filter: invert(1) hue-rotate(180deg) grayscale(0);
+                border-radius: 10px;
+                width:100%;
+                ' 
+            height='750' 
+            title='kofi-obviouslyluuk'>
+        </iframe>
+    `;
+    overlay_content.style.height = "545px";
+    overlay_content.style.overflow = "hidden";
+    overlay_content.parentElement.parentElement.style['background-color'] = "black";
+});
+
+
+
 document.body.dataset.mobile = mobileCheck();
 document.body.dataset.tablet = tabletCheck();
 document.body.dataset.ios = iOSCheck();

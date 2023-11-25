@@ -111,6 +111,7 @@ a:not(.btn):hover {
     top: 10px;
     right: 10px;
     cursor: pointer;
+    z-index: 100;
 }
 .message_overlay {
     background-color: white;
