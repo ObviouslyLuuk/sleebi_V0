@@ -606,3 +606,20 @@ body[data-mobile=true][data-iOS=true] .video-container:not(.fake-full-screen).sr
   background-color: black;
 }
 
+
+
+/* Miniplayer (Picture in Picture) */
+body.pip .video-wrapper {
+  position: fixed;
+  width: 35vw;
+  max-width: 200px;
+  aspect-ratio: 3/1;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+body.pip video {
+  border-radius: 0;
+  object-fit: cover;
+}
+

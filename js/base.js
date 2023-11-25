@@ -50,8 +50,13 @@ const PATHNAME = window.location.pathname.split("/").splice(1);
 switch (PATHNAME[0]) {
     case "":
         if (URLPARAMS.get('v')) {
-            // Append js/watch.js to the body
+            // Append js/home.js to the body
             let script = document.createElement('script');
+            script.src = 'js/home.js';
+            document.body.appendChild(script);
+
+            // Append js/watch.js to the body
+            script = document.createElement('script');
             script.src = 'js/watch.js';
             document.body.appendChild(script);
         } else if (URLPARAMS.get('q')) {
@@ -65,12 +70,6 @@ switch (PATHNAME[0]) {
             script.src = 'js/home.js';
             document.body.appendChild(script);
         }
-        break;
-    case "channel":
-        console.log("channel page not yet implemented");
-        break;
-    case "results":
-        console.log("results page not yet implemented");
         break;
     default:
         console.log("error page not yet implemented");
@@ -117,7 +116,7 @@ tip_btn.addEventListener('click', function() {
     overlay_content.parentElement.parentElement.style['background-color'] = "black";
 });
 
-
+let link // declaring link here so it can be used in multiple places
 
 document.body.dataset.mobile = mobileCheck();
 document.body.dataset.tablet = tabletCheck();

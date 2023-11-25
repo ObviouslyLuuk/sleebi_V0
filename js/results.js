@@ -1,8 +1,8 @@
 
 
 // Fetch the HTML content
-var html_ready = false;
-fetch_html('results', "#content-container", "html_ready");
+HTML_TEMPLATES['results'] = null;
+fetch_html('results', "#content-container");
 
 // Get query from URL
 const QUERY = URLPARAMS.get('q');
@@ -15,8 +15,8 @@ search_input.value = QUERY;
 document.querySelector('#navbar').dataset.mode = "search";
 
 
-function placeContent() {
-    if (!html_ready || !videos_info)
+function placeResultsContent() {
+    if (!HTML_TEMPLATES['results'] || !videos_info)
         return
 
     let rec_vids = get_search_results(QUERY, Object.values(videos_info));
@@ -60,11 +60,11 @@ updateLandscape();
 
 
 // Call placeContent() after html_ready and videos_info_loaded events
-window.addEventListener('html_ready', placeContent);
-window.addEventListener('videos_info_loaded', placeContent);
+window.addEventListener('results_html_ready', placeResultsContent);
+window.addEventListener('videos_info_loaded', placeResultsContent);
 
 // Add css/results.css to the head
-let link = document.createElement('link');
+link = document.createElement('link');
 link.rel = 'stylesheet';
 link.href = 'css/results.css';
 document.head.appendChild(link);

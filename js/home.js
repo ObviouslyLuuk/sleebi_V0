@@ -1,12 +1,12 @@
 
 
 // Fetch the HTML content
-var html_ready = false;
-fetch_html('home', "#content-container", "html_ready");
+HTML_TEMPLATES['home'] = null;
+fetch_html('home', "#content-container");
 
 
-function placeContent() {
-    if (!html_ready || !videos_info)
+function placeHomeContent() {
+    if (!HTML_TEMPLATES['home'] || !videos_info)
         return
 
     let rec_vids = get_search_results("", Object.values(videos_info));
@@ -50,11 +50,11 @@ updateLandscape();
 
 
 // Call placeContent() after html_ready and videos_info_loaded events
-window.addEventListener('html_ready', placeContent);
-window.addEventListener('videos_info_loaded', placeContent);
+window.addEventListener('home_html_ready', placeHomeContent);
+window.addEventListener('videos_info_loaded', placeHomeContent);
 
 // Add css/home.css to the head
-let link = document.createElement('link');
+link = document.createElement('link');
 link.rel = 'stylesheet';
 link.href = 'css/home.css';
 document.head.appendChild(link);

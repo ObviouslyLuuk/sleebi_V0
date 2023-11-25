@@ -23,6 +23,7 @@ const volumeSlider = document.querySelector(".volume-slider")
 const brightnessSlider = document.querySelector(".brightness-slider")
 const videoContainer = document.querySelector(".video-container")
 const timelineContainer = document.querySelector(".timeline-container")
+const videoWrapper = document.querySelector(".video-wrapper")
 const video = document.querySelector("video")
 
 const skipBackOverlay = document.querySelector(".skip-back")
@@ -447,6 +448,51 @@ video.addEventListener("touchstart", e => {
   }
   lastTap = Date.now()
 })
+
+
+// Detect dragging on the video element
+// As user is dragging down, we translate #watch_overlay the same amount.
+// If the user lets go further than half the viewport height down, we enable picture in picture mode
+// Otherwise, we reset the translation
+var startY = 0
+var isDragging = false
+video.addEventListener("touchstart", e => {
+  startY = e.touches[0].clientY
+  watch_overlay.classList.add("dragging")
+  document.body.style.overflow = "hidden"
+})
+video.addEventListener("touchmove", e => {
+  let deltaY = e.touches[0].clientY - startY
+
+  if (isDragging && !document.body.classList.contains("pip")) {
+    let translation = Math.min(Math.max(0, deltaY), window.innerHeight)
+    watch_overlay.style.top = `${translation}px`
+  } else if (isDragging && document.body.classList.contains("pip")) {
+    let translation = Math.max(Math.min(Math.min(0, deltaY), window.innerHeight), -window.innerHeight)
+    watch_overlay.style.top = `${window.innerHeight + translation}px`
+    videoWrapper.style.bottom = `${-translation}px`
+  } else {
+    isDragging = true
+  }
+})
+video.addEventListener("touchend", e => {
+  if (!isDragging) return
+
+  let deltaY = e.changedTouches[0].clientY - startY
+
+  if (deltaY > window.innerHeight / 4) {
+    document.body.classList.add("pip")
+    watch_overlay.style.top = "100vh"
+  } else {
+    document.body.classList.remove("pip")
+    watch_overlay.style.top = "0"
+  }
+  videoWrapper.style.bottom = "0"
+  watch_overlay.classList.remove("dragging")
+  document.body.style.overflow = ""
+  isDragging = false
+})
+
 
 
 // Loop button

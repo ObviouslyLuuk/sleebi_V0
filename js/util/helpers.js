@@ -26,26 +26,29 @@ window.iOSCheck = function() {
 
 /**
  * Fetches the HTML from 'html/${page}.html' and injects it into the container div.
- * Sets the 'html_ready' flag to true after successful injection.
- * Fires the 'html_ready' event after injection.
+ * Sets the 'HTML_TEMPLATES[page]' to the html after successful injection.
+ * Fires the '{page}_html_ready' event after injection.
  * 
  * @returns {void}
  */
-function fetch_html(page, selector, event_name) {
+function fetch_html(page, selector=null) {
     fetch(`html/${page}.html`)
         .then(response => response.text())
         .then(html => {
             // Inject the HTML into the container
-            let container = document.querySelector(selector);
-            container.innerHTML = html;
-            html_ready = true;
+            if (selector) {
+                let container = document.querySelector(selector);
+                container.innerHTML = html;
+            }
+            HTML_TEMPLATES[page] = html;
         })
         .catch(error => console.error('Error fetching HTML:', error))
         .then(() => {
             // Fire event
-            window.dispatchEvent(new Event(event_name));
+            window.dispatchEvent(new Event(`${page}_html_ready`));
         });
 }
+const HTML_TEMPLATES = {}
 
 
 

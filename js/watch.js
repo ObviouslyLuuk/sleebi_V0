@@ -1,22 +1,34 @@
 
+let watch_overlay = create_and_append('div', document.body, 'watch_overlay', 'grid-container');
+document.body.classList.add('watch');
 
 // Fetch the HTML content
-var html_ready = false;
-fetch_html('watch', "#content-container", "html_ready");
+HTML_TEMPLATES['watch'] = null;
+fetch_html('watch', "#watch_overlay");
 
 // Get video_id from URL
 const VIDEO_ID = URLPARAMS.get('v');
 console.log(VIDEO_ID);
 
 function placePlayer() {
-    html_ready = false;
-    fetch_html('player', ".vid_player_container", "player_ready");
+    HTML_TEMPLATES['player'] = null;
+    fetch_html('player', ".vid_player_container");
 }
 
-window.addEventListener('html_ready', placePlayer);
+window.addEventListener('watch_html_ready', placePlayer);
 
-function placeContent() {
-    if (!html_ready || !videos_info)
+function placeWatchContent() {
+    if (!HTML_TEMPLATES['player'])
+        return
+    // Copy navbar element to the start of watch_overlay if not mobile
+    if (!mobileCheck()) {
+        let navbar = document.querySelector('#navbar');
+        watch_overlay.prepend(navbar);
+        navbar_copy = navbar.cloneNode(true);
+        navbar_copy.id = 'navbar_copy';
+        document.body.prepend(navbar_copy);
+    }
+    if (!videos_info)
         return
     let video = document.querySelector('video');
     if (document.querySelector('video').src != "")
@@ -140,11 +152,11 @@ updateLandscape();
 
 
 // Call placeContent() after player_ready and videos_info_loaded events
-window.addEventListener('player_ready', placeContent);
-window.addEventListener('videos_info_loaded', placeContent);
+window.addEventListener('player_html_ready', placeWatchContent);
+window.addEventListener('videos_info_loaded', placeWatchContent);
 
 // Add css/watch.css to the head
-let link = document.createElement('link');
+link = document.createElement('link');
 link.rel = 'stylesheet';
 link.href = 'css/watch.css';
 document.head.appendChild(link);
