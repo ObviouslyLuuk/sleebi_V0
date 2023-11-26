@@ -674,16 +674,16 @@ body[data-mobile=false].pip .pip-player-controls {
   visibility: hidden;
   transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
 }
+.video-error-div span {
+  text-align: center;
+}
 body[data-mobile=false] .video-error-div {
   position: absolute;
   /* min-width: 50%; */
   max-width: 90%;
 }
-.video-error-div.active {
+body.watch .video-error-div.active {
   opacity: 1;
   visibility: visible;
-}
-.video-error-div span {
-  text-align: center;
 }
 
