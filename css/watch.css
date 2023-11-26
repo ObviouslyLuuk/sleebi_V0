@@ -88,7 +88,7 @@ body[data-mobile=false] .vid_player_container {
 
 #watch_overlay {
     position: fixed;
-    top: 0;
+    top: 100vh;
     left: 0;
     width: 100%;
     height: 100%;
@@ -103,6 +103,9 @@ body[data-mobile=false] .vid_player_container {
 }
 body.watch:not(.pip) {
     overflow: hidden;
+}
+body.watch:not(.pip) #watch_overlay {
+    top: 0;
 }
 
 /* Miniplayer (Picture in Picture) */

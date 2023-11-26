@@ -1,5 +1,8 @@
 
 
+const PLAY_WHEN_CLICKED = true; // If true, video will play when clicked, otherwise, video will play when play button is clicked
+
+
 // Fetch the HTML content
 HTML_TEMPLATES['watch'] = null;
 fetch_html('watch');
@@ -33,13 +36,15 @@ function placeWatchContent() {
         document.querySelector('.vid_player_container').innerHTML = HTML_TEMPLATES['player'];
 
         // Set video src once play is requested
-        window.addEventListener('play_requested', function() {
-            let video = document.querySelector('video');
-            if (video.src != "") return;
+        if (!PLAY_WHEN_CLICKED) {
+            window.addEventListener('play_requested', function() {
+                let video = document.querySelector('video');
+                if (video.src != "") return;
 
-            let video_info = videos_info[VIDEO_ID]
-            video.src = get_download_url(video_info);
-        });
+                let video_info = videos_info[VIDEO_ID]
+                video.src = get_download_url(video_info);
+            });
+        }
     }
     if (!document.querySelector('#player_script')) {
         let script = document.createElement('script');
@@ -68,13 +73,17 @@ function placeWatchContent() {
     video.style.backgroundImage = `url(${get_thumb_url(video_info)})`;
 
     // Prepare video src for when play is requested
-    video.removeAttribute('src');
-    video.load();
+    document.querySelector('.video-container').classList.remove('src-loaded');
+    if (!PLAY_WHEN_CLICKED) {
+        video.removeAttribute('src');
+        video.load();
+        document.querySelector('.video-container').classList.add('paused');
+        document.querySelector('.video-container').classList.add('controls-active');
+    } else {
+        video.src = get_download_url(video_info);
+    }
     let elem_to_scroll = mobileCheck() ? video : document.querySelector('#navbar');
     elem_to_scroll.scrollIntoView();
-    document.querySelector('.video-container').classList.remove('src-loaded');
-    document.querySelector('.video-container').classList.add('paused');
-    document.querySelector('.video-container').classList.add('controls-active');
 
 
     // video.play() // Cannot play before user interaction
