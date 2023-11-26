@@ -11,6 +11,8 @@ ADDITIONS:
 sort search results by date, views, like-ratio, etc
 add feedback form
 
+add small v button at top of player to engage miniplayer
+
 add email list signup
 
 add channel screen
@@ -74,6 +76,8 @@ make brightness and volume sliders go up instead of sideways
 autofill makes the searchbar light
 
 custom right-click menu
+
+miniplayer title, if too long, should scroll automatically
 
 
 

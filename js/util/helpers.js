@@ -150,6 +150,9 @@ function get_thumb_url(video_info) {
 
 function get_download_url(video_info) {
     let video_id = video_info['id']
+    if (video_id == "demo480x852") {
+        return "/videos/demo480x852.mp4"
+    }
     return `https://sleebi-video-bucket.s3.eu-west-3.amazonaws.com/ObviouslyASMR/${video_id}.mp4`
 }
 
