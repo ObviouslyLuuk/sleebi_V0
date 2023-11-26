@@ -651,9 +651,11 @@ body[data-mobile=false].pip .pip-player-controls {
 
 /* Video Error div */
 .video-error-div {
-  position: absolute;
-  /* min-width: 50%; */
-  max-width: 90%;
+  position: fixed;
+  padding: 20px;
+  width: min(500px, 80vw);
+  max-height: 90vh;
+  overflow: auto;
   padding: 20px;
   border-radius: 20px;
   top: 50%;
