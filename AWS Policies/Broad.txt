@@ -1,0 +1,33 @@
+{
+	"Version": "2012-10-17",
+	"Id": "HTTP referer policy example",
+	"Statement": [
+		{
+			"Sid": "Allow only GET requests originating from www.sleebi.com and sleebi.com.",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": [
+				"s3:GetObject",
+				"s3:GetObjectVersion"
+			],
+			"Resource": "arn:aws:s3:::sleebi-video-bucket/*",
+			"Condition": {
+				"StringLike": {
+					"aws:Referer": [
+						"http://www.sleebi.com/*",
+						"http://sleebi.com/*",
+						"https://sleebi.net/*",
+						"https://www.sleebi.net/*"
+					]
+				}
+			}
+		},
+		{
+			"Sid": "Allow all",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": "s3:GetObject",
+			"Resource": "arn:aws:s3:::sleebi-video-bucket/*"
+		}
+	]
+}

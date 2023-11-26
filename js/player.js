@@ -33,6 +33,8 @@ const pipCloseBtn = document.querySelector(".pip-close-btn")
 const skipBackOverlay = document.querySelector(".skip-back")
 const skipForwardOverlay = document.querySelector(".skip-forward")
 
+const videoError = document.querySelector(".video-error-div")
+
 document.addEventListener("keydown", e => {
   const tagName = document.activeElement.tagName.toLowerCase()
 
@@ -624,4 +626,40 @@ buttons.forEach(button => {
         button.classList.remove("clicked")
     })
 })
+
+
+// Video error handling using the .video-error-div, adjusting its innerHTML and adding .active
+// https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/MediaError
+video.addEventListener("error", () => {
+  videoContainer.classList.remove('src-loading');
+  videoContainer.classList.remove('src-loaded');
+  switch (video.error.code) {
+    case 1: // MEDIA_ERR_ABORTED
+      videoError.innerHTML = "Aborted"
+      break
+    case 2: // MEDIA_ERR_NETWORK
+      videoError.innerHTML = "Network error"
+      break
+    case 3: // MEDIA_ERR_DECODE
+      videoError.innerHTML = "Decode error"
+      break
+    case 4: // MEDIA_ERR_SRC_NOT_SUPPORTED
+      // videoError.innerHTML = "Source not supported"
+      // Give button to ?v=demo480x852
+      videoError.innerHTML = `
+        <span>Due to immense data transfer costs I had to pause the website because it was very quickly draining my bank account.
+        I'll try to find solutions to further limit the cost! Stay up to date at:</span>
+        <a href="https://www.youtube.com/@ObviouslyASMR/community" class="btn" target="_blank">My YouTube Community</a>
+        <span>or watch a short demo I kept available:</span>
+        <a href="?v=demo480x852" class="btn">Demo</a>
+      `
+      break
+    default:
+      videoError.innerHTML = "Unknown error"
+      break
+  }
+  videoError.classList.add("active")
+})
+
+
 

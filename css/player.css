@@ -647,3 +647,36 @@ body[data-mobile=false].pip .pip-player-controls {
   height: 65px;
 }
 
+
+
+/* Video Error div */
+.video-error-div {
+  position: absolute;
+  /* min-width: 50%; */
+  max-width: 90%;
+  padding: 20px;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: var(--dark-theme-background-color);
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: white;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
+}
+.video-error-div.active {
+  opacity: 1;
+  visibility: visible;
+}
+.video-error-div span {
+  text-align: center;
+}
+

@@ -56,6 +56,8 @@ a:not(.btn):hover {
     animation: spin 2s ease-in-out infinite;
     pointer-events: none;
     z-index: 100;
+    background-color: #00000055;
+    border-radius: 100%;
 }
 .spinner img {
     width: 100px;
