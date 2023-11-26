@@ -651,7 +651,7 @@ video.addEventListener("error", () => {
         I'll try to find solutions to further limit the cost! Stay up to date at:</span>
         <a href="https://www.youtube.com/@ObviouslyASMR/community" class="btn" target="_blank">My YouTube Community</a>
         <span>or watch a short demo I kept available:</span>
-        <a href="?v=demo480x852" class="btn">Demo</a>
+        <a class="btn" onclick="redirect_watch('demo480x852')">Demo</a>
       `
       break
     default:
@@ -659,6 +659,10 @@ video.addEventListener("error", () => {
       break
   }
   videoError.classList.add("active")
+})
+// With every pushstate event (when navigating to a new page), remove .active from videoError
+window.addEventListener("pushstate", () => {
+  videoError.classList.remove("active")
 })
 
 

@@ -652,10 +652,10 @@ body[data-mobile=false].pip .pip-player-controls {
 /* Video Error div */
 .video-error-div {
   position: fixed;
-  padding: 20px;
-  width: min(500px, 80vw);
   max-height: 90vh;
   overflow: auto;
+
+  width: min(500px, 80vw);
   padding: 20px;
   border-radius: 20px;
   top: 50%;
@@ -673,6 +673,11 @@ body[data-mobile=false].pip .pip-player-controls {
   opacity: 0;
   visibility: hidden;
   transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
+}
+body[data-mobile=false] .video-error-div {
+  position: absolute;
+  /* min-width: 50%; */
+  max-width: 90%;
 }
 .video-error-div.active {
   opacity: 1;
