@@ -455,7 +455,7 @@ body[data-mobile=true] .video-controls-container::before {
   /* .video-container.src-loading .video-controls-container, */
   .video-container.src-loading .big-play-pause-btn,
   .video-container.src-loaded .spinner {
-    visibility: hidden;
+    visibility: hidden!important;
   }
   
   /* .video-container.scrubbing .thumbnail-img {

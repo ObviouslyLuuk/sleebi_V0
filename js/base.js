@@ -103,6 +103,7 @@ tip_btn.addEventListener('click', function() {
             src='https://ko-fi.com/obviouslyluuk/?hidefeed=true&widget=true&embed=true&preview=true' 
             style='
                 /* position: absolute;
+                width:100%;
                 top: -120px;
                 left: 0;
                 right: 0; */
@@ -110,15 +111,17 @@ tip_btn.addEventListener('click', function() {
                 border: none;
                 filter: invert(1) hue-rotate(180deg) grayscale(0);
                 border-radius: 10px;
-                width:100%;
-                ' 
-            height='750' 
+                '
+            height='800' 
             title='kofi-obviouslyluuk'>
         </iframe>
     `;
-    overlay_content.style.height = "545px";
-    overlay_content.style.overflow = "hidden";
+    overlay_content.style['max-height'] = "min(90vh, 545px)";
+    // overlay_content.style.overflow = "hidden";
     overlay_content.parentElement.parentElement.style['background-color'] = "black";
+    overlay_content.parentElement.parentElement.style['padding'] = "0";
+    overlay_content.parentElement.parentElement.style['width'] = "unset";
+    overlay_content.parentElement.parentElement.style['border'] = "2px solid white";
 });
 
 

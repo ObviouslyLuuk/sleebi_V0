@@ -108,6 +108,8 @@ body.watch:not(.pip) {
 /* Miniplayer (Picture in Picture) */
 body.pip #watch_overlay {
     top: 100vh;
+    /* We don't want to hide overflow because miniplayer will be outside the bounds */
+    overflow: visible;
 }
 
 

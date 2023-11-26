@@ -500,7 +500,7 @@ drag_elems.forEach(e=>{e.addEventListener("touchend", e => {
 
   let deltaY = e.changedTouches[0].clientY - startY
 
-  if (deltaY > window.innerHeight / 4) {
+  if (deltaY > videoContainer.clientHeight / 3) {
     window.dispatchEvent(new Event('enterpip'));
   } else {
     window.dispatchEvent(new Event('exitpip'));
@@ -540,7 +540,7 @@ window.addEventListener("enterpip", () => {
   }
 
   document.body.classList.add("pip");
-  watch_overlay.style.top = "100vh";
+  watch_overlay.style.top = "";
   pip_refresh();
 })
 window.addEventListener("exitpip", () => {
@@ -550,7 +550,7 @@ window.addEventListener("exitpip", () => {
   }
 
   document.body.classList.remove("pip");
-  watch_overlay.style.top = "0";
+  watch_overlay.style.top = "";
   pip_refresh();
 })
 pipCloseBtn.addEventListener("click", () => { // Close button on pip player
