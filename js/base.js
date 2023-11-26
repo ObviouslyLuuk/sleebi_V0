@@ -75,10 +75,11 @@ update_page_based_on_url();
 
 
 // Make search bar work by directing to /?q=QUERY
-let search_bar = document.querySelector('#search_bar');
+let search_bar = document.querySelector('#navbar #search_bar');
 search_bar.addEventListener('submit', function(e) {
     e.preventDefault();
-    let query = document.querySelector('#search-input').value;
+    let query = document.querySelector('#navbar #search-input').value;
+    console.log("search query entered: ", query)
     redirect_results(query);
 });
 
@@ -165,23 +166,27 @@ function update_page_based_on_url() {
     // Get params from URL
     URLPARAMS = new URLSearchParams(window.location.search);
     PATHNAME = window.location.pathname.split("/").splice(1);
+    console.log("new params:", URLPARAMS.toString());
 
     // Depending on the pathname and urlparams, place different content
     switch (PATHNAME[0]) {
         case "":
             if (URLPARAMS.get('v')) {
+                console.log("placing watch page");
                 placeHomeContent();
                 placeWatchContent();
             } else if (URLPARAMS.get('q')) {
+                console.log("placing results page");
                 placeResultsContent();
                 window.dispatchEvent(new Event('enterpip'));
             } else {
+                console.log("placing home page");
                 placeHomeContent();
                 window.dispatchEvent(new Event('enterpip'));
             }
             break;
         default:
-            console.log("error page not yet implemented");
+            console.log("unknown pathname. error page not yet implemented");
             break;
     }
 }

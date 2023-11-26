@@ -7,11 +7,13 @@ fetch_html('home');
 
 function placeHomeContent() {
     if (!HTML_TEMPLATES['home']) {
+        console.log("home html not loaded yet, waiting...");
         window.addEventListener('home_html_ready', placeHomeContent);
         return;
     }
     document.querySelector('#content-container').innerHTML = HTML_TEMPLATES['home'];
     if (!videos_info) {
+        console.log("videos_info not loaded yet, waiting...");
         window.addEventListener('videos_info_loaded', placeHomeContent);
         return;
     }

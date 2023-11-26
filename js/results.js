@@ -6,6 +6,7 @@ fetch_html('results');
 
 function placeResultsContent() {
     if (!HTML_TEMPLATES['results']) {
+        console.log("results html not loaded yet, waiting...");
         window.addEventListener('results_html_ready', placeResultsContent);
         return;
     }
@@ -15,6 +16,7 @@ function placeResultsContent() {
     // Get query from URL
     URLPARAMS = new URLSearchParams(window.location.search);
     QUERY = URLPARAMS.get('q');
+    console.log("query:", QUERY)
 
     // Set search bar value to query from URL
     let search_input = document.querySelector('#search-input');
@@ -23,6 +25,7 @@ function placeResultsContent() {
     document.querySelector('#content-container').innerHTML = HTML_TEMPLATES['results'];
 
     if (!videos_info) {
+        console.log("videos_info not loaded yet, waiting...");
         window.addEventListener('videos_info_loaded', placeResultsContent);
         return;
     }

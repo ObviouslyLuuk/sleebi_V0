@@ -551,6 +551,7 @@ window.addEventListener("exitpip", () => {
     switch_navbar_parent(watch_overlay, document.body);
   }
 
+  window.history.pushState(null, null, '/?v=' + VIDEO_ID);
   document.body.classList.remove("pip");
   watch_overlay.style.top = "";
   pip_refresh();

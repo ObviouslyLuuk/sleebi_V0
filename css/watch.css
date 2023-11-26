@@ -87,6 +87,8 @@ body[data-mobile=false] .vid_player_container {
 
 
 #watch_overlay {
+    opacity: 0;
+    visibility: hidden;
     position: fixed;
     top: 100vh;
     left: 0;
@@ -95,17 +97,21 @@ body[data-mobile=false] .vid_player_container {
     background-color: inherit;
     z-index: 100;
     overflow-y: scroll;
-    transition: top 0.5s ease-in-out;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
 #watch_overlay.dragging {
     transition: none;
     overflow: hidden;
 }
-body.watch:not(.pip) {
-    overflow: hidden;
+body.watch #watch_overlay {
+    opacity: 1;
+    visibility: visible;
 }
 body.watch:not(.pip) #watch_overlay {
     top: 0;
+}
+body.watch:not(.pip) {
+    overflow: hidden;
 }
 
 /* Miniplayer (Picture in Picture) */

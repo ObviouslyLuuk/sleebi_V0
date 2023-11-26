@@ -1,17 +1,19 @@
 
 
 function redirect_results(query) {
-    window.history.pushState({}, '', `?q=${query}`);
-    window.dispatchEvent(new Event('pushstate'));
+    redirect_to(`/?q=${query}`);
 }
 
 function redirect_watch(video_id) {
-    window.history.pushState({}, '', `?v=${video_id}`);
-    window.dispatchEvent(new Event('pushstate'));
+    redirect_to(`/?v=${video_id}`);
 }
 
 function redirect_home() {
-    window.history.pushState({}, '', '/');
+    redirect_to('/');
+}
+
+function redirect_to(url) {
+    window.history.pushState({}, '', url);
     window.dispatchEvent(new Event('pushstate'));
 }
 

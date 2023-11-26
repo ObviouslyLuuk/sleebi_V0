@@ -23,14 +23,16 @@ function placeWatchContent() {
     // Get video_id from URL
     URLSPARAMS = new URLSearchParams(window.location.search);
     VIDEO_ID = URLPARAMS.get('v');
-    console.log(VIDEO_ID);
+    console.log("video_id:", VIDEO_ID);
 
     if (!HTML_TEMPLATES['player']) {
+        console.log("player html not loaded yet, waiting...");
         window.addEventListener('player_html_ready', placeWatchContent);
         return;
     }
     let watch_overlay = document.querySelector('#watch_overlay');
     if (!watch_overlay) {
+        console.log("watch_overlay not created yet, creating...");
         watch_overlay = create_and_append('div', document.body, 'watch_overlay');
         document.querySelector('#watch_overlay').innerHTML = HTML_TEMPLATES['watch'];
         document.querySelector('.vid_player_container').innerHTML = HTML_TEMPLATES['player'];
@@ -47,6 +49,7 @@ function placeWatchContent() {
         }
     }
     if (!document.querySelector('#player_script')) {
+        console.log("player.js not loaded yet, loading...");
         let script = document.createElement('script');
         script.src = 'js/player.js';
         script.id = 'player_script';
@@ -62,11 +65,12 @@ function placeWatchContent() {
     window.dispatchEvent(new Event('exitpip'));
 
     if (!videos_info) {
+        console.log("videos_info not loaded yet, waiting...");
         window.addEventListener('videos_info_loaded', placeWatchContent);
         return;
     }
     let video_info = videos_info[VIDEO_ID];
-    console.log(video_info);
+    console.log("video_info:", video_info);
 
     // Set thumbnail src
     let video = document.querySelector('video');
@@ -91,6 +95,7 @@ function placeWatchContent() {
     // If t is in URL, set video.currentTime to t
     let t = URLPARAMS.get('t');
     if (t) {
+        console.log("setting time: ", t);
         video.currentTime = t / 1000;
     }
     
