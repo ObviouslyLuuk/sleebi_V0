@@ -39,6 +39,8 @@ function placeHomeContent() {
         );
     };
     document.querySelector('#content-container').dataset.page = "home";
+
+    window.scrollTo(0,0);
 };
 
 

@@ -47,4 +47,6 @@ function placeResultsContent() {
         );
     };
     document.querySelector('#content-container').dataset.page = "results";
+
+    window.scrollTo(0,0);
 };
