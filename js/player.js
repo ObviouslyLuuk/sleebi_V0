@@ -2,412 +2,407 @@
  * https://github.com/WebDevSimplified/youtube-video-player-clone/tree/main
  */
 
-const videoPlayerContainer = document.querySelector(".vid_player_container")
+const videoPlayerContainer = document.querySelector(".vid_player_container");
 
-const playPauseBtns = document.querySelectorAll(".play-pause-btn")
-const theaterBtn = document.querySelector(".theater-btn")
-const fullScreenBtn = document.querySelector(".full-screen-btn")
-const fullScreenIosBtn = document.querySelector(".full-screen-ios-btn")
-const miniPlayerBtn = document.querySelector(".mini-player-btn")
-const muteBtn = document.querySelector(".mute-btn")
-const brightnessBtn = document.querySelector(".brightness-btn")
-const blueFilterBtn = document.querySelector(".blue-filter-btn")
-const loopBtn = document.querySelector(".loop-btn")
-const captionsBtn = document.querySelector(".captions-btn")
-const speedBtn = document.querySelector(".speed-btn")
-const currentTimeElem = document.querySelector(".current-time")
-const totalTimeElem = document.querySelector(".total-time")
-const previewImg = document.querySelector(".preview-img")
-const thumbnailImg = document.querySelector(".thumbnail-img")
-const volumeSlider = document.querySelector(".volume-slider")
-const brightnessSlider = document.querySelector(".brightness-slider")
-const videoContainer = document.querySelector(".video-container")
-const timelineContainer = document.querySelector(".timeline-container")
-const videoWrapper = document.querySelector(".video-wrapper")
-const video = document.querySelector("video")
+const playPauseBtns = document.querySelectorAll(".play-pause-btn");
+const theaterBtn = document.querySelector(".theater-btn");
+const fullScreenBtn = document.querySelector(".full-screen-btn");
+const fullScreenIosBtn = document.querySelector(".full-screen-ios-btn");
+const miniPlayerBtn = document.querySelector(".mini-player-btn");
+const muteBtn = document.querySelector(".mute-btn");
+const brightnessBtn = document.querySelector(".brightness-btn");
+const blueFilterBtn = document.querySelector(".blue-filter-btn");
+const loopBtn = document.querySelector(".loop-btn");
+const captionsBtn = document.querySelector(".captions-btn");
+const speedBtn = document.querySelector(".speed-btn");
+const currentTimeElem = document.querySelector(".current-time");
+const totalTimeElem = document.querySelector(".total-time");
+const previewImg = document.querySelector(".preview-img");
+const thumbnailImg = document.querySelector(".thumbnail-img");
+const volumeSlider = document.querySelector(".volume-slider");
+const brightnessSlider = document.querySelector(".brightness-slider");
+const videoContainer = document.querySelector(".video-container");
+const timelineContainer = document.querySelector(".timeline-container");
+const videoWrapper = document.querySelector(".video-wrapper");
+const video = document.querySelector("video");
 
-const pipPlayer = document.querySelector(".pip-player-controls")
-const pipPlayerStyle = document.querySelector("style#pipplayer")
-const pipCloseBtn = document.querySelector(".pip-close-btn")
+const pipPlayer = document.querySelector(".pip-player-controls");
+const pipPlayerStyle = document.querySelector("style#pipplayer");
+const pipCloseBtn = document.querySelector(".pip-close-btn");
 
-const skipBackOverlay = document.querySelector(".skip-back")
-const skipForwardOverlay = document.querySelector(".skip-forward")
+const skipBackOverlay = document.querySelector(".skip-back");
+const skipForwardOverlay = document.querySelector(".skip-forward");
 
-const videoError = document.querySelector(".video-error-div")
+const videoError = document.querySelector(".video-error-div");
 
 document.addEventListener("keydown", e => {
-  const tagName = document.activeElement.tagName.toLowerCase()
+  const tagName = document.activeElement.tagName.toLowerCase();
 
-  if (tagName === "input") return
+  if (tagName === "input") return;
 
   switch (e.key.toLowerCase()) {
     case " ":
-      if (tagName === "button") return
+      if (tagName === "button") return;
     case "k":
-      togglePlay()
-      break
+      togglePlay();
+      break;
     case "f":
-      toggleFullScreenMode()
-      break
+      toggleFullScreenMode();
+      break;
     case "t":
-      toggleTheaterMode()
-      break
+      toggleTheaterMode();
+      break;
     case "i":
-      toggleMiniPlayerMode()
-      break
+      toggleMiniPlayerMode();
+      break;
     case "m":
-      toggleMute()
-      break
+      toggleMute();
+      break;
     case "arrowleft":
-      skip(-5)
-      break
+      skip(-5);
+      break;
     case "j":
-      skip(-10)
-      break
+      skip(-10);
+      break;
     case "arrowright":
-      skip(5)
-      break
+      skip(5);
+      break;
     case "l":
-      skip(10)
-      break
+      skip(10);
+      break;
     case "c":
-      toggleCaptions()
-      break
-  }
-})
+      toggleCaptions();
+      break;
+  };
+});
 
 // Timeline
-timelineContainer.addEventListener("mousemove", handleTimelineUpdate)
-timelineContainer.addEventListener("mousedown", toggleScrubbing)
+timelineContainer.addEventListener("mousemove", handleTimelineUpdate);
+timelineContainer.addEventListener("mousedown", toggleScrubbing);
 document.addEventListener("mouseup", e => {
-  if (isScrubbing) toggleScrubbing(e)
+  if (isScrubbing) toggleScrubbing(e);
 })
 document.addEventListener("mousemove", e => {
-  if (isScrubbing) handleTimelineUpdate(e)
+  if (isScrubbing) handleTimelineUpdate(e);
 })
 // Add touch events for mobile
 timelineContainer.addEventListener("touchmove", e => {
   // Construct a simulated mouse event from the touch event.
-  e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'}
+  e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'};
   handleTimelineUpdate(e);
 });
 timelineContainer.addEventListener("touchstart", e => {
-  e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchstart'}
+  e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchstart'};
   toggleScrubbing(e);
 });
 document.addEventListener("touchend", e => {
   if (isScrubbing) {
-    e = {x: e.changedTouches[0].clientX, buttons: 0, preventDefault: ()=>{}, type: 'touchend'}
+    e = {x: e.changedTouches[0].clientX, buttons: 0, preventDefault: ()=>{}, type: 'touchend'};
     toggleScrubbing(e);
   }
 });
 document.addEventListener("touchmove", e => {
   if (isScrubbing) {
-    e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'}
+    e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'};
     handleTimelineUpdate(e);
   }
 });
 
 
-let isScrubbing = false
-let wasPaused
+let isScrubbing = false;
+let wasPaused;
 function toggleScrubbing(e) {
-  const rect = timelineContainer.getBoundingClientRect()
-  const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
-  isScrubbing = (e.buttons & 1) === 1
-  videoContainer.classList.toggle("scrubbing", isScrubbing)
+  const rect = timelineContainer.getBoundingClientRect();
+  const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
+  isScrubbing = (e.buttons & 1) === 1;
+  videoContainer.classList.toggle("scrubbing", isScrubbing);
   if (isScrubbing) {
-    wasPaused = video.paused
-    video.pause()
+    wasPaused = video.paused;
+    video.pause();
   } else {
-    video.currentTime = percent * video.duration
-    if (!wasPaused) video.play()
-  }
+    video.currentTime = percent * video.duration;
+    if (!wasPaused) video.play();
+  };
 
-  handleTimelineUpdate(e)
-}
+  handleTimelineUpdate(e);
+};
 
 function handleTimelineUpdate(e) {
-  const rect = timelineContainer.getBoundingClientRect()
-  const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
+  const rect = timelineContainer.getBoundingClientRect();
+  const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
   const previewImgNumber = Math.max(
     1,
     Math.floor((percent * video.duration) / 10)
-  )
+  );
   // const previewImgSrc = `assets/previewImgs/preview${previewImgNumber}.jpg`
   // previewImg.src = previewImgSrc
-  timelineContainer.style.setProperty("--preview-position", percent)
+  timelineContainer.style.setProperty("--preview-position", percent);
 
   if (isScrubbing) {
-    e.preventDefault()
-    // thumbnailImg.src = previewImgSrc
-    timelineContainer.style.setProperty("--progress-position", percent)
+    e.preventDefault();
+    // thumbnailImg.src = previewImgSrc;
+    timelineContainer.style.setProperty("--progress-position", percent);
 
     // Update video current time (could be intensive on performance?)
-    video.currentTime = percent * video.duration
-    currentTimeElem.textContent = formatDuration(video.currentTime)
-  }
-}
+    video.currentTime = percent * video.duration;
+    currentTimeElem.textContent = formatDuration(video.currentTime);
+  };
+};
 
 // Playback Speed
 // speedBtn.addEventListener("click", changePlaybackSpeed)
 
 function changePlaybackSpeed() {
-  let newPlaybackRate = video.playbackRate + 0.25
-  if (newPlaybackRate > 2) newPlaybackRate = 0.25
-  video.playbackRate = newPlaybackRate
-  speedBtn.textContent = `${newPlaybackRate}x`
-}
+  let newPlaybackRate = video.playbackRate + 0.25;
+  if (newPlaybackRate > 2) newPlaybackRate = 0.25;
+  video.playbackRate = newPlaybackRate;
+  speedBtn.textContent = `${newPlaybackRate}x`;
+};
 
 // Captions
-// const captions = video.textTracks[0]
-// captions.mode = "hidden"
+// const captions = video.textTracks[0];
+// captions.mode = "hidden";
 
-// captionsBtn.addEventListener("click", toggleCaptions)
+// captionsBtn.addEventListener("click", toggleCaptions);
 
 function toggleCaptions() {
-  const isHidden = captions.mode === "hidden"
-  captions.mode = isHidden ? "showing" : "hidden"
-  videoContainer.classList.toggle("captions", isHidden)
-}
+  const isHidden = captions.mode === "hidden";
+  captions.mode = isHidden ? "showing" : "hidden";
+  videoContainer.classList.toggle("captions", isHidden);
+};
 
 // Duration
 video.addEventListener("loadeddata", () => {
-  totalTimeElem.textContent = formatDuration(video.duration)
-})
+  totalTimeElem.textContent = formatDuration(video.duration);
+});
 
 video.addEventListener("timeupdate", () => {
-  currentTimeElem.textContent = formatDuration(video.currentTime)
-  const percent = video.currentTime / video.duration
-  timelineContainer.style.setProperty("--progress-position", percent)
-})
+  currentTimeElem.textContent = formatDuration(video.currentTime);
+  const percent = video.currentTime / video.duration;
+  timelineContainer.style.setProperty("--progress-position", percent);
+});
 
 const leadingZeroFormatter = new Intl.NumberFormat(undefined, {
   minimumIntegerDigits: 2,
-})
+});
 function formatDuration(time) {
-  const seconds = Math.floor(time % 60)
-  const minutes = Math.floor(time / 60) % 60
-  const hours = Math.floor(time / 3600)
+  const seconds = Math.floor(time % 60);
+  const minutes = Math.floor(time / 60) % 60;
+  const hours = Math.floor(time / 3600);
   if (hours === 0) {
-    return `${minutes}:${leadingZeroFormatter.format(seconds)}`
+    return `${minutes}:${leadingZeroFormatter.format(seconds)}`;
   } else {
     return `${hours}:${leadingZeroFormatter.format(
       minutes
-    )}:${leadingZeroFormatter.format(seconds)}`
-  }
-}
+    )}:${leadingZeroFormatter.format(seconds)}`;
+  };
+};
 
 function skip(duration) {
-  video.currentTime += duration
+  video.currentTime += duration;
 
-  let skipOverlay = duration < 0 ? skipBackOverlay : skipForwardOverlay
+  let skipOverlay = duration < 0 ? skipBackOverlay : skipForwardOverlay;
 
-  skipOverlay.querySelector('span').textContent = `${duration < 0 ? "" : "+"}${duration} seconds`
-  skipOverlay.classList.remove("active")
+  skipOverlay.querySelector('span').textContent = `${duration < 0 ? "" : "+"}${duration} seconds`;
+  skipOverlay.classList.remove("active");
   // Force a reflow to restart the animation
-  void skipOverlay.offsetWidth
-  skipOverlay.classList.add("active")
+  void skipOverlay.offsetWidth;
+  skipOverlay.classList.add("active");
   setTimeout(() => {
-    skipOverlay.classList.remove("active")
-  }, 500)
-}
+    skipOverlay.classList.remove("active");
+  }, 500);
+};
 
 // Volume
-muteBtn.addEventListener("click", toggleMute)
+muteBtn.addEventListener("click", toggleMute);
 volumeSlider.addEventListener("input", e => {
-  video.volume = e.target.value
-  video.muted = e.target.value === 0
-})
+  video.volume = e.target.value;
+  video.muted = e.target.value === 0;
+});
 
 function toggleMute() {
-  video.muted = !video.muted
-}
+  video.muted = !video.muted;
+};
 
 video.addEventListener("volumechange", () => {
-  volumeSlider.value = video.volume
-  let volumeLevel
+  volumeSlider.value = video.volume;
+  let volumeLevel;
   if (video.muted || video.volume === 0) {
-    volumeSlider.value = 0
-    volumeLevel = "muted"
+    volumeSlider.value = 0;
+    volumeLevel = "muted";
   } else if (video.volume >= 0.5) {
-    volumeLevel = "high"
+    volumeLevel = "high";
   } else {
-    volumeLevel = "low"
-  }
+    volumeLevel = "low";
+  };
 
-  videoContainer.dataset.volumeLevel = volumeLevel
-})
+  videoContainer.dataset.volumeLevel = volumeLevel;
+});
 
 // Brightness
-brightnessBtn.addEventListener("click", toggleBrightness)
+brightnessBtn.addEventListener("click", toggleBrightness);
 brightnessSlider.addEventListener("input", e => {
-  video.style.filter = `brightness(${e.target.value})`
-  thumbnailImg.style.filter = `brightness(${e.target.value})`
+  video.style.filter = `brightness(${e.target.value})`;
+  thumbnailImg.style.filter = `brightness(${e.target.value})`;
   window.dispatchEvent(new Event('brightnesschange'));
-})
+});
 
 window.addEventListener("brightnesschange", () => {
-  let brightnessLevel
+  let brightnessLevel;
   if (brightnessSlider.value < 0.01) {
-    brightnessLevel = "muted"
+    brightnessLevel = "muted";
   } else if (brightnessSlider.value >= 0.5) {
-    brightnessLevel = "high"
+    brightnessLevel = "high";
   } else {
-    brightnessLevel = "low"
-  }
+    brightnessLevel = "low";
+  };
 
-  videoContainer.setAttribute("data-brightness-level", brightnessLevel)
-})
+  videoContainer.setAttribute("data-brightness-level", brightnessLevel);
+});
 
-let lastBrightness = 0
+let lastBrightness = 0;
 function toggleBrightness() {
   switch (brightnessSlider.value) {
     case "0":
-      brightnessSlider.value = lastBrightness
+      brightnessSlider.value = lastBrightness;
       break;
     default:
-      lastBrightness = brightnessSlider.value
-      brightnessSlider.value = 0
+      lastBrightness = brightnessSlider.value;
+      brightnessSlider.value = 0;
       break;
-  }
-  video.style.filter = `brightness(${brightnessSlider.value})`
-  thumbnailImg.style.filter = `brightness(${brightnessSlider.value})`
+  };
+  video.style.filter = `brightness(${brightnessSlider.value})`;
+  thumbnailImg.style.filter = `brightness(${brightnessSlider.value})`;
   if (brightnessSlider.value == 1) {
-    video.style.filter = ''
-    thumbnailImg.style.filter = ''
-  }
+    video.style.filter = '';
+    thumbnailImg.style.filter = '';
+  };
   window.dispatchEvent(new Event('brightnesschange'));
-}
+};
 
 // Blue Light Filter
-blueFilterBtn.addEventListener("click", toggleBlueFilter)
+blueFilterBtn.addEventListener("click", toggleBlueFilter);
 
 function toggleBlueFilter() {
-  let bf = document.body.classList.toggle("blue-filter")
+  let bf = document.body.classList.toggle("blue-filter");
   requestAnimationFrame(() => {
     if (create_message_overlay) {
-      let message = `Blue light filter ${bf ? 'enabled' : 'disabled'}`
+      let message = `Blue light filter ${bf ? 'enabled' : 'disabled'}`;
       create_message_overlay(message);
-    }
+    };
   });
-}
+};
 
 
 // View Modes
-// theaterBtn.addEventListener("click", toggleTheaterMode)
-fullScreenBtn.addEventListener("click", toggleFullScreenMode)
-// miniPlayerBtn.addEventListener("click", toggleMiniPlayerMode)
-fullScreenIosBtn.addEventListener("click", toggleIOSViewerMode)
+// theaterBtn.addEventListener("click", toggleTheaterMode);
+fullScreenBtn.addEventListener("click", toggleFullScreenMode);
+// miniPlayerBtn.addEventListener("click", toggleMiniPlayerMode);
+fullScreenIosBtn.addEventListener("click", toggleIOSViewerMode);
 
 function toggleTheaterMode() {
-  videoContainer.classList.toggle("theater")
-}
+  videoContainer.classList.toggle("theater");
+};
 
 function toggleFullScreenMode() {
   // Check if iOS
   if (iOSCheck()) {
-    toggle_fake_fullscreen()
-    return
-  }
+    toggle_fake_fullscreen();
+    return;
+  };
 
   if (document.fullscreenElement == null) {
-    videoContainer.requestFullscreen()
+    videoContainer.requestFullscreen();
   } else {
-    document.exitFullscreen()
-  }
-}
+    document.exitFullscreen();
+  };
+};
 function toggle_fake_fullscreen() {
-  videoContainer.classList.toggle("fake-full-screen")
+  videoContainer.classList.toggle("fake-full-screen");
   if (videoContainer.classList.contains("fake-full-screen")) {
     // Disable scrolling
-    document.body.style.overflow = "hidden"
+    document.body.style.overflow = "hidden";
   } else {
     // Enable scrolling
-    document.body.style.overflow = ""
-  }
-}
+    document.body.style.overflow = "";
+  };
+};
 
 function toggleIOSViewerMode() {
   // Remove properties that prevent the video from playing fullscreen on iOS
-  let waspaused = video.paused
-  video.pause()
-  // video.removeAttribute("playsinline")
-  // video.removeAttribute("webkit-playsinline")
-  video.webkitEnterFullscreen()
-  if (!waspaused) {video.play()}
-
-  // There's no controls to turn this off because iOS takes over
-  // So we add the properties back when the video exits fullscreen
-  video.addEventListener("webkitendfullscreen", () => {
-    // video.setAttribute("playsinline", "")
-    // video.setAttribute("webkit-playsinline", "")
-  })
-}
+  let waspaused = video.paused;
+  video.pause();
+  video.webkitEnterFullscreen();
+  if (!waspaused) {video.play()};
+};
 
 
 function toggleMiniPlayerMode() {
   if (videoContainer.classList.contains("mini-player")) {
-    document.exitPictureInPicture()
+    document.exitPictureInPicture();
   } else {
-    video.requestPictureInPicture()
-  }
-}
+    video.requestPictureInPicture();
+  };
+};
 
 document.addEventListener("fullscreenchange", () => {
-  videoContainer.classList.toggle("full-screen", document.fullscreenElement)
-})
+  videoContainer.classList.toggle("full-screen", document.fullscreenElement);
+});
 
 video.addEventListener("enterpictureinpicture", () => {
-  videoContainer.classList.add("mini-player")
-})
+  videoContainer.classList.add("mini-player");
+});
 
 video.addEventListener("leavepictureinpicture", () => {
-  videoContainer.classList.remove("mini-player")
-})
+  videoContainer.classList.remove("mini-player");
+});
 
 // Play/Pause
 playPauseBtns.forEach(e => {e.addEventListener("click", togglePlay)});
 video.parentElement.addEventListener("click", function (e) { // We use parentElement because in fullscreen the video could be smaller than the container
   if (mobileCheck() || tabletCheck()) {
-    toggleControls()
+    toggleControls();
   } else {
-    togglePlay()
-  }
-})
+    togglePlay();
+  };
+});
 
 function togglePlay() {
   window.dispatchEvent(new Event('play_requested'));
-  video.paused ? video.play() : video.pause()
-}
+  try {
+    video.paused ? video.play() : video.pause();
+  } catch (error) { // Doesn't work for some reason
+    console.log("Error:", error);
+  }
+};
 
 video.addEventListener("play", () => {
-  videoContainer.classList.remove("paused")
-})
+  videoContainer.classList.remove("paused");
+});
 
 video.addEventListener("pause", () => {
-  videoContainer.classList.add("paused")
-})
+  videoContainer.classList.add("paused");
+});
 
 
 // Controls on mobile
-let controlsTimeout
+let controlsTimeout;
 function toggleControls(force=undefined) {
-  clearTimeout(controlsTimeout)
-  videoContainer.classList.toggle("controls-active", force)
+  clearTimeout(controlsTimeout);
+  videoContainer.classList.toggle("controls-active", force);
 
   // Set timeout if video is playing
   if (!video.paused) {
     controlsTimeout = setTimeout(() => {
-      videoContainer.classList.remove("controls-active")
-    }, 2000)
-  }
-}
+      videoContainer.classList.remove("controls-active");
+    }, 2000);
+  };
+};
 
 // When you unpause the video, timeout to hide controls
 video.addEventListener("play", () => {
-  toggleControls(true)
-})
+  toggleControls(true);
+});
 // // Any touch interaction with the controls in videoContainer should reset the timeout
 const control_elements = [
   videoContainer.querySelector(".controls"),
@@ -426,61 +421,61 @@ const control_elements = [
   // videoContainer.querySelector(".speed-btn"),
   videoContainer.querySelector(".current-time"),
   videoContainer.querySelector(".total-time"),
-]
-control_elements.forEach(e=>{e.addEventListener("touchstart", () => {toggleControls(true)})})
-control_elements.forEach(e=>{e.addEventListener("touchmove", () => {toggleControls(true)})})
-control_elements.forEach(e=>{e.addEventListener("touchend", () => {toggleControls(true)})})
+];
+control_elements.forEach(e=>{e.addEventListener("touchstart", () => {toggleControls(true)})});
+control_elements.forEach(e=>{e.addEventListener("touchmove", () => {toggleControls(true)})});
+control_elements.forEach(e=>{e.addEventListener("touchend", () => {toggleControls(true)})});
 
 // When pausing the video, clear the timeout
 video.addEventListener("pause", () => {
-  clearTimeout(controlsTimeout)
-})
+  clearTimeout(controlsTimeout);
+});
 
 
 // Double tap to skip. Tapping on the left side of the video will skip backwards, and tapping on the right side will skip forwards.
 // We listen for touchstart events on the video element, and first determine if there's a double tap in quick succession
 // To do this, we check if the time between the current tap and the last tap is less than 300ms
-let lastTap = 0
+let lastTap = 0;
 video.addEventListener("touchstart", e => {
   // If in the center third of video, don't count the tap
-  const rect = video.getBoundingClientRect()
+  const rect = video.getBoundingClientRect();
   if (e.touches[0].clientX > rect.width / 3 && e.touches[0].clientX < rect.width * 2 / 3) {
-    return
-  }
+    return;
+  };
 
-  const timeSinceLastTap = Date.now() - lastTap
+  const timeSinceLastTap = Date.now() - lastTap;
   if (timeSinceLastTap < 300) {
     if (e.touches[0].clientX < rect.width / 2) {
-      skip(-5)
+      skip(-5);
     } else {
-      skip(5)
-    }
-  }
-  lastTap = Date.now()
-})
+      skip(5);
+    };
+  };
+  lastTap = Date.now();
+});
 
 
 // Detect dragging on the video element
 // As user is dragging down, we translate #watch_overlay the same amount.
 // If the user lets go further than half the viewport height down, we enable picture in picture mode
 // Otherwise, we reset the translation
-var startY = 0
-var isDragging = false
-let drag_elems = [pipPlayer.querySelector('.pip-player-info'),video]
+var startY = 0;
+var isDragging = false;
+let drag_elems = [pipPlayer.querySelector('.pip-player-info'),video];
 drag_elems.forEach(e=>{e.addEventListener("touchstart", e => {
-  startY = e.touches[0].clientY
-  watch_overlay.classList.add("dragging")
-  document.body.style.overflow = "hidden"
-})})
+  startY = e.touches[0].clientY;
+  watch_overlay.classList.add("dragging");
+  document.body.style.overflow = "hidden";
+})});
 drag_elems.forEach(e=>{e.addEventListener("touchmove", e => {
-  let deltaY = e.touches[0].clientY - startY
+  let deltaY = e.touches[0].clientY - startY;
 
   if (isDragging && !document.body.classList.contains("pip")) {
-    let translation = Math.min(Math.max(0, deltaY), window.innerHeight)
-    watch_overlay.style.top = `${translation}px`
+    let translation = Math.min(Math.max(0, deltaY), window.innerHeight);
+    watch_overlay.style.top = `${translation}px`;
   } else if (isDragging && document.body.classList.contains("pip")) {
-    let translation = Math.max(Math.min(Math.min(0, deltaY), window.innerHeight), -window.innerHeight)
-    watch_overlay.style.top = `${window.innerHeight + translation}px`
+    let translation = Math.max(Math.min(Math.min(0, deltaY), window.innerHeight), -window.innerHeight);
+    watch_overlay.style.top = `${window.innerHeight + translation}px`;
 
     pipPlayerStyle.innerHTML = `
       .video-wrapper {
@@ -491,71 +486,52 @@ drag_elems.forEach(e=>{e.addEventListener("touchmove", e => {
         bottom: ${-translation}px;
         opacity: ${1 - Math.min(Math.abs(translation) / (window.innerHeight/2), 1)};
       }
-    `
+    `;
   } else {
-    isDragging = true
-  }
-})})
+    isDragging = true;
+  };
+})});
 drag_elems.forEach(e=>{e.addEventListener("touchend", e => {
-  watch_overlay.classList.remove("dragging")
-  if (!isDragging) return
+  watch_overlay.classList.remove("dragging");
+  if (!isDragging) return;
 
-  let deltaY = e.changedTouches[0].clientY - startY
+  let deltaY = e.changedTouches[0].clientY - startY;
 
   if (deltaY > videoContainer.clientHeight / 3) {
     window.dispatchEvent(new Event('enterpip'));
   } else {
     window.dispatchEvent(new Event('exitpip'));
-  }
-})})
+  };
+})});
 drag_elems[0].addEventListener("click", () => {
   window.dispatchEvent(new Event('exitpip'));
-})
+});
 
 function pip_refresh() {
-  pipPlayerStyle.innerHTML = ''
-  watch_overlay.classList.remove("dragging")
-  document.body.style.overflow = ""
-  isDragging = false
-}
-function switch_navbar_parent(to_parent, from_parent) {
-  let navbar = document.querySelector('#navbar');
-  to_parent.prepend(navbar);
-  let navbar_copy = document.querySelector('#navbar_copy');
-  if (!navbar_copy) {
-    navbar_copy = navbar.cloneNode(true);
-    navbar_copy.id = 'navbar_copy';
-  }
-  from_parent.prepend(navbar_copy);
-}
+  pipPlayerStyle.innerHTML = '';
+  watch_overlay.classList.remove("dragging");
+  document.body.style.overflow = "";
+  isDragging = false;
+};
 
 window.addEventListener("enterpip", () => {
-  // Copy navbar element back to the start of body if not mobile
-  if (!mobileCheck()) {
-    switch_navbar_parent(document.body, watch_overlay);
-  }
   let content_container = document.querySelector('#content-container');
   if (content_container.dataset.page == "home") {
-    window.history.pushState(null, null, '/');
+    window.history.replaceState({page:"home"}, null, '/');
   } else if (content_container.dataset.page == "results") {
-    window.history.pushState(null, null, '/?q=' + QUERY);
-  }
+    window.history.replaceState({page:"results",query:QUERY}, null, '/?q=' + QUERY);
+  };
 
   document.body.classList.add("pip");
   watch_overlay.style.top = "";
   pip_refresh();
-})
+});
 window.addEventListener("exitpip", () => {
-  // Copy navbar element to the start of watch_overlay if not mobile
-  if (!mobileCheck()) {
-    switch_navbar_parent(watch_overlay, document.body);
-  }
-
-  window.history.pushState(null, null, '/?v=' + VIDEO_ID);
+  window.history.replaceState({page:"watch",video_id:VIDEO_ID}, null, '/?v=' + VIDEO_ID);
   document.body.classList.remove("pip");
   watch_overlay.style.top = "";
   pip_refresh();
-})
+});
 pipCloseBtn.addEventListener("click", () => { // Close button on pip player
   video.pause();
   document.body.classList.remove("pip");
@@ -568,18 +544,18 @@ pipCloseBtn.addEventListener("click", () => { // Close button on pip player
     .pip-player-controls {
       bottom: ${-100}px;
     }
-  `
-})
+  `;
+});
 
 
 
 // Loop button
-loopBtn.addEventListener("click", toggleLoop)
+loopBtn.addEventListener("click", toggleLoop);
 
 function toggleLoop() {
-  video.loop = !video.loop
-  loopBtn.classList.toggle("active", video.loop)
-}
+  video.loop = !video.loop;
+  loopBtn.classList.toggle("active", video.loop);
+};
 
 
 
@@ -591,10 +567,10 @@ function toggleLoop() {
  * @returns {void}
  */
 window.seekTo = function(time) {
-  video.currentTime = time / 1000
-  video.scrollIntoView()
-  toggleControls(true)
-}
+  video.currentTime = time / 1000;
+  video.scrollIntoView();
+  toggleControls(true);
+};
 
 
 // Add class when the video starts loading
@@ -612,21 +588,21 @@ video.addEventListener('loadeddata', () => {
 // Make space bar not scroll the page
 window.addEventListener("keydown", e => {
   if (e.key === " ") {
-    e.preventDefault()
-  }
-})
+    e.preventDefault();
+  };
+});
 
 
 // When a button is clicked, start whitePulse animation by adding .clicked class, then remove it after animation is done
-const buttons = document.querySelectorAll(".clickable_icon")
+const buttons = document.querySelectorAll(".clickable_icon");
 buttons.forEach(button => {
     button.addEventListener("click", () => {
-        button.classList.add("clicked")
-    })
+        button.classList.add("clicked");
+    });
     button.addEventListener("animationend", () => {
-        button.classList.remove("clicked")
-    })
-})
+        button.classList.remove("clicked");
+    });
+});
 
 
 // Video error handling using the .video-error-div, adjusting its innerHTML and adding .active
@@ -636,35 +612,35 @@ video.addEventListener("error", () => {
   videoContainer.classList.remove('src-loaded');
   switch (video.error.code) {
     case 1: // MEDIA_ERR_ABORTED
-      videoError.innerHTML = "Aborted"
-      break
+      videoError.innerHTML = "Aborted";
+      break;
     case 2: // MEDIA_ERR_NETWORK
-      videoError.innerHTML = "Network error"
-      break
+      videoError.innerHTML = "Network error";
+      break;
     case 3: // MEDIA_ERR_DECODE
-      videoError.innerHTML = "Decode error"
-      break
+      videoError.innerHTML = "Decode error";
+      break;
     case 4: // MEDIA_ERR_SRC_NOT_SUPPORTED
       // videoError.innerHTML = "Source not supported"
       // Give button to ?v=demo480x852
       videoError.innerHTML = `
         <span>Due to immense data transfer costs I had to pause the website because it was very quickly draining my bank account.
         I'll try to find solutions to further limit the cost! Stay up to date at:</span>
-        <a href="https://www.youtube.com/@ObviouslyASMR/community" class="btn" target="_blank">My YouTube Community</a>
+        <a href="https://www.youtube.com/@ObviouslyASMR/community" class="btn rounded" target="_blank">My YouTube Community</a>
         <span>or watch a short demo I kept available:</span>
-        <a class="btn" onclick="redirect_watch('demo480x852')">Demo</a>
-      `
-      break
+        <a class="btn rounded" onclick="redirect_watch('demo480x852')">Demo</a>
+      `;
+      break;
     default:
-      videoError.innerHTML = "Unknown error"
-      break
+      videoError.innerHTML = "Unknown error";
+      break;
   }
-  videoError.classList.add("active")
-})
+  videoError.classList.add("active");
+});
 // With every pushstate event (when navigating to a new page), remove .active from videoError
 window.addEventListener("pushstate", () => {
-  videoError.classList.remove("active")
-})
+  videoError.classList.remove("active");
+});
 
 
 

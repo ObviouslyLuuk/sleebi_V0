@@ -12,10 +12,10 @@ function loadPlayer() {
     if (!HTML_TEMPLATES['watch']) {
         window.addEventListener('watch_html_ready', loadPlayer);
         return;
-    }
+    };
     HTML_TEMPLATES['player'] = null;
     fetch_html('player');
-}
+};
 
 window.addEventListener('watch_html_ready', loadPlayer);
 
@@ -29,7 +29,7 @@ function placeWatchContent() {
         console.log("player html not loaded yet, waiting...");
         window.addEventListener('player_html_ready', placeWatchContent);
         return;
-    }
+    };
     let watch_overlay = document.querySelector('#watch_overlay');
     if (!watch_overlay) {
         console.log("watch_overlay not created yet, creating...");
@@ -43,11 +43,11 @@ function placeWatchContent() {
                 let video = document.querySelector('video');
                 if (video.src != "") return;
 
-                let video_info = videos_info[VIDEO_ID]
+                let video_info = videos_info[VIDEO_ID];
                 video.src = get_download_url(video_info);
             });
-        }
-    }
+        };
+    };
     if (!document.querySelector('#player_script')) {
         console.log("player.js not loaded yet, loading...");
         let script = document.createElement('script');
@@ -59,7 +59,7 @@ function placeWatchContent() {
             placeWatchContent();
         }, 50);
         return;
-    }
+    };
 
     document.body.classList.add('watch');
     window.dispatchEvent(new Event('exitpip'));
@@ -68,13 +68,16 @@ function placeWatchContent() {
         console.log("videos_info not loaded yet, waiting...");
         window.addEventListener('videos_info_loaded', placeWatchContent);
         return;
-    }
+    };
     let video_info = videos_info[VIDEO_ID];
     console.log("video_info:", video_info);
 
+    // Update page title
+    document.title = video_info['title'];
+
     // Set thumbnail src
     let video = document.querySelector('video');
-    video.style.backgroundImage = `url(${get_thumb_url(video_info)})`;
+    video.style.backgroundImage = `url(${get_thumb_urls(video_info)['maxres']})`;
 
     // Prepare video src for when play is requested
     document.querySelector('.video-container').classList.remove('src-loaded');
@@ -85,9 +88,8 @@ function placeWatchContent() {
         document.querySelector('.video-container').classList.add('controls-active');
     } else {
         video.src = get_download_url(video_info);
-    }
-    let elem_to_scroll = mobileCheck() ? video : document.querySelector('#navbar');
-    elem_to_scroll.scrollIntoView();
+    };
+    document.querySelector('video').scrollIntoView();
 
 
     // video.play() // Cannot play before user interaction
@@ -97,7 +99,7 @@ function placeWatchContent() {
     if (t) {
         console.log("setting time: ", t);
         video.currentTime = t / 1000;
-    }
+    };
     
     // Set video title
     let video_title = document.querySelector('#vid_title');
@@ -107,7 +109,7 @@ function placeWatchContent() {
 
     // Set video views
     let video_views = document.querySelector('#vid_viewcount');
-    video_views.innerHTML = `${views_add_commas(video_info['views'])} views`
+    video_views.innerHTML = `${views_add_commas(video_info['views'])} views`;
 
     // Set video description
     let video_description = document.querySelector('#vid_description');
@@ -157,14 +159,21 @@ function placeWatchContent() {
         add_rec_vid(
             rec_div,
             vid_info,
+            "eager",
+            320,
         );
-    }
+    };
 
-    // Wait 2 seconds to load embedding functionality
-    setTimeout(function() {
-        onYouTubeIframeAPIReady();
-    }, 2000);
-}
+    // Add script tag for js/util/embed.js
+    let embed_script = document.querySelector('#embed_script');
+    if (!embed_script) {
+        console.log("embed.js not loaded yet, loading...");
+        let script = document.createElement('script');
+        script.src = 'js/util/embed.js';
+        script.id = 'embed_script';
+        document.body.appendChild(script);
+    };
+};
 
 
 
@@ -173,8 +182,8 @@ function add_share_overlay() {
     video.pause();
     let starttime = format_ms_as_time(video.currentTime * 1000);
 
-    let overlay_content = create_overlay(document.body, 'share_overlay', true, null, true)
-    overlay_content = create_and_append('div', overlay_content, null, 'share_overlay_content')
+    let overlay_content = create_overlay(document.body, 'share_overlay', true, null, true);
+    overlay_content = create_and_append('div', overlay_content, null, 'share_overlay_content');
     // Include starttime checkbox
     overlay_content.innerHTML = `
     <h5>Share</h5>
@@ -187,7 +196,7 @@ function add_share_overlay() {
         <label for="share_starttime_checkbox">Start at:</label>
         <input type="text" id="share_starttime" class="time_input" disabled value="${starttime}">
     </div>
-    `
+    `;
     // Add onclick event to copy_url_btn
     let copy_url_btn = document.querySelector('#copy_url_btn');
     copy_url_btn.addEventListener('click', function() {
@@ -203,21 +212,21 @@ function add_share_overlay() {
         let index = val.indexOf('&t=');
         if (index != -1) {
             val = val.slice(0, index);
-        }
-        let t
+        };
+        let t;
         try {
             t = calc_ms_from_time(share_starttime.value);
         } catch (error) {
             console.log(error);
             return;
-        }
+        };
         if (t == 0 || !incl_time) {
             textarea.value = val;
             return;
-        }
+        };
         val += `&t=${calc_ms_from_time(share_starttime.value)}`;
         textarea.value = val;
-    }
+    };
 
     // Add onclick event to share_starttime_checkbox
     let share_starttime_checkbox = document.querySelector('#share_starttime_checkbox');
@@ -229,11 +238,11 @@ function add_share_overlay() {
         } else {
             share_starttime.disabled = true;
             update_url();
-        }
+        };
     });
 
     // Add input event to share_starttime
     let share_starttime = document.querySelector('#share_starttime');
     share_starttime.addEventListener('input', update_url);
-}
+};
 

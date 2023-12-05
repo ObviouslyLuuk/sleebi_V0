@@ -2,5 +2,4 @@
 #content-container[data-page=results] .vid_tile img {
     width: 300px;
     max-width: 40vw;
-    height: unset;
 }

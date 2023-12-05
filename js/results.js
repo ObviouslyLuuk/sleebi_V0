@@ -5,18 +5,23 @@ HTML_TEMPLATES['results'] = null;
 fetch_html('results');
 
 function placeResultsContent() {
+    let container = document.querySelector('#content-container');
+    container.innerHTML = '<div class="spinner active"><img src="images/logo.svg"></div>';
     if (!HTML_TEMPLATES['results']) {
         console.log("results html not loaded yet, waiting...");
         window.addEventListener('results_html_ready', placeResultsContent);
         return;
-    }
+    };
     // Open search bar by default
     document.querySelector('#navbar').dataset.mode = "search";
 
     // Get query from URL
     URLPARAMS = new URLSearchParams(window.location.search);
     QUERY = URLPARAMS.get('q');
-    console.log("query:", QUERY)
+    console.log("query:", QUERY);
+
+    // Update page title
+    document.title = `Search: ${QUERY}`;
 
     // Set search bar value to query from URL
     let search_input = document.querySelector('#search-input');
@@ -28,7 +33,7 @@ function placeResultsContent() {
         console.log("videos_info not loaded yet, waiting...");
         window.addEventListener('videos_info_loaded', placeResultsContent);
         return;
-    }
+    };
 
     let rec_vids = get_search_results(QUERY, Object.values(videos_info));
 
@@ -37,7 +42,9 @@ function placeResultsContent() {
         add_rec_vid(
             document.querySelector('#search_results'),
             vid_info,
+            'eager',
+            320,
         );
-    }
+    };
     document.querySelector('#content-container').dataset.page = "results";
-}
+};

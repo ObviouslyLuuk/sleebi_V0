@@ -1,75 +1,9 @@
 
-// [
-//     'TpvoB80j3Zo',
-//     'w1QPVe9jqlM',
-//     '5JN3o0Q-IgA',
-//     'PjaBwZkamDQ',
-//     'XIcjH3a98-c',
-//     'uOXj-T5D4jQ',
-//     'xD90_Gh-IKo',
-//     'JoLI3GYuB_A',
-//     'pXIXpfWyUNE'
-// ]
-
-// Uploaded videos
-VIDEO_IDS = [
-    'demo480x852',
-    '-9R09WrLmZc',
-    '5JN3o0Q-IgA',
-    'cAmIxLEANHo',
-    'dt4YRc4UqK8',
-    'J_ldPXab1f4',
-    'JoLI3GYuB_A',
-    'NJoFdZFvfcc',
-    'PjaBwZkamDQ',
-    'pXIXpfWyUNE',
-    'TpvoB80j3Zo',
-    'U2TLtSdQjpo',
-    'uOXj-T5D4jQ',
-    'w1QPVe9jqlM',
-    'xD90_Gh-IKo',
-    'XIcjH3a98-c',
-    'YNMoz3OZ1JQ'
-]
-
-
-
-// Load video_basics.json
-var videos_info;
-let video_basics_request = new XMLHttpRequest();
-video_basics_request.open('GET', 'data/video_basics.json');
-video_basics_request.onload = function() {
-    if (video_basics_request.status >= 200 && video_basics_request.status < 400) {
-        // Success!
-        videos_info = JSON.parse(video_basics_request.responseText); // This is an object with key: video_id, value: video_info
-
-        // Only keep video_infos that are in VIDEO_IDS
-        let video_ids = Object.keys(videos_info);
-        for (let video_id of video_ids) {
-            if (!VIDEO_IDS.includes(video_id)) {
-                delete videos_info[video_id];
-            }
-        }
-
-        // Fire event
-        window.dispatchEvent(new Event('videos_info_loaded'));
-    } else {
-        // We reached our target server, but it returned an error
-        console.log("Error loading video_basics.json");
-    }
-};
-video_basics_request.onerror = function() {
-    // There was a connection error of some sort
-    console.log("Error loading video_basics.json");
-};
-video_basics_request.send();
-
-
 // Get params from URL
 var URLPARAMS = new URLSearchParams(window.location.search);
 var PATHNAME = window.location.pathname.split("/").splice(1);
-var VIDEO_ID
-var QUERY
+var VIDEO_ID;
+var QUERY;
 
 update_page_based_on_url();
 
@@ -79,7 +13,7 @@ let search_bar = document.querySelector('#navbar #search_bar');
 search_bar.addEventListener('submit', function(e) {
     e.preventDefault();
     let query = document.querySelector('#navbar #search-input').value;
-    console.log("search query entered: ", query)
+    console.log("search query entered: ", query);
     redirect_results(query);
 });
 
@@ -129,7 +63,7 @@ tip_btn.addEventListener('click', function() {
 
 
 
-let link // declaring link here so it can be used in multiple places
+let link; // declaring link here so it can be used in multiple places
 
 document.body.dataset.mobile = mobileCheck();
 document.body.dataset.tablet = tabletCheck();
@@ -144,8 +78,8 @@ function updateLandscape() {
     } else {
         // document.exitFullscreen();
         document.body.dataset.landscape = "false";
-    }
-}
+    };
+};
 updateLandscape();
 
 
@@ -173,8 +107,10 @@ function update_page_based_on_url() {
         case "":
             if (URLPARAMS.get('v')) {
                 console.log("placing watch page");
-                placeHomeContent();
                 placeWatchContent();
+                if (!document.querySelector('#content-container').dataset.page) {
+                    placeHomeContent();
+                }
             } else if (URLPARAMS.get('q')) {
                 console.log("placing results page");
                 placeResultsContent();
@@ -183,13 +119,13 @@ function update_page_based_on_url() {
                 console.log("placing home page");
                 placeHomeContent();
                 window.dispatchEvent(new Event('enterpip'));
-            }
+            };
             break;
         default:
             console.log("unknown pathname. error page not yet implemented");
             break;
-    }
-}
+    };
+};
 
 
 
@@ -197,3 +133,5 @@ function update_page_based_on_url() {
 window.addEventListener('pushstate', update_page_based_on_url);
 window.addEventListener('popstate', update_page_based_on_url);
 
+
+create_message_overlay('Sleebi is a work in progress, so keep in mind some features might not work :)', document.body, 5000);

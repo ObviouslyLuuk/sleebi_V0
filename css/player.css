@@ -28,19 +28,11 @@ body[data-mobile=true] video,
 body[data-mobile=true] .video-controls-container::before {
   border-radius: 0;
 }
-
-
-*, *::before, *::after {
-    box-sizing: border-box;
-  }
-  
-  body {
-    margin: 0;
-  }
   
   .video-container {
     position: relative;
-    /* width: 90%; */
+    width: 100%;
+    aspect-ratio: 16/9;
     flex: 1;
     max-width: 1000px;
     display: flex;
@@ -638,13 +630,10 @@ body.pip video {
   border-radius: 0;
   object-fit: cover;
 }
-body[data-mobile=true].pip .video-wrapper,
-body[data-mobile=true].pip .pip-player-controls {
-  height: 50px;
-}
-body[data-mobile=false].pip .video-wrapper,
-body[data-mobile=false].pip .pip-player-controls {
-  height: 65px;
+body.pip .video-wrapper,
+body.pip .pip-player-controls {
+  /* This property changes dynamically based on mobile */
+  height: var(--pip-player-height);
 }
 
 

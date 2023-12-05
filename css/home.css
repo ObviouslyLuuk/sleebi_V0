@@ -1,8 +1,13 @@
 
+/* Vid tiles */
 #content-container[data-page=home] #search_results {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+body[data-mobile=false] #content-container[data-page=home] #search_results {
+    padding: 20px;
+    padding-top: 5px;
 }
 #content-container[data-page=home] .vid_tile {
     display: flex;
@@ -10,5 +15,28 @@
 }
 #content-container[data-page=home] .vid_tile img {
     width: 100%;
-    height: 100%;
+    /* In reality vid tiles will never exceed this size, because it'd make room for another */
+    max-width: 640px;
+}
+
+/* Stats */
+.stats_div {
+    display: flex;
+    background-color: var(--dark-theme-divider-color);
+}
+.stat_div {
+    display: flex;
+    width: 50%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+.stat_num {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.stat_text {
+    font-size: 1.2em;
+    font-weight: bold;
 }

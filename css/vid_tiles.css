@@ -1,4 +1,7 @@
 
+.vid_tile {
+    cursor: pointer;
+}
 .rec_vid {
     display: flex;
     flex-direction: row;
@@ -23,7 +26,8 @@
 .rec_thumb_img {
     /* Crop to 16:9 aspect ratio */
     width: 160px;
-    height: 90px;
+    aspect-ratio: 16/9;
+    height: unset;
     border-radius: 10px;
 
     /* Make image fill the div */
@@ -39,14 +43,14 @@
     margin-top: 5px;
 }
 .rec_title {
-    font-size: 1em;
     margin: 0;
 }
 .rec_channel {
     margin: 0;
     /* Smaller font, secondary color */
     font-size: 0.8em;
-    color: var(--dark-theme-secondary-color)
+    color: var(--dark-theme-secondary-color);
+    text-wrap: nowrap;
 }
 .rec_views-date {
     display: flex;
