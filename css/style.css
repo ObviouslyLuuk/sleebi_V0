@@ -188,7 +188,7 @@ a.bordered {
     z-index: 9999999;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.8);
 }
 .overlay {
     position: fixed;
@@ -203,6 +203,7 @@ a.bordered {
     width: 470px;
     max-width: 90vw;
     overflow: auto;
+    border: 1px solid var(--dark-theme-divider-color);
 }
 .overlay_close_btn {
     position: absolute;
@@ -265,6 +266,7 @@ input[type=text] {
 }
 .time_input {
     width: 40px;
+    text-align: center;
     background-color: transparent!important;
     border: none!important;
     border-bottom: 1px solid white!important;
@@ -281,6 +283,16 @@ input[type=text] {
 }
 .wide_input {
     width: 100%;
+}
+
+
+/* A label tag that isn't the first child should have margin-left */
+/* A label tag that isn't the last child should have margin-right */
+label:not(:first-child) {
+    margin-left: 10px;
+}
+label:not(:last-child) {
+    margin-right: 10px;
 }
 
 
@@ -467,6 +479,7 @@ button, input, optgroup, select, textarea {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
+    border-radius: 0.25rem;
 }
 
 a {
