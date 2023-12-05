@@ -32,6 +32,7 @@ body[data-mobile=true] .video-controls-container::before {
   .video-container {
     position: relative;
     width: 100%;
+    max-height: 100vh;
     aspect-ratio: 16/9;
     flex: 1;
     max-width: 1000px;
