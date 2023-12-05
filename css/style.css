@@ -159,7 +159,6 @@ a.bordered {
     justify-content: start;
     align-items: center;
     gap: 1em;
-    flex-wrap: wrap;
 }
 .flex-container.even {
     justify-content: space-evenly;
@@ -311,6 +310,7 @@ input[type=text] {
     cursor: pointer;
     align-items: center;
     justify-content: center;
+    opacity: 0.8;
 }
 .clickable_icon.wide {
     /* padding: 10px; */
@@ -318,7 +318,6 @@ input[type=text] {
     height: 40px;
 }
 .clickable_icon:hover {
-    /* filter: brightness(0.5); */
     opacity: 1;
 }
 .rounded {

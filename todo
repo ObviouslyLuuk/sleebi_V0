@@ -3,9 +3,9 @@ ISSUES:
     background play not working for iOS? (many comments on post #1, but not sure if they were checking the widget)
 
 BUGS:
-    sometimes when loaded homescreen and clicking on a video, the navbar doesn't get copied
     can't scroll down when only video is on screen (on mobile, landscape)
     minifying JS makes spaces after commas disappear in strings that are displayed in the UI
+        ideally text that will appear in UI should NOT be in JS files, but in a separate file, so that it doesn't suffer from minification
     when loading home or results it doesn't scroll to top
 iPad:
     also weirdly, the message for blue filter does show, but for link copied doesn't

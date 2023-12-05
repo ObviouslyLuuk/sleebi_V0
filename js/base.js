@@ -134,4 +134,4 @@ window.addEventListener('pushstate', update_page_based_on_url);
 window.addEventListener('popstate', update_page_based_on_url);
 
 
-create_message_overlay('Sleebi is a work in progress, so keep in mind some features might not work :)', document.body, 5000);
+create_message_overlay('Sleebi is a work in progress, so keep in mind some features might not work', document.body, 5000);
