@@ -4,6 +4,9 @@ ISSUES:
 
 BUGS:
     sometimes when loaded homescreen and clicking on a video, the navbar doesn't get copied
+    can't scroll down when only video is on screen (on mobile, landscape)
+    minifying JS makes spaces after commas disappear in strings that are displayed in the UI
+    when loading home or results it doesn't scroll to top
 iPad:
     also weirdly, the message for blue filter does show, but for link copied doesn't
 
@@ -25,6 +28,8 @@ filter based on duration
 optional calming music to play in background of videos, or noise?
 
 video chapters
+
+make stats div clickable so you can scroll through channels and videos
 
 also show other ASMR Youtube videos, but embedded, with preroll ads, but stopping before postrolls
     little badge in the tile corner
@@ -68,6 +73,12 @@ clean up controls on mobile (maybe with a settings button toggle)
 put svgs from player into sprite.svg
 
 add a "more" button to the description
+
+privacy policy is a bit narrow on mobile, and email address has no underlining
+
+overlays are kinda hard to distinguish from the background
+
+Share overlay isn't great after dropping bootstrap
 
 make brightness and volume sliders go up instead of sideways
 
