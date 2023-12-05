@@ -36,6 +36,8 @@ function placeHomeContent() {
         add_rec_vid(
             document.querySelector('#search_results'),
             vid_info,
+            'eager',
+            640,
         );
     };
     document.querySelector('#content-container').dataset.page = "home";
