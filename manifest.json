@@ -1,0 +1,22 @@
+{
+    "name": "Sleebi - for Sleep",
+    "short_name": "Sleebi",
+    "description": "Watch ASMR without distractions; Sleebi offers a free ad-free experience with options to dim brightness and filter blue light",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#212121",
+    "theme_color": "#ffba12",
+    "icons": [
+      {
+        "src": "/images/logo.png",
+        "sizes": "1000x1000",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "/images/logo_text.png",
+        "sizes": "1250x500",
+        "type": "image/png"
+      }
+    ]
+  }
