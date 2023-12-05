@@ -217,24 +217,21 @@ a.bordered {
     color: black;
     bottom: 0;
     transform: translate(-50%, 100%);
+    border: none;
     /* animation: slideUpAndAway 2s ease-in-out forwards; */
 }
 
 @keyframes slideUpAndAway {
     0% {
-        bottom: 0;
         transform: translate(-50%, 100%);
     }
     20% {
-        bottom: 20px;
-        transform: translate(-50%, 0%);
+        transform: translate(-50%, calc(0% - 20px));
     }
     80% {
-        bottom: 20px;
-        transform: translate(-50%, 0%);
+        transform: translate(-50%, calc(0% - 20px));
     }
     100% {
-        bottom: 0;
         transform: translate(-50%, 100%);
     }
 }
