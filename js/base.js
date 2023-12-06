@@ -128,6 +128,15 @@ function update_page_based_on_url() {
 };
 
 
+// Load Analytics and Cookie consent only if not localhost
+if (window.location.hostname != "localhost") {
+    let script = document.createElement('script');
+    script.src = "js/util/piwik.js";
+    script.async = true;
+    script.defer = true;
+    document.body.insertBefore(script, document.body.firstChild);
+}
+
 
 // Every time something is pushed or popped from history, place content
 window.addEventListener('pushstate', update_page_based_on_url);

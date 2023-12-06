@@ -116,7 +116,6 @@ improve load speed
     https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fsleebi.net%2F&tab=desktop
     https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fsleebi.net%2F&tab=mobile
     https://web.dev/articles/optimize-cls
-    apparently yt thumbnails are also available in webp format, which is smaller, at vi_webp/VIDEO_ID/maxresdefault.webp
     defer loading of lower priority JS/CSS
         like when doing ssr, only load the appropriate JS/CSS at initial load, and then load the rest async
         optimize loading of sleebi player VS YT player (perhaps pre-loading when on home page)
