@@ -10,8 +10,18 @@ iPad:
     also weirdly, the message for blue filter does show, but for link copied doesn't
 
 ADDITIONS:
+make piwik load later, and not if localhost
+
+bundle embed/sleebi player uses into separate functions to make the code cleaner
+add loop functionality to embed player
+
 sort search results by date, views, like-ratio, etc
 add feedback form
+
+on desktop fullscreen make controls time out after a while because you can't remove the cursor
+add up and down arrow keys to change volume
+can I somehow prevent right and left arrow keys from changing volume? This happens when the user is focused on the volume slider, but I don't want that to happen
+pause when hitting spacebar
 
 add small v button at top of player to engage miniplayer
 
@@ -39,6 +49,19 @@ also show other ASMR Youtube videos, but embedded, with preroll ads, but stoppin
         However, disabling postroll ads is no longer possible on YouTube, therefore Sleebi will stop the video before the postroll ad.
 
         tl;dr: you won't be woken up by a postroll ad, any revenue from other ads go to the creator and YouTube.
+ads won't show unless the embed player is 
+    click-to-play (we could probably hack this), 
+    at least 200x200, 
+    and on a safe website
+    https://support.google.com/youtube/answer/132596?hl=en#:~:text=If%20you've%20associated%20your,as%20videos%20on%20youtube.com.
+    what about mute?
+    what about display: none?
+    what about autoplay?
+    what about being blocked by a different element?
+    what about being outside of the viewport?
+    test this with a randomizing script for these factors that autofills a google form where the user can say whether they saw an ad or not
+    or if we just want to test for watchtime, we could have a different video for every config and see which one(s) get any watchtime
+        just have this be unlisted videos on my personal channel, but first probably test if all these are satisfied on a normal YT embed
 
 have video preview GIFs when hovering over a video. Scrape from YT in the mouseover-overlay:
 https://i.ytimg.com/an_webp/wS7IPxLZrR4/mqdefault_6s.webp?du=3000&sqp=COKD5KoG&rs=AOn4CLCUw0a8np8UJZynr4pfEB4_ARjqPg
@@ -93,10 +116,18 @@ improve load speed
     https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fsleebi.net%2F&tab=desktop
     https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fsleebi.net%2F&tab=mobile
     https://web.dev/articles/optimize-cls
+    apparently yt thumbnails are also available in webp format, which is smaller, at vi_webp/VIDEO_ID/maxresdefault.webp
     defer loading of lower priority JS/CSS
         like when doing ssr, only load the appropriate JS/CSS at initial load, and then load the rest async
+        optimize loading of sleebi player VS YT player (perhaps pre-loading when on home page)
     compress JS/CSS
     browser caching
+
+    load subset of videos for initial load, and then load the rest async
+    have separate HTML for home/search, watch Sleebi, watch embed because they have different needs
+        then use the same SPA for the rest
+        different min.js and min.css for each page with the rest async loaded
+        if necessary could even generate the Sleebi and embed HTML from what we have now with a script so that it's always up to date
 
 
 

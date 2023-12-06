@@ -1,4 +1,14 @@
 
+/**
+ * This file fetches the watch html
+ * then that fires an event which calls loadPlayer()
+ * loadPlayer() fetches the player html (or loads the yt embed js)
+ * then that fires an event which calls placeWatchContent()
+ * placeWatchContent() waits for the player html / yt iframe api to load and adds an event listener if necessary
+ * then it places the watch overlay if necessary
+ * then it waits for videos_info to load and adds an event listener if necessary
+ * then it places the watch content
+ */
 
 const PLAY_WHEN_CLICKED = true; // If true, video will play when clicked, otherwise, video will play when play button is clicked
 
@@ -7,35 +17,45 @@ const PLAY_WHEN_CLICKED = true; // If true, video will play when clicked, otherw
 HTML_TEMPLATES['watch'] = null;
 fetch_html('watch');
 
+var EMBED;
+var yt_player;
 
 function loadPlayer() {
-    if (!HTML_TEMPLATES['watch']) {
-        window.addEventListener('watch_html_ready', loadPlayer);
-        return;
-    };
+    // Load Sleebi player html
+    console.log("loadPlayer: loading player html...");
     HTML_TEMPLATES['player'] = null;
     fetch_html('player');
+
+    if (EMBED) {
+        // Load youtube embedding JS
+        console.log("loadPlayer: loading yt embedding js...");
+        script = document.createElement('script');
+        script.src = 'js/util/embed.js';
+        script.id = 'embed_script';
+        document.body.appendChild(script);
+    }
 };
 
 window.addEventListener('watch_html_ready', loadPlayer);
 
 function placeWatchContent() {
     // Get video_id from URL
-    URLSPARAMS = new URLSearchParams(window.location.search);
     VIDEO_ID = URLPARAMS.get('v');
     console.log("video_id:", VIDEO_ID);
 
+    EMBED = (URLPARAMS.get('embed')!=null); // If true, video will be embedded in page, otherwise, video will be served from Sleebi
+
     if (!HTML_TEMPLATES['player']) {
-        console.log("player html not loaded yet, waiting...");
+        console.log("placeWatchContent: player html not loaded yet, waiting...");
         window.addEventListener('player_html_ready', placeWatchContent);
         return;
     };
     let watch_overlay = document.querySelector('#watch_overlay');
-    if (!watch_overlay) {
-        console.log("watch_overlay not created yet, creating...");
+    if (HTML_TEMPLATES['player'] && !watch_overlay) {
         watch_overlay = create_and_append('div', document.body, 'watch_overlay');
         document.querySelector('#watch_overlay').innerHTML = HTML_TEMPLATES['watch'];
         document.querySelector('.vid_player_container').innerHTML = HTML_TEMPLATES['player'];
+        console.log("placeWatchContent: watch_overlay now created");
 
         // Set video src once play is requested
         if (!PLAY_WHEN_CLICKED) {
@@ -55,9 +75,31 @@ function placeWatchContent() {
         script.id = 'player_script';
         document.body.appendChild(script);
 
-        setTimeout(function() { // Wait for player.js to load (important for exitpip event)
-            placeWatchContent();
-        }, 50);
+        // We don't actually need to wait for player.js
+        // window.addEventListener('player_js_ready', placeWatchContent);
+        // return;
+    };
+    if (EMBED && !window.YT) {
+        console.log("placeWatchContent: yt iframe api not loaded yet, waiting...");
+        window.addEventListener('yt_iframe_api_ready', placeWatchContent);
+        return;
+    };
+    if (EMBED && !yt_player) {
+        console.log("placeWatchContent: yt_player not loaded yet, loading...");
+        yt_player = place_player(VIDEO_ID, 'main-video-element', 640, 360, undefined, {
+            'onReady': ()=>{
+                console.log("yt_player ready");
+                window.dispatchEvent(new Event('yt_player_ready'));
+            },
+            'onStateChange': (event)=>{
+                if (event.data == YT.PlayerState.PLAYING) {
+                    window.dispatchEvent(new Event('play'));
+                } else if (event.data == YT.PlayerState.PAUSED) {
+                    window.dispatchEvent(new Event('pause'));
+                };
+            }
+        });
+        window.addEventListener('yt_player_ready', placeWatchContent);
         return;
     };
 
@@ -65,7 +107,7 @@ function placeWatchContent() {
     window.dispatchEvent(new Event('exitpip'));
 
     if (!videos_info) {
-        console.log("videos_info not loaded yet, waiting...");
+        console.log("placeWatchContent: videos_info not loaded yet, waiting...");
         window.addEventListener('videos_info_loaded', placeWatchContent);
         return;
     };
@@ -75,31 +117,32 @@ function placeWatchContent() {
     // Update page title
     document.title = video_info['title'];
 
-    // Set thumbnail src
-    let video = document.querySelector('video');
-    video.style.backgroundImage = `url(${get_thumb_urls(video_info)['maxres']})`;
-
-    // Prepare video src for when play is requested
-    document.querySelector('.video-container').classList.remove('src-loaded');
-    if (!PLAY_WHEN_CLICKED) {
-        video.removeAttribute('src');
-        video.load();
-        document.querySelector('.video-container').classList.add('paused');
-        document.querySelector('.video-container').classList.add('controls-active');
-    } else {
-        video.src = get_download_url(video_info);
-    };
-    document.querySelector('video').scrollIntoView();
-
-
-    // video.play() // Cannot play before user interaction
-
-    // If t is in URL, set video.currentTime to t
     let t = URLPARAMS.get('t');
-    if (t) {
-        console.log("setting time: ", t);
-        video.currentTime = t / 1000;
-    };
+    if (!EMBED) {
+        // Set thumbnail src
+        let video = document.querySelector('video');
+        video.style.backgroundImage = `url(${get_thumb_urls(video_info)['maxres']})`;
+
+        // Prepare video src for when play is requested
+        document.querySelector('.video-container').classList.remove('src-loaded');
+        if (!PLAY_WHEN_CLICKED) {
+            video.removeAttribute('src');
+            video.load();
+            document.querySelector('.video-container').classList.add('paused');
+            document.querySelector('.video-container').classList.add('controls-active');
+        } else {
+            video.src = get_download_url(video_info);
+        };
+        // If t is in URL, set video.currentTime to t
+        if (t) {
+            console.log("setting time: ", t);
+            video.currentTime = t / 1000;
+        };
+    } else {
+        yt_player.loadVideoById(VIDEO_ID, t / 1000);
+    }
+    document.querySelector('.vid_player_container').scrollIntoView();
+
     
     // Set video title
     let video_title = document.querySelector('#vid_title');

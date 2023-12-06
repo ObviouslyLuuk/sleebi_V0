@@ -8,7 +8,7 @@ function placeResultsContent() {
     let container = document.querySelector('#content-container');
     container.innerHTML = '<div class="spinner active"><img src="images/logo.svg"></div>';
     if (!HTML_TEMPLATES['results']) {
-        console.log("results html not loaded yet, waiting...");
+        console.log("placeResultsContent: results html not loaded yet, waiting...");
         window.addEventListener('results_html_ready', placeResultsContent);
         return;
     };
@@ -30,7 +30,7 @@ function placeResultsContent() {
     document.querySelector('#content-container').innerHTML = HTML_TEMPLATES['results'];
 
     if (!videos_info) {
-        console.log("videos_info not loaded yet, waiting...");
+        console.log("placeResultsContent: videos_info not loaded yet, waiting...");
         window.addEventListener('videos_info_loaded', placeResultsContent);
         return;
     };

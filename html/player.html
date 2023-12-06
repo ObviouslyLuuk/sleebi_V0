@@ -131,12 +131,6 @@
               <path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
             </svg>
           </button>
-          <button class="full-screen-ios-btn clickable_icon">
-            <!-- <img style="filter:invert(); width: 18px" src="images/iOS_fullscreen.svg"> -->
-            <svg class="icon" width="100" style="transform:scale(1.2) translateY(-1px)">
-              <use xlink:href="images/sprite.svg#icon-apple"></use>
-            </svg>
-          </button>
         </div>
       </div>
     </div>
@@ -145,10 +139,12 @@
       <img src="images/logo.svg">
     </div>
     <div class="video-wrapper flex-container">
-      <!-- playsinline and webkit-playsinline are to prevent Safari on iOS from opening the native video player -->
-      <video autoplay playsinline webkit-playsinline>
-        <!-- <track kind="captions" srclang="en" src="assets/subtitles.vtt"> -->
-      </video>
+      <div class="video-brightness-wrapper flex-container">
+        <!-- playsinline and webkit-playsinline are to prevent Safari on iOS from opening the native video player -->
+        <video id="main-video-element" autoplay playsinline webkit-playsinline>
+          <!-- <track kind="captions" srclang="en" src="assets/subtitles.vtt"> -->
+        </video>
+      </div>
     </div>
     <div class="pip-player-controls flex">
       <div class="pip-player-info flex-grow">

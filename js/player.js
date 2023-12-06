@@ -5,25 +5,26 @@
 const videoPlayerContainer = document.querySelector(".vid_player_container");
 
 const playPauseBtns = document.querySelectorAll(".play-pause-btn");
-const theaterBtn = document.querySelector(".theater-btn");
+// const theaterBtn = document.querySelector(".theater-btn");
 const fullScreenBtn = document.querySelector(".full-screen-btn");
-const fullScreenIosBtn = document.querySelector(".full-screen-ios-btn");
-const miniPlayerBtn = document.querySelector(".mini-player-btn");
+// const fullScreenIosBtn = document.querySelector(".full-screen-ios-btn");
+// const miniPlayerBtn = document.querySelector(".mini-player-btn");
 const muteBtn = document.querySelector(".mute-btn");
 const brightnessBtn = document.querySelector(".brightness-btn");
 const blueFilterBtn = document.querySelector(".blue-filter-btn");
 const loopBtn = document.querySelector(".loop-btn");
-const captionsBtn = document.querySelector(".captions-btn");
-const speedBtn = document.querySelector(".speed-btn");
+// const captionsBtn = document.querySelector(".captions-btn");
+// const speedBtn = document.querySelector(".speed-btn");
 const currentTimeElem = document.querySelector(".current-time");
 const totalTimeElem = document.querySelector(".total-time");
-const previewImg = document.querySelector(".preview-img");
+// const previewImg = document.querySelector(".preview-img");
 const thumbnailImg = document.querySelector(".thumbnail-img");
 const volumeSlider = document.querySelector(".volume-slider");
 const brightnessSlider = document.querySelector(".brightness-slider");
 const videoContainer = document.querySelector(".video-container");
 const timelineContainer = document.querySelector(".timeline-container");
 const videoWrapper = document.querySelector(".video-wrapper");
+const brightnessWrapper = document.querySelector(".video-brightness-wrapper");
 const video = document.querySelector("video");
 
 const pipPlayer = document.querySelector(".pip-player-controls");
@@ -49,12 +50,12 @@ document.addEventListener("keydown", e => {
     case "f":
       toggleFullScreenMode();
       break;
-    case "t":
-      toggleTheaterMode();
-      break;
-    case "i":
-      toggleMiniPlayerMode();
-      break;
+    // case "t":
+    //   toggleTheaterMode();
+    //   break;
+    // case "i":
+    //   toggleMiniPlayerMode();
+    //   break;
     case "m":
       toggleMute();
       break;
@@ -70,9 +71,9 @@ document.addEventListener("keydown", e => {
     case "l":
       skip(10);
       break;
-    case "c":
-      toggleCaptions();
-      break;
+    // case "c":
+    //   toggleCaptions();
+    //   break;
   };
 });
 
@@ -117,11 +118,13 @@ function toggleScrubbing(e) {
   isScrubbing = (e.buttons & 1) === 1;
   videoContainer.classList.toggle("scrubbing", isScrubbing);
   if (isScrubbing) {
-    wasPaused = video.paused;
-    video.pause();
+    wasPaused = (EMBED ? yt_player.getPlayerState() != 1 : video.paused);
+    EMBED ? yt_player.pauseVideo() : video.pause();
   } else {
-    video.currentTime = percent * video.duration;
-    if (!wasPaused) video.play();
+    EMBED ? yt_player.seekTo(percent * yt_player.getDuration()) : video.currentTime = percent * video.duration;
+    if (!wasPaused) {
+      EMBED ? yt_player.playVideo() : video.play();
+    };
   };
 
   handleTimelineUpdate(e);
@@ -130,12 +133,12 @@ function toggleScrubbing(e) {
 function handleTimelineUpdate(e) {
   const rect = timelineContainer.getBoundingClientRect();
   const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
-  const previewImgNumber = Math.max(
-    1,
-    Math.floor((percent * video.duration) / 10)
-  );
-  // const previewImgSrc = `assets/previewImgs/preview${previewImgNumber}.jpg`
-  // previewImg.src = previewImgSrc
+  // const previewImgNumber = Math.max(
+  //   1,
+  //   Math.floor((percent * video.duration) / 10)
+  // );
+  // const previewImgSrc = `assets/previewImgs/preview${previewImgNumber}.jpg`;
+  // previewImg.src = previewImgSrc;
   timelineContainer.style.setProperty("--preview-position", percent);
 
   if (isScrubbing) {
@@ -144,20 +147,25 @@ function handleTimelineUpdate(e) {
     timelineContainer.style.setProperty("--progress-position", percent);
 
     // Update video current time (could be intensive on performance?)
-    video.currentTime = percent * video.duration;
-    currentTimeElem.textContent = formatDuration(video.currentTime);
+    if (EMBED) {
+      yt_player.seekTo(percent * yt_player.getDuration());
+      currentTimeElem.textContent = formatDuration(yt_player.getCurrentTime());
+    } else {
+      video.currentTime = percent * video.duration;
+      currentTimeElem.textContent = formatDuration(video.currentTime);
+    };
   };
 };
 
 // Playback Speed
 // speedBtn.addEventListener("click", changePlaybackSpeed)
 
-function changePlaybackSpeed() {
-  let newPlaybackRate = video.playbackRate + 0.25;
-  if (newPlaybackRate > 2) newPlaybackRate = 0.25;
-  video.playbackRate = newPlaybackRate;
-  speedBtn.textContent = `${newPlaybackRate}x`;
-};
+// function changePlaybackSpeed() {
+//   let newPlaybackRate = video.playbackRate + 0.25;
+//   if (newPlaybackRate > 2) newPlaybackRate = 0.25;
+//   video.playbackRate = newPlaybackRate;
+//   speedBtn.textContent = `${newPlaybackRate}x`;
+// };
 
 // Captions
 // const captions = video.textTracks[0];
@@ -165,22 +173,33 @@ function changePlaybackSpeed() {
 
 // captionsBtn.addEventListener("click", toggleCaptions);
 
-function toggleCaptions() {
-  const isHidden = captions.mode === "hidden";
-  captions.mode = isHidden ? "showing" : "hidden";
-  videoContainer.classList.toggle("captions", isHidden);
-};
+// function toggleCaptions() {
+//   const isHidden = captions.mode === "hidden";
+//   captions.mode = isHidden ? "showing" : "hidden";
+//   videoContainer.classList.toggle("captions", isHidden);
+// };
 
 // Duration
 video.addEventListener("loadeddata", () => {
   totalTimeElem.textContent = formatDuration(video.duration);
 });
+window.addEventListener("yt_player_ready", () => {
+  totalTimeElem.textContent = formatDuration(yt_player.getDuration());
+});
 
 video.addEventListener("timeupdate", () => {
   currentTimeElem.textContent = formatDuration(video.currentTime);
-  const percent = video.currentTime / video.duration;
+  let percent = video.currentTime / video.duration;
   timelineContainer.style.setProperty("--progress-position", percent);
 });
+// We don't have an event for the embed player, so we just update the time every second
+if (EMBED) {
+  setInterval(() => {
+    currentTimeElem.textContent = formatDuration(yt_player.getCurrentTime());
+    let percent = yt_player.getCurrentTime() / yt_player.getDuration();
+    timelineContainer.style.setProperty("--progress-position", percent);
+  }, 1000);
+}
 
 const leadingZeroFormatter = new Intl.NumberFormat(undefined, {
   minimumIntegerDigits: 2,
@@ -199,7 +218,7 @@ function formatDuration(time) {
 };
 
 function skip(duration) {
-  video.currentTime += duration;
+  EMBED ? yt_player.seekTo(yt_player.getCurrentTime() + duration) : video.currentTime += duration;
 
   let skipOverlay = duration < 0 ? skipBackOverlay : skipForwardOverlay;
 
@@ -216,34 +235,58 @@ function skip(duration) {
 // Volume
 muteBtn.addEventListener("click", toggleMute);
 volumeSlider.addEventListener("input", e => {
-  video.volume = e.target.value;
-  video.muted = e.target.value === 0;
+  if (EMBED) {
+    yt_player.setVolume(e.target.value * 100);
+    handleVolumeChange(e.target.value);
+  } else {
+    video.volume = e.target.value;
+    video.muted = e.target.value === 0;
+  };
 });
 
 function toggleMute() {
-  video.muted = !video.muted;
+  if (EMBED) {
+    let was_muted = yt_player.isMuted();
+    was_muted ? yt_player.unMute() : yt_player.mute();
+    handleVolumeChange(!was_muted ? 0 : yt_player.getVolume() / 100); // There's some delay in the volume change, so we base it on the previous isMuted value
+  } else {
+    video.muted = !video.muted;
+  };
 };
 
 video.addEventListener("volumechange", () => {
-  volumeSlider.value = video.volume;
+  handleVolumeChange();
+});
+function handleVolumeChange(volume=null) {
+  if (volume == null) {
+    volume = video.muted ? 0 : video.volume;
+  };
+
+  volumeSlider.value = volume;
   let volumeLevel;
-  if (video.muted || video.volume === 0) {
+  if (volume == 0) {
     volumeSlider.value = 0;
     volumeLevel = "muted";
-  } else if (video.volume >= 0.5) {
+  } else if (volume >= 0.5) {
     volumeLevel = "high";
   } else {
     volumeLevel = "low";
   };
 
   videoContainer.dataset.volumeLevel = volumeLevel;
-});
+};
 
 // Brightness
+function setBrightnessStyle(brightness) {
+  let str = `brightness(${brightness})`;
+  if (!brightness) str = '';
+  brightnessWrapper.style.filter = str;
+  thumbnailImg.style.filter = str;
+}
+
 brightnessBtn.addEventListener("click", toggleBrightness);
 brightnessSlider.addEventListener("input", e => {
-  video.style.filter = `brightness(${e.target.value})`;
-  thumbnailImg.style.filter = `brightness(${e.target.value})`;
+  setBrightnessStyle(e.target.value);
   window.dispatchEvent(new Event('brightnesschange'));
 });
 
@@ -271,11 +314,9 @@ function toggleBrightness() {
       brightnessSlider.value = 0;
       break;
   };
-  video.style.filter = `brightness(${brightnessSlider.value})`;
-  thumbnailImg.style.filter = `brightness(${brightnessSlider.value})`;
+  setBrightnessStyle(brightnessSlider.value);
   if (brightnessSlider.value == 1) {
-    video.style.filter = '';
-    thumbnailImg.style.filter = '';
+    setBrightnessStyle(null);
   };
   window.dispatchEvent(new Event('brightnesschange'));
 };
@@ -298,16 +339,16 @@ function toggleBlueFilter() {
 // theaterBtn.addEventListener("click", toggleTheaterMode);
 fullScreenBtn.addEventListener("click", toggleFullScreenMode);
 // miniPlayerBtn.addEventListener("click", toggleMiniPlayerMode);
-fullScreenIosBtn.addEventListener("click", toggleIOSViewerMode);
+// fullScreenIosBtn.addEventListener("click", toggleIOSViewerMode);
 
-function toggleTheaterMode() {
-  videoContainer.classList.toggle("theater");
-};
+// function toggleTheaterMode() {
+//   videoContainer.classList.toggle("theater");
+// };
 
 function toggleFullScreenMode() {
   // Check if iOS
   if (iOSCheck()) {
-    toggle_fake_fullscreen();
+    toggleIOSViewerMode();
     return;
   };
 
@@ -317,19 +358,12 @@ function toggleFullScreenMode() {
     document.exitFullscreen();
   };
 };
-function toggle_fake_fullscreen() {
-  videoContainer.classList.toggle("fake-full-screen");
-  if (videoContainer.classList.contains("fake-full-screen")) {
-    // Disable scrolling
-    document.body.style.overflow = "hidden";
-  } else {
-    // Enable scrolling
-    document.body.style.overflow = "";
-  };
-};
 
 function toggleIOSViewerMode() {
-  // Remove properties that prevent the video from playing fullscreen on iOS
+  if (EMBED) {
+    console.log("Can't enter fullscreen on iOS in embed mode");
+    return;
+  }
   let waspaused = video.paused;
   video.pause();
   video.webkitEnterFullscreen();
@@ -337,29 +371,29 @@ function toggleIOSViewerMode() {
 };
 
 
-function toggleMiniPlayerMode() {
-  if (videoContainer.classList.contains("mini-player")) {
-    document.exitPictureInPicture();
-  } else {
-    video.requestPictureInPicture();
-  };
-};
+// function toggleMiniPlayerMode() {
+//   if (videoContainer.classList.contains("mini-player")) {
+//     document.exitPictureInPicture();
+//   } else {
+//     video.requestPictureInPicture();
+//   };
+// };
 
 document.addEventListener("fullscreenchange", () => {
   videoContainer.classList.toggle("full-screen", document.fullscreenElement);
 });
 
-video.addEventListener("enterpictureinpicture", () => {
-  videoContainer.classList.add("mini-player");
-});
+// video.addEventListener("enterpictureinpicture", () => {
+//   videoContainer.classList.add("mini-player");
+// });
 
-video.addEventListener("leavepictureinpicture", () => {
-  videoContainer.classList.remove("mini-player");
-});
+// video.addEventListener("leavepictureinpicture", () => {
+//   videoContainer.classList.remove("mini-player");
+// });
 
 // Play/Pause
 playPauseBtns.forEach(e => {e.addEventListener("click", togglePlay)});
-video.parentElement.addEventListener("click", function (e) { // We use parentElement because in fullscreen the video could be smaller than the container
+videoWrapper.addEventListener("click", function (e) { // We use parentElement because in fullscreen the video could be smaller than the container
   if (mobileCheck() || tabletCheck()) {
     toggleControls();
   } else {
@@ -370,17 +404,27 @@ video.parentElement.addEventListener("click", function (e) { // We use parentEle
 function togglePlay() {
   window.dispatchEvent(new Event('play_requested'));
   try {
-    video.paused ? video.play() : video.pause();
+    if (EMBED) {
+      yt_player.getPlayerState() != 1 ? yt_player.playVideo() : yt_player.pauseVideo();
+    } else {
+      video.paused ? video.play() : video.pause();
+    };
   } catch (error) { // Doesn't work for some reason
     console.log("Error:", error);
-  }
+  };
 };
 
 video.addEventListener("play", () => {
   videoContainer.classList.remove("paused");
 });
+window.addEventListener("play", () => { // For the embed player
+  videoContainer.classList.remove("paused");
+});
 
 video.addEventListener("pause", () => {
+  videoContainer.classList.add("paused");
+});
+window.addEventListener("pause", () => { // For the embed player
   videoContainer.classList.add("paused");
 });
 
@@ -392,7 +436,7 @@ function toggleControls(force=undefined) {
   videoContainer.classList.toggle("controls-active", force);
 
   // Set timeout if video is playing
-  if (!video.paused) {
+  if ((EMBED && yt_player.getPlayerState() == 1) || (!EMBED && !video.paused)) {
     controlsTimeout = setTimeout(() => {
       videoContainer.classList.remove("controls-active");
     }, 2000);
@@ -401,6 +445,9 @@ function toggleControls(force=undefined) {
 
 // When you unpause the video, timeout to hide controls
 video.addEventListener("play", () => {
+  toggleControls(true);
+});
+window.addEventListener("play", () => { // For the embed player
   toggleControls(true);
 });
 // // Any touch interaction with the controls in videoContainer should reset the timeout
@@ -427,7 +474,7 @@ control_elements.forEach(e=>{e.addEventListener("touchmove", () => {toggleContro
 control_elements.forEach(e=>{e.addEventListener("touchend", () => {toggleControls(true)})});
 
 // When pausing the video, clear the timeout
-video.addEventListener("pause", () => {
+videoWrapper.addEventListener("pause", () => {
   clearTimeout(controlsTimeout);
 });
 
@@ -436,9 +483,9 @@ video.addEventListener("pause", () => {
 // We listen for touchstart events on the video element, and first determine if there's a double tap in quick succession
 // To do this, we check if the time between the current tap and the last tap is less than 300ms
 let lastTap = 0;
-video.addEventListener("touchstart", e => {
+videoWrapper.addEventListener("touchstart", e => {
   // If in the center third of video, don't count the tap
-  const rect = video.getBoundingClientRect();
+  const rect = videoWrapper.getBoundingClientRect();
   if (e.touches[0].clientX > rect.width / 3 && e.touches[0].clientX < rect.width * 2 / 3) {
     return;
   };
@@ -461,7 +508,7 @@ video.addEventListener("touchstart", e => {
 // Otherwise, we reset the translation
 var startY = 0;
 var isDragging = false;
-let drag_elems = [pipPlayer.querySelector('.pip-player-info'),video];
+let drag_elems = [pipPlayer.querySelector('.pip-player-info'),videoWrapper];
 drag_elems.forEach(e=>{e.addEventListener("touchstart", e => {
   startY = e.touches[0].clientY;
   watch_overlay.classList.add("dragging");
@@ -527,13 +574,13 @@ window.addEventListener("enterpip", () => {
   pip_refresh();
 });
 window.addEventListener("exitpip", () => {
-  window.history.replaceState({page:"watch",video_id:VIDEO_ID}, null, '/?v=' + VIDEO_ID);
+  window.history.replaceState({page:"watch",video_id:VIDEO_ID}, null, '/?v=' + VIDEO_ID + (EMBED ? '&embed' : ''));
   document.body.classList.remove("pip");
   watch_overlay.style.top = "";
   pip_refresh();
 });
 pipCloseBtn.addEventListener("click", () => { // Close button on pip player
-  video.pause();
+  EMBED ? yt_player.pauseVideo() : video.pause();
   document.body.classList.remove("pip");
   document.body.classList.remove("watch");
   document.body.style.overflow = "";
@@ -553,8 +600,12 @@ pipCloseBtn.addEventListener("click", () => { // Close button on pip player
 loopBtn.addEventListener("click", toggleLoop);
 
 function toggleLoop() {
-  video.loop = !video.loop;
-  loopBtn.classList.toggle("active", video.loop);
+  if (EMBED) {
+    console.log("Can't loop in embed mode");
+  } else {
+    video.loop = !video.loop;
+    loopBtn.classList.toggle("active", video.loop);
+  };
 };
 
 
@@ -567,9 +618,15 @@ function toggleLoop() {
  * @returns {void}
  */
 window.seekTo = function(time) {
-  video.currentTime = time / 1000;
-  video.scrollIntoView();
-  toggleControls(true);
+  if (EMBED) {
+    yt_player.seekTo(time / 1000);
+    window.scrollTo(0,0);
+    toggleControls(true);
+  } else {
+    video.currentTime = time / 1000;
+    video.scrollIntoView();
+    toggleControls(true);
+  };
 };
 
 
@@ -642,5 +699,4 @@ window.addEventListener("pushstate", () => {
   videoError.classList.remove("active");
 });
 
-
-
+window.dispatchEvent(new Event('player_js_ready'));

@@ -24,7 +24,7 @@ body[data-mobile=true] .video-container {
   width: 100vw;
 }
 body[data-mobile=true] .thumbnail-img,
-body[data-mobile=true] video,
+body[data-mobile=true] .video-wrapper,
 body[data-mobile=true] .video-controls-container::before {
   border-radius: 0;
 }
@@ -58,15 +58,20 @@ body[data-mobile=true] .video-controls-container::before {
   
   .video-wrapper {
     width: 100%;
+    max-height: 100vh;
     filter: brightness(1);
     /* We use fade-duration here because it goes along with the controls fading */
     transition: filter var(--fade_duration) ease-in-out;
     transition-delay: var(--controls-delay);
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  .video-brightness-wrapper {
+    width: 100%;
+    height: 100%;
   }
   video {
     width: 100%;
-    max-height: 100vh;
-    border-radius: 10px;
     height: 100%;
     background-position: center;
     background-size: cover;
@@ -627,14 +632,15 @@ body.pip[data-mobile=true] .video-container.controls-active .video-wrapper {
   /* No controls with pip, so no need to be dimmed */
   filter: brightness(1);
 }
-body.pip video {
-  border-radius: 0;
+body.pip .video-wrapper iframe,
+body.pip .video-wrapper video {
   object-fit: cover;
 }
 body.pip .video-wrapper,
 body.pip .pip-player-controls {
   /* This property changes dynamically based on mobile */
   height: var(--pip-player-height);
+  border-radius: 0;
 }
 
 
@@ -677,3 +683,11 @@ body.watch .video-error-div.active {
   visibility: visible;
 }
 
+
+
+/* YT Iframe */
+.video-wrapper iframe {
+  width: 100%;
+  height: 300%;
+  pointer-events: none;
+}
