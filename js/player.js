@@ -620,11 +620,11 @@ function toggleLoop() {
 window.seekTo = function(time) {
   if (EMBED) {
     yt_player.seekTo(time / 1000);
-    window.scrollTo(0,0);
+    videoWrapper.scrollIntoView();
     toggleControls(true);
   } else {
     video.currentTime = time / 1000;
-    video.scrollIntoView();
+    videoWrapper.scrollIntoView();
     toggleControls(true);
   };
 };
