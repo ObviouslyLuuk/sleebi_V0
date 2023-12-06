@@ -10,9 +10,6 @@ iPad:
     also weirdly, the message for blue filter does show, but for link copied doesn't
 
 ADDITIONS:
-bundle embed/sleebi player uses into separate functions to make the code cleaner
-add loop functionality to embed player
-
 sort search results by date, views, like-ratio, etc
 add feedback form
 
