@@ -143,9 +143,12 @@ function empty_element(element) {
 
 
 function get_thumb_url(video_info) {
-    // let video_id = video_info.id
-    // return `https://i.ytimg.com/vi/${video_id}/maxresdefault.jpg`
-    return video_info['thumbnail_url'];
+    let video_id = video_info.id;
+    if (video_id == "demo480x852") {
+        video_id = "NJoFdZFvfcc";
+    }
+    return `https://i.ytimg.com/vi_webp/${video_id}/maxresdefault.webp`;
+    // return video_info['thumbnail_url'];
 };
 
 function get_thumb_urls(video_info) {
@@ -155,9 +158,9 @@ function get_thumb_urls(video_info) {
     };
     return {
         // yep I know this mapping seems counterintuitive, but it's correct
-        'low': `https://i.ytimg.com/vi/${video_id}/mqdefault.jpg`, // 320x180
-        'medium': `https://i.ytimg.com/vi/${video_id}/hqdefault.jpg`, // 480x360
-        'high': `https://i.ytimg.com/vi/${video_id}/sddefault.jpg`, // 640x480
+        'low': `https://i.ytimg.com/vi_webp/${video_id}/mqdefault.webp`, // 320x180
+        'medium': `https://i.ytimg.com/vi_webp/${video_id}/hqdefault.webp`, // 480x360
+        'high': `https://i.ytimg.com/vi_webp/${video_id}/sddefault.webp`, // 640x480
         'maxres': get_thumb_url(video_info), // 1280x720
     };
 };
