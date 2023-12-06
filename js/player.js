@@ -113,17 +113,22 @@ document.addEventListener("touchmove", e => {
 let isScrubbing = false;
 let wasPaused;
 function toggleScrubbing(e) {
+  // Check if e is MouseEvent
+  if ((document.body.dataset.mobile == "true" 
+    || document.body.dataset.tablet == "true")
+    && (e instanceof MouseEvent)) {return}; // If mobile or tablet, don't allow scrubbing with mouse
+
   const rect = timelineContainer.getBoundingClientRect();
   const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
   isScrubbing = (e.buttons & 1) === 1;
   videoContainer.classList.toggle("scrubbing", isScrubbing);
   if (isScrubbing) {
-    wasPaused = (EMBED ? yt_player.getPlayerState() != 1 : video.paused);
-    EMBED ? yt_player.pauseVideo() : video.pause();
+    wasPaused = getPaused();
+    pause();
   } else {
-    EMBED ? yt_player.seekTo(percent * yt_player.getDuration()) : video.currentTime = percent * video.duration;
+    setTime(percent * getDuration());
     if (!wasPaused) {
-      EMBED ? yt_player.playVideo() : video.play();
+      play();
     };
   };
 
@@ -147,13 +152,8 @@ function handleTimelineUpdate(e) {
     timelineContainer.style.setProperty("--progress-position", percent);
 
     // Update video current time (could be intensive on performance?)
-    if (EMBED) {
-      yt_player.seekTo(percent * yt_player.getDuration());
-      currentTimeElem.textContent = formatDuration(yt_player.getCurrentTime());
-    } else {
-      video.currentTime = percent * video.duration;
-      currentTimeElem.textContent = formatDuration(video.currentTime);
-    };
+    setTime(percent * getDuration());
+    currentTimeElem.textContent = formatDuration(getTime());
   };
 };
 
@@ -181,24 +181,23 @@ function handleTimelineUpdate(e) {
 
 // Duration
 video.addEventListener("loadeddata", () => {
-  totalTimeElem.textContent = formatDuration(video.duration);
+  totalTimeElem.textContent = formatDuration(getDuration());
 });
 window.addEventListener("yt_player_ready", () => {
-  totalTimeElem.textContent = formatDuration(yt_player.getDuration());
+  totalTimeElem.textContent = formatDuration(getDuration());
 });
 
-video.addEventListener("timeupdate", () => {
-  currentTimeElem.textContent = formatDuration(video.currentTime);
-  let percent = video.currentTime / video.duration;
-  timelineContainer.style.setProperty("--progress-position", percent);
-});
+video.addEventListener("timeupdate", handleTimeUpdate);
 // We don't have an event for the embed player, so we just update the time every second
 if (EMBED) {
-  setInterval(() => {
-    currentTimeElem.textContent = formatDuration(yt_player.getCurrentTime());
-    let percent = yt_player.getCurrentTime() / yt_player.getDuration();
-    timelineContainer.style.setProperty("--progress-position", percent);
-  }, 1000);
+  setInterval(handleTimeUpdate, 1000);
+}
+function handleTimeUpdate() {
+  currentTimeElem.textContent = formatDuration(getTime());
+  let percent = getTime() / getDuration();
+  timelineContainer.style.setProperty("--progress-position", percent);
+
+  loopYtPlayer();
 }
 
 const leadingZeroFormatter = new Intl.NumberFormat(undefined, {
@@ -218,7 +217,7 @@ function formatDuration(time) {
 };
 
 function skip(duration) {
-  EMBED ? yt_player.seekTo(yt_player.getCurrentTime() + duration) : video.currentTime += duration;
+  setTime(getTime() + duration);
 
   let skipOverlay = duration < 0 ? skipBackOverlay : skipForwardOverlay;
 
@@ -404,11 +403,7 @@ videoWrapper.addEventListener("click", function (e) { // We use parentElement be
 function togglePlay() {
   window.dispatchEvent(new Event('play_requested'));
   try {
-    if (EMBED) {
-      yt_player.getPlayerState() != 1 ? yt_player.playVideo() : yt_player.pauseVideo();
-    } else {
-      video.paused ? video.play() : video.pause();
-    };
+    getPaused() ? play() : pause();
   } catch (error) { // Doesn't work for some reason
     console.log("Error:", error);
   };
@@ -429,6 +424,53 @@ window.addEventListener("pause", () => { // For the embed player
 });
 
 
+///////////////////////////////////////////////////////////////////////////////
+// BASIC CONTROLS FOR BOTH EMBED AND SLEEBI PLAYER
+///////////////////////////////////////////////////////////////////////////////
+function play() {
+  EMBED ? yt_player.playVideo() : video.play();
+};
+function pause() {
+  EMBED ? yt_player.pauseVideo() : video.pause();
+};
+function getPaused() {
+  return EMBED ? yt_player.getPlayerState() != 1 : video.paused;
+};
+function setTime(time) {
+  EMBED ? yt_player.seekTo(time) : video.currentTime = time;
+};
+function getTime() {
+  return EMBED ? yt_player.getCurrentTime() : video.currentTime;
+};
+function getDuration() {
+  return EMBED ? yt_player.getDuration() : video.duration;
+};
+var LOOPING = false;
+function setLoop(loop) {
+  LOOPING = loop;
+  if (!EMBED) {video.loop = loop;};
+};
+function getLoop() {
+  return EMBED ? LOOPING : video.loop;
+};
+// We want to stop the yt_player slightly before the end, so we can loop it
+function loopYtPlayer() {
+  if (getDuration() == 0) {return;};
+  if (getDuration() - getTime() > 2) {return;};
+  if (LOOPING) {
+    yt_player.seekTo(0);
+    console.log("Looping");
+  } else {
+    yt_player.pauseVideo();
+    setTime(getDuration() - 2.1);
+    console.log("Pausing before end");
+  };
+}
+
+
+
+
+
 // Controls on mobile
 let controlsTimeout;
 function toggleControls(force=undefined) {
@@ -436,7 +478,7 @@ function toggleControls(force=undefined) {
   videoContainer.classList.toggle("controls-active", force);
 
   // Set timeout if video is playing
-  if ((EMBED && yt_player.getPlayerState() == 1) || (!EMBED && !video.paused)) {
+  if (!getPaused()) {
     controlsTimeout = setTimeout(() => {
       videoContainer.classList.remove("controls-active");
     }, 2000);
@@ -580,7 +622,7 @@ window.addEventListener("exitpip", () => {
   pip_refresh();
 });
 pipCloseBtn.addEventListener("click", () => { // Close button on pip player
-  EMBED ? yt_player.pauseVideo() : video.pause();
+  pause();
   document.body.classList.remove("pip");
   document.body.classList.remove("watch");
   document.body.style.overflow = "";
@@ -600,12 +642,8 @@ pipCloseBtn.addEventListener("click", () => { // Close button on pip player
 loopBtn.addEventListener("click", toggleLoop);
 
 function toggleLoop() {
-  if (EMBED) {
-    console.log("Can't loop in embed mode");
-  } else {
-    video.loop = !video.loop;
-    loopBtn.classList.toggle("active", video.loop);
-  };
+  setLoop(!getLoop());
+  loopBtn.classList.toggle("active", getLoop());
 };
 
 
@@ -618,15 +656,9 @@ function toggleLoop() {
  * @returns {void}
  */
 window.seekTo = function(time) {
-  if (EMBED) {
-    yt_player.seekTo(time / 1000);
-    videoWrapper.scrollIntoView();
-    toggleControls(true);
-  } else {
-    video.currentTime = time / 1000;
-    videoWrapper.scrollIntoView();
-    toggleControls(true);
-  };
+  setTime(time / 1000);
+  videoWrapper.scrollIntoView();
+  toggleControls(true);
 };
 
 
