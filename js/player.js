@@ -728,7 +728,7 @@ video.addEventListener("error", () => {
   if (video.error.message.includes("Empty src attribute")) {return;};
 
   destroyVideo(embed=false);
-  redirect_watch(VIDEO_ID, true) // Redirect to embed player
+  redirect_watch(VIDEO_ID, embed=true, replace=true) // Redirect to embed player
   return;
 
   videoContainer.classList.remove('src-loading');
