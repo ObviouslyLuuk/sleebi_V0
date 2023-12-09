@@ -11,7 +11,7 @@
     padding: 0.5em 1em;
 }
 #description_div {
-    background-color: var(--dark-theme-divider-color);
+    background-color: var(--divider-color);
     border-radius: 15px;
     padding: 0.7em;
     font-size: 1em;
