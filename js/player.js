@@ -184,7 +184,13 @@ video.addEventListener("loadeddata", () => {
   totalTimeElem.textContent = formatDuration(getDuration());
 });
 window.addEventListener("yt_player_ready", () => {
-  totalTimeElem.textContent = formatDuration(getDuration());
+  // Set interval to update as soon as getDuration() is available
+  let interval = setInterval(() => {
+    if (getDuration()) {
+      totalTimeElem.textContent = formatDuration(getDuration());
+      clearInterval(interval);
+    }
+  }, 500);
 });
 
 video.addEventListener("timeupdate", handleTimeUpdate);
@@ -194,6 +200,8 @@ window.addEventListener("yt_player_ready", () => {
   ytPlayerTimeUpdateInterval = setInterval(handleTimeUpdate, 1000);
 });
 function handleTimeUpdate() {
+  if (EMBED && (!yt_player || !yt_player.getCurrentTime)) {return;};
+
   currentTimeElem.textContent = formatDuration(getTime());
   let percent = getTime() / getDuration();
   timelineContainer.style.setProperty("--progress-position", percent);
@@ -630,7 +638,7 @@ window.addEventListener("enterpip", () => {
   pip_refresh();
 });
 window.addEventListener("exitpip", () => {
-  window.history.replaceState({page:"watch",video_id:VIDEO_ID}, null, '/?v=' + VIDEO_ID + (EMBED ? '&embed' : ''));
+  window.history.replaceState({page:"watch",video_id:VIDEO_ID}, null, '/?v=' + VIDEO_ID + (EMBED ? '&embed=true' : ''));
   document.body.classList.remove("pip");
   watch_overlay.style.top = "";
   pip_refresh();
@@ -686,6 +694,10 @@ video.addEventListener('loadeddata', () => {
   videoContainer.classList.remove('src-loading');
   videoContainer.classList.add('src-loaded');
 });
+window.addEventListener("yt_player_ready", () => {
+  videoContainer.classList.remove('src-loading');
+  videoContainer.classList.add('src-loaded');
+});
 
 
 // Make space bar not scroll the page
@@ -711,6 +723,14 @@ buttons.forEach(button => {
 // Video error handling using the .video-error-div, adjusting its innerHTML and adding .active
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/MediaError
 video.addEventListener("error", () => {
+  if (EMBED) {return;};
+  console.log("Video error:", video.error);
+  if (video.error.message.includes("Empty src attribute")) {return;};
+
+  destroyVideo(embed=false);
+  redirect_watch(VIDEO_ID, true) // Redirect to embed player
+  return;
+
   videoContainer.classList.remove('src-loading');
   videoContainer.classList.remove('src-loaded');
   switch (video.error.code) {
@@ -730,7 +750,11 @@ video.addEventListener("error", () => {
         <span>Due to immense data transfer costs I had to pause the website because it was very quickly draining my bank account.
         I'll try to find solutions to further limit the cost! Stay up to date at:</span>
         <a href="https://www.youtube.com/@ObviouslyASMR/community" class="btn rounded" target="_blank">My YouTube Community</a>
-        <span>or watch a short demo I kept available:</span>
+
+        <span>embed this video from YouTube (but it stops before the postroll ad):</span>
+        <a class="btn rounded" onclick="redirect_watch('${VIDEO_ID}',true)">Watch Embedded</a>
+
+        <span>or watch a short demo I kept available on the Sleebi servers:</span>
         <a class="btn rounded" onclick="redirect_watch('demo480x852')">Demo</a>
       `;
       break;

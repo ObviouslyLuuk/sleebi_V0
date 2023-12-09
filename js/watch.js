@@ -227,7 +227,7 @@ function prompt_player(video_id) {
 
 function load_yt_player() {    
     // Load yt iframe api and rerun
-    if (!window.YT) {
+    if (!window.YT || !window.YT.Player) {
         console.log("placeWatchContent: yt iframe api not loaded yet, waiting...");
         window.addEventListener('yt_iframe_api_ready', load_yt_player);
         return;

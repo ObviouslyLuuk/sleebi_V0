@@ -24,7 +24,8 @@ function get_search_results(query, videos) {
         };
         results.push([video, relevance]);
     };
-    results.sort((a, b) => b[0]["views"] - a[0]["views"]);
+    // results.sort((a, b) => b[0]["views"] - a[0]["views"]);
+    results.sort((a, b) => new Date(b[0]["published"]) - new Date(a[0]["published"]));
     results.sort((a, b) => b[1] - a[1]);
     results = results.map(result => result[0]);
     return results;

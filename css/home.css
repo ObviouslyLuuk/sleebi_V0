@@ -22,8 +22,8 @@ body[data-mobile=false] #content-container[data-page=home] #search_results {
 /* Stats */
 .stats_div {
     display: flex;
-    border-top: 1px solid var(--divider-color);
-    border-bottom: 1px solid var(--divider-color);
+    border-top: 2px solid var(--divider-color);
+    border-bottom: 2px solid var(--divider-color);
 }
 .stat_div {
     display: flex;
@@ -32,6 +32,10 @@ body[data-mobile=false] #content-container[data-page=home] #search_results {
     align-items: center;
     justify-content: center;
     column-gap: 10px;
+
+    /* border: 2px solid var(--divider-color);
+    border-radius: 10px;
+    margin: 0 5px; */
 }
 .stat_num {
     font-size: 1.5em;
