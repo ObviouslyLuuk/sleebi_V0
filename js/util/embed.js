@@ -13,30 +13,29 @@ var embedplayer;
 function onYouTubeIframeAPIReady() {
     window.dispatchEvent(new Event('yt_iframe_api_ready'));
 
-    wait_for_player_html(function() {
-        embedplayer = place_player('h1MsqH5dxCU', 'embedplayer', 160, 90, {
-            'mute': 1, // this means the video will be muted
-            'start': 0, // this means the video will start at 0 seconds
-        }, {
-            'onReady': onPlayerReady,
-            // 'onStateChange': onPlayerStateChange
-        });
-    });
+    // let callback = function() {
+    //     embedplayer = place_player('h1MsqH5dxCU', 'embedplayer', 160, 90, {
+    //         'mute': 1, // this means the video will be muted
+    //         'start': 0, // this means the video will start at 0 seconds
+    //         'autoplay': 1, // this means the video will play as soon as it's ready
+    //     }, {
+    //         'onReady': onPlayerReady,
+    //         // 'onStateChange': function(event) {
+    //         //     console.log(event);
+    //         // },
+    //     });
+    // };
+    // // We wait for player to be ready just so we don't slow down the page
+    // if (document.querySelector('.video-container') != null) {
+    //     callback();
+    // } else {
+    //     window.addEventListener('player_html_ready', callback);
+    // };
 };
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
     embedplayer.setPlaybackRate(0.25);
-    embedplayer.playVideo();
-};
-
-function wait_for_player_html(callback) {
-    // We wait for player to be ready just so we don't slow down the page
-    if (document.querySelector('.video-container') != null) {
-        callback();
-    } else {
-        window.addEventListener('player_html_ready', callback);
-    };
 };
 
 function place_player(video_id, elem_id="main-video-element", width=640, height=360, vars={
@@ -70,7 +69,8 @@ function place_player(video_id, elem_id="main-video-element", width=640, height=
 // Important functions:
 // player.playVideo();
 // player.pauseVideo();
-// player.stopVideo();
+// player.stopVideo(); // This is not the same as pauseVideo because it resets the video
+// player.destroy(); // This is not the same as stopVideo because it removes the player
 // player.seekTo(seconds, allowSeekAhead);
 // player.mute();
 // player.unMute();

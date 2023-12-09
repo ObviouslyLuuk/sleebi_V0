@@ -138,7 +138,7 @@ mobile app
 user authentication and database
     playlists (watch later, history, favorites, etc)
     user settings
-    comments
+    comments (+ have account option to disable comments)
     likes
     subscriptions
     notifications

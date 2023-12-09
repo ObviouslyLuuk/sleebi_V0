@@ -95,7 +95,7 @@ function add_rec_vid(parent, info, img_loading='eager', max_width=1280) {
     let rec_thumb_div_container = create_and_append('div', rec_vid, null, 'rec_thumb_div_container');
     let rec_thumb_div = create_and_append('div', rec_thumb_div_container, null, 'rec_thumb_div');
     let rec_thumb_img = create_and_append('img', rec_thumb_div, null, 'rec_thumb_img');
-    thumb_urls = get_thumb_urls(info);
+    thumb_urls = get_thumb_urls(info.id);
     rec_thumb_img.width = 480;
     rec_thumb_img.height = 270;
     if (img_loading == 'lazy') {

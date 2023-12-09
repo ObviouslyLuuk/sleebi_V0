@@ -688,6 +688,15 @@ body.watch .video-error-div.active {
 /* YT Iframe */
 .video-wrapper iframe {
   width: 100%;
-  height: 300%;
+  height: max(300%, 500px);
   pointer-events: none;
+}
+
+.video-container[data-mode=yt] .video-wrapper video,
+.video-container[data-mode=sleebi] .video-wrapper #main-video-element {
+  display: none;
+}
+.video-container[data-mode=sleebi] .video-wrapper video,
+.video-container[data-mode=yt] .video-wrapper #main-video-element {
+  display: block;
 }

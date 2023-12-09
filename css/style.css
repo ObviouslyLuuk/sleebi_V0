@@ -39,21 +39,6 @@ body[data-mobile=false] {
 *, ::after, ::before {
     box-sizing: border-box;
 }
-/* scrollbar */
-::-webkit-scrollbar {
-    width: 7px;
-}
-::-webkit-scrollbar-track { /* Track */
-    background: var(--divider-color); 
-}
-::-webkit-scrollbar-thumb { /* Handle */
-    background: var(--disabled-color);
-    border-radius: 10px;
-    opacity: 0.8;
-}
-::-webkit-scrollbar-thumb:hover { /* Handle on hover */
-    opacity: 1;
-}
 
 body {
     /* Bootstrap stuff */

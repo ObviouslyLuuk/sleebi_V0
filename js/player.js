@@ -189,16 +189,17 @@ window.addEventListener("yt_player_ready", () => {
 
 video.addEventListener("timeupdate", handleTimeUpdate);
 // We don't have an event for the embed player, so we just update the time every second
-if (EMBED) {
-  setInterval(handleTimeUpdate, 1000);
-}
+let ytPlayerTimeUpdateInterval;
+window.addEventListener("yt_player_ready", () => {
+  ytPlayerTimeUpdateInterval = setInterval(handleTimeUpdate, 1000);
+});
 function handleTimeUpdate() {
   currentTimeElem.textContent = formatDuration(getTime());
   let percent = getTime() / getDuration();
   timelineContainer.style.setProperty("--progress-position", percent);
 
-  loopYtPlayer();
-}
+  if (EMBED) {loopYtPlayer();};
+};
 
 const leadingZeroFormatter = new Intl.NumberFormat(undefined, {
   minimumIntegerDigits: 2,
@@ -433,6 +434,19 @@ function play() {
 function pause() {
   EMBED ? yt_player.pauseVideo() : video.pause();
 };
+function stopVideo() {
+  EMBED ? yt_player.stopVideo() : video.pause();
+};
+function destroyVideo(embed=false) {
+  if (embed && yt_player) {
+    clearInterval(ytPlayerTimeUpdateInterval);
+    yt_player.destroy();
+    yt_player = null;
+  } else {
+    video.src = "";
+    video.load();
+  };
+};
 function getPaused() {
   return EMBED ? yt_player.getPlayerState() != 1 : video.paused;
 };
@@ -448,14 +462,14 @@ function getDuration() {
 var LOOPING = false;
 function setLoop(loop) {
   LOOPING = loop;
-  if (!EMBED) {video.loop = loop;};
+  video.loop = loop;
 };
 function getLoop() {
   return EMBED ? LOOPING : video.loop;
 };
 // We want to stop the yt_player slightly before the end, so we can loop it
 function loopYtPlayer() {
-  if (getDuration() == 0) {return;};
+  if (getDuration() == 0 || !getDuration()) {return;};
   if (getDuration() - getTime() > 2) {return;};
   if (LOOPING) {
     yt_player.seekTo(0);
@@ -622,7 +636,7 @@ window.addEventListener("exitpip", () => {
   pip_refresh();
 });
 pipCloseBtn.addEventListener("click", () => { // Close button on pip player
-  pause();
+  destroyVideo(EMBED);
   document.body.classList.remove("pip");
   document.body.classList.remove("watch");
   document.body.style.overflow = "";
