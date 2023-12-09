@@ -304,7 +304,7 @@ body[data-mobile=true] .video-controls-container::before {
   /* https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers/ */
   /***** Chrome, Safari, Opera, and Edge Chromium *****/
   .video-container .slider::-webkit-slider-runnable-track {
-  background: var(--dark-theme-disabled-color);
+  background: var(--disabled-color);
   height: 0.2rem;
   transform: translateY(30%);
   border-radius: 5px;
@@ -312,7 +312,7 @@ body[data-mobile=true] .video-controls-container::before {
 
 /******** Firefox ********/
 .video-container .slider::-moz-range-track {
-  background: var(--dark-theme-disabled-color);
+  background: var(--disabled-color);
   height: 0.2rem;
   transform: translateY(30%);
   border-radius: 5px;
@@ -593,7 +593,7 @@ body[data-mobile=true][data-iOS=true] .video-container:not(.fake-full-screen).sr
   left: 0;
   right: 0;
   z-index: 101;
-  background-color: var(--dark-theme-background-color);
+  background-color: var(--background-color);
   cursor: pointer;
 }
 body.pip .pip-player-controls {
@@ -657,7 +657,7 @@ body.pip .pip-player-controls {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  background-color: var(--dark-theme-background-color);
+  background-color: var(--background-color);
   display: flex;
   gap: 0.5rem;
   flex-direction: column;

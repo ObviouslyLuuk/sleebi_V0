@@ -22,7 +22,8 @@ body[data-mobile=false] #content-container[data-page=home] #search_results {
 /* Stats */
 .stats_div {
     display: flex;
-    background-color: var(--dark-theme-divider-color);
+    border-top: 1px solid var(--divider-color);
+    border-bottom: 1px solid var(--divider-color);
 }
 .stat_div {
     display: flex;

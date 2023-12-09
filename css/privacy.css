@@ -9,8 +9,8 @@
     overflow-y: scroll;
     scrollbar-width: thin; */
     border-radius: 10px;
-    background-color: var(--dark-theme-divider-color);
-    color: var(--dark-theme-text-color);
+    background-color: var(--divider-color);
+    color: var(--text-primary-color);
     padding: 20px;
     /* margin order: top, right, bottom, left */
     margin: 3% 10% 3% 10%;

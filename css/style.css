@@ -1,30 +1,30 @@
 
 /* Colors */
+/* 
+monochromatic vibrant: https://www.realtimecolors.com/?colors=ffeed6-1e1d1a-ffbd14-c98322-ffd470&fonts=Poppins-Poppins
+monochromatic muted: https://www.realtimecolors.com/?colors=fff7e0-23211f-ffbd14-564c39-b1a477&fonts=Poppins-Poppins
+complementary yellow-mutedblue: https://www.realtimecolors.com/?colors=f0f0f0-212121-ffbd14-32324b-a7c6f7&fonts=Poppins-Poppins
+*/
 :root {
     --link-color: #007bff;
     --link-hover-color: #0056b3;
     --error-color: #dd2c00;
-    /* --primary-color: #3f51b5; */
-    --light-primary-color: #ffcd4e;
+    --light-primary-color: hsl(43, 100%, 70%);
     --primary-color: #ffba12;
-    /* --light-primary-color: #c5cae9; */
-    /* --dark-primary-color: #303f9f; */
-    --dark-primary-color: rgb(179, 132, 14);
-    --accent-color: #ff4081;
-    --light-accent-color: #ff80ab;
-    --dark-accent-color: #f50057;
-    /* --dark-theme-background-color: #212121; */
-    --dark-theme-background-color: #0f0f0f;
-    --dark-theme-base-color: #fff;
-    --dark-theme-text-color: #fff;
-    --dark-theme-secondary-color: #bcbcbc;
-    /* --dark-theme-secondary-color: #646464; */
-    /* --dark-theme-disabled-color: #646464; */
-    --dark-theme-disabled-color: #3c3c3c;
-    /* --dark-theme-divider-color: #3c3c3c; */
-    --dark-theme-divider-color: #212121;
-    --text-primary-color: var(--dark-theme-text-color);
-    --default-primary-color: var(--primary-color);
+    --dark-primary-color: rgba(255, 189, 20, 0.5);
+    --secondary-color: #564C39;
+    --accent-color: #B1A477;
+    --light-accent-color: hsl(47, 27%, 70%);
+    --dark-accent-color: rgba(177, 164, 119, 0.5);
+    --background-color: #0f0f0f;
+    --divider-color: #212121;
+    --disabled-color: #3c3c3c;
+    --text-primary-color: #fff;
+    --text-secondary-color: #bcbcbc;
+
+    /* Blues */
+    /* --secondary-color: #32324B;
+    --accent-color: #A7C6F7; */
 
     -webkit-tap-highlight-color: #00000000;
 }
@@ -39,6 +39,21 @@ body[data-mobile=false] {
 *, ::after, ::before {
     box-sizing: border-box;
 }
+/* scrollbar */
+::-webkit-scrollbar {
+    width: 7px;
+}
+::-webkit-scrollbar-track { /* Track */
+    background: var(--divider-color); 
+}
+::-webkit-scrollbar-thumb { /* Handle */
+    background: var(--disabled-color);
+    border-radius: 10px;
+    opacity: 0.8;
+}
+::-webkit-scrollbar-thumb:hover { /* Handle on hover */
+    opacity: 1;
+}
 
 body {
     /* Bootstrap stuff */
@@ -49,8 +64,8 @@ body {
     line-height: 1.5;
     text-align: left;
 
-    background-color: var(--dark-theme-background-color);
-    color: var(--dark-theme-text-color);
+    background-color: var(--background-color);
+    color: var(--text-primary-color);
     overflow-x: hidden;
 }
 main {
@@ -65,7 +80,7 @@ header {
     left: 0;
     width: 100vw;
     z-index: 1;
-    background-color: var(--dark-theme-background-color);
+    background-color: var(--background-color);
     height: var(--header-height);
 }
 /* Space for scrollbar */
@@ -89,8 +104,8 @@ footer {
     margin-top: 20px;
     padding: 20px;
     padding-bottom: var(--pip-player-height);
-    background-color: var(--dark-theme-divider-color);
-    color: var(--dark-theme-secondary-color);
+    background-color: var(--divider-color);
+    color: var(--text-secondary-color);
     text-align: center;
     display: grid;
     align-items: center;
@@ -176,7 +191,7 @@ a.bordered {
     align-items: center;
 }
 .text_div {
-    background-color: var(--dark-theme-divider-color);
+    background-color: var(--divider-color);
 }
 .text_div.center {
     text-align: center;
@@ -196,14 +211,14 @@ a.bordered {
     left: 50%;
     z-index: 10000000;
     transform: translate(-50%, 50%);
-    background-color: var(--dark-theme-background-color);
-    color: var(--dark-theme-text-color);
+    background-color: var(--background-color);
+    color: var(--text-primary-color);
     border-radius: 10px;
     padding: 20px;
     width: 470px;
     max-width: 90vw;
     overflow: auto;
-    border: 1px solid var(--dark-theme-divider-color);
+    border: 1px solid var(--divider-color);
 }
 .overlay_close_btn {
     position: absolute;
@@ -255,9 +270,9 @@ a.bordered {
 
 
 input[type=text] {
-    background-color: var(--dark-theme-background-color);
-    color: var(--dark-theme-text-color);
-    border: 1px solid var(--dark-theme-divider-color);
+    background-color: var(--background-color);
+    color: var(--text-primary-color);
+    border: 1px solid var(--divider-color);
     border-radius: 5px;
     padding: 5px;
 }
@@ -295,16 +310,16 @@ label:not(:last-child) {
 
 /* Buttons */
 .btn {
-    background-color: var(--dark-theme-divider-color);
-    color: var(--dark-theme-text-color);
-    border: 1px solid var(--dark-theme-divider-color);
+    background-color: var(--divider-color);
+    color: var(--text-primary-color);
+    border: 1px solid var(--divider-color);
     display: flex;
     align-items: center;
 }
 .btn:hover {
-    background-color: var(--dark-theme-disabled-color);
-    color: var(--dark-theme-text-color);
-    border: 1px solid var(--dark-theme-divider-color);
+    background-color: var(--disabled-color);
+    color: var(--text-primary-color);
+    border: 1px solid var(--divider-color);
 }
 .btn div {
     margin: 0 10px;
@@ -312,7 +327,7 @@ label:not(:last-child) {
 .icon {
     width: 20px;
     height: 20px;
-    fill: var(--dark-theme-text-color);
+    fill: var(--text-primary-color);
 }
 .clickable_icon {
     display: flex;
@@ -347,13 +362,13 @@ label:not(:last-child) {
     width: 50px;
 }
 .form-control {
-    background-color: var(--dark-theme-background-color);
-    color: var(--dark-theme-secondary-color);
-    border: 1px solid var(--dark-theme-divider-color);
+    background-color: var(--background-color);
+    color: var(--text-secondary-color);
+    border: 1px solid var(--divider-color);
 }
 .form-control:focus {
-    background-color: var(--dark-theme-background-color);
-    color: var(--dark-theme-text-color);
+    background-color: var(--background-color);
+    color: var(--text-primary-color);
     border: 1px solid var(--primary-color);
     box-shadow: none;
     outline: none;
