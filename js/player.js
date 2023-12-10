@@ -458,7 +458,7 @@ function destroyVideo(embed=false) {
 };
 function getPaused() {
   if (EMBED) {
-    if (!yt_player.getPlayerState) {return true};
+    if (!yt_player || !yt_player.getPlayerState) {return true};
     return yt_player.getPlayerState() != 1;
   } else {
     return video.paused;
