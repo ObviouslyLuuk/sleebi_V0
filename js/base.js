@@ -85,6 +85,9 @@ updateLandscape();
 
 // Listen for resize events
 window.addEventListener('resize', function() {
+    // Update viewport height style element
+    document.documentElement.style.setProperty('--innerHeight', `${window.innerHeight}px!important`);
+
     // document.body.dataset.mobile = window.mobileCheck();
     // if (!document.body.dataset.mobile) return;
     if (!window.mobileCheck()) return;

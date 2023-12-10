@@ -27,6 +27,8 @@ complementary yellow-mutedblue: https://www.realtimecolors.com/?colors=f0f0f0-21
     --accent-color: #A7C6F7; */
 
     -webkit-tap-highlight-color: #00000000;
+
+    --innerHeight: 100vh;
 }
 body {
     --pip-player-height: 50px;
