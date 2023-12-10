@@ -80,13 +80,18 @@ function updateLandscape() {
         document.body.dataset.landscape = "false";
     };
 };
-updateLandscape();
 
 
 // Listen for resize events
 window.addEventListener('resize', function() {
     // Update viewport height style element
-    document.documentElement.style.setProperty('--innerHeight', `${window.innerHeight}px!important`);
+    let elem = document.querySelector('style#innerHeight');
+    if (!elem) {
+        elem = document.createElement('style');
+        elem.id = "innerHeight";
+        document.head.appendChild(elem);
+    };
+    elem.innerText = `:root { --innerHeight: ${window.innerHeight}px!important; }`;
 
     // document.body.dataset.mobile = window.mobileCheck();
     // if (!document.body.dataset.mobile) return;
@@ -95,6 +100,7 @@ window.addEventListener('resize', function() {
     // If mobile and width is greater than height, set landscape to true
     updateLandscape();
 });
+window.dispatchEvent(new Event('resize'));
 
 
 
