@@ -743,7 +743,7 @@ buttons.forEach(button => {
 video.addEventListener("error", () => {
   if (EMBED) {return;};
   console.log("Video error:", video.error);
-  if (video.error.message.includes("Empty src attribute")) {return;};
+  if (video.error.message && video.error.message.includes("Empty src attribute")) {return;};
 
   destroyVideo(embed=false);
   redirect_watch(VIDEO_ID, embed=true, replace=true) // Redirect to embed player
