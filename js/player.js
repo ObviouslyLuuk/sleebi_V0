@@ -742,6 +742,7 @@ video.addEventListener("error", () => {
 
   destroyVideo(embed=false);
   redirect_watch(VIDEO_ID, embed=true, replace=true) // Redirect to embed player
+  create_message_overlay("switching to embed player")
   return;
 
   videoContainer.classList.remove('src-loading');
