@@ -487,9 +487,21 @@ function loopYtPlayer() {
     yt_player.pauseVideo();
     setTime(getDuration() - 2.1);
     console.log("Pausing before end");
+    video.dispatchEvent(new Event('ended'))
   };
-}
+};
 
+var AUTOPLAY = false;
+document.querySelector("#autoplay_switch").addEventListener("change", e => {
+  AUTOPLAY = e.target.checked;
+  create_message_overlay(`Autoplay ${AUTOPLAY ? 'enabled' : 'disabled'}`);
+});
+video.addEventListener("ended", () => {
+  if (getLoop()) {return;};
+  if (AUTOPLAY) {
+    autoplay_video();
+  };
+});
 
 
 

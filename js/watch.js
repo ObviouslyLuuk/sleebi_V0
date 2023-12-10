@@ -54,6 +54,18 @@ window.addEventListener('player_ready', ()=>{
     prompt_player(VIDEO_ID);
 });
 
+function autoplay_video() {
+    // Pick random video from videos_info that is not the current video and redirect to it
+    let video_ids = Object.keys(videos_info);
+    let random_video_id = video_ids[Math.floor(Math.random() * video_ids.length)];
+    if (random_video_id == VIDEO_ID) {
+        autoplay_video();
+        return;
+    };
+    redirect_watch(random_video_id);
+};
+
+
 function placeWatchContent() {
     // Get video_id from URL
     VIDEO_ID = URLPARAMS.get('v');
@@ -149,18 +161,18 @@ function placeWatchContent() {
     // Set video channel name
     let video_channel = document.querySelector('#vid_channel_name');
     video_channel.innerHTML = video_info['channel_name'];
-    video_channel.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
+    video_channel.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; });
     let pip_video_channel = document.querySelector('.pip-player-channel-name');
     pip_video_channel.innerHTML = video_info['channel_name'];
 
     // Set channel icon
-    let channel_icon = document.querySelector('#vid_channel_icon');
-    channel_icon.src = video_info['channel_icon_url']; // Don't have channel_icon_url yet
-    channel_icon.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; }); // Don't have channel_@name yet
+    // let channel_icon = document.querySelector('#vid_channel_icon');
+    // channel_icon.src = video_info['channel_icon_url'];
+    // channel_icon.addEventListener('click', function() { window.location.href = `?c=${video_info['channel_@name']}`; });
 
     // Set youtube subscribe button
     let yt_sub = document.querySelector('#yt_sub');
-    yt_sub.href = `https://www.youtube.com/channel/${video_info['channel_id']}?sub_confirmation=1&feature=subscribe-embed-click`; // Don't have channel_id yet
+    yt_sub.href = `https://www.youtube.com/channel/${video_info['channel_id']}?sub_confirmation=1&feature=subscribe-embed-click`;
 
     // Set video share button
     let share_btn = document.querySelector('#vid_share_btn');
@@ -174,7 +186,7 @@ function placeWatchContent() {
 
     // Sort recommended videos by relevance using get_search_results() and title as query
     let rec_vids = get_search_results(video_info['title'], Object.values(videos_info));
-    let rec_div = document.querySelector('.right-column');
+    let rec_div = document.querySelector('#related_videos');
     empty_element(rec_div);
 
     // Add every video as rec_vid
