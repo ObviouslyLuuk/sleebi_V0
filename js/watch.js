@@ -26,6 +26,7 @@ if (!PLAY_WHEN_CLICKED) {
 HTML_TEMPLATES['watch'] = null;
 fetch_html('watch');
 
+var PREV_VIDEO_ID;
 var PREV_EMBED;
 var EMBED;
 var yt_player;
@@ -68,8 +69,19 @@ function placeWatchContent() {
         destroyVideo(PREV_EMBED);
         if (!EMBED) {window.dispatchEvent(new Event('player_ready'));}; // Sleebi player is always ready after it's loaded
     } else {
-        // If PREV_EMBED is defined and is the same as EMBED, we can just prompt the player
-        prompt_player(VIDEO_ID);
+        if (VIDEO_ID == PREV_VIDEO_ID) {
+            // If video_id is the same as PREV_VIDEO_ID, we don't need to reload the player at all
+            console.log("placeWatchContent: video_id is the same as PREV_VIDEO_ID");
+            document.body.classList.add('watch');
+            window.dispatchEvent(new Event('exitpip'));
+            document.querySelector('.vid_player_container').scrollIntoView();
+            play();
+            return;
+        } else {
+            // If PREV_EMBED is defined and is the same as EMBED, 
+            // we can just prompt the player and continue placing the watch content
+            prompt_player(VIDEO_ID);
+        };
     };
 
     // Load player and rerun
@@ -188,6 +200,8 @@ function placeWatchContent() {
         script.id = 'embed_script';
         document.body.appendChild(script);
     };
+
+    PREV_VIDEO_ID = VIDEO_ID;
 };
 
 

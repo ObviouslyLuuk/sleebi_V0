@@ -202,8 +202,9 @@ window.addEventListener("yt_player_ready", () => {
 function handleTimeUpdate() {
   if (EMBED && (!yt_player || !yt_player.getCurrentTime)) {return;};
 
-  currentTimeElem.textContent = formatDuration(getTime());
-  let percent = getTime() / getDuration();
+  let time = getTime();
+  currentTimeElem.textContent = formatDuration(time);
+  let percent = time / getDuration();
   timelineContainer.style.setProperty("--progress-position", percent);
 
   if (EMBED) {loopYtPlayer();};

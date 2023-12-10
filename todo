@@ -1,4 +1,6 @@
 ISSUES:
+    no fullscreen on iOS embedded (it's impossible)
+    iOS turns off after 30 seconds??
     scrubbing on firefox not working? (comment on post #1)
     background play not working for iOS? (many comments on post #1, but not sure if they were checking the widget)
 
