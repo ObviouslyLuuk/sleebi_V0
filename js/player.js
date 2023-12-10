@@ -457,7 +457,12 @@ function destroyVideo(embed=false) {
   };
 };
 function getPaused() {
-  return EMBED ? yt_player.getPlayerState() != 1 : video.paused;
+  if (EMBED) {
+    if (!yt_player.getPlayerState) {return true};
+    return yt_player.getPlayerState() != 1;
+  } else {
+    return video.paused;
+  };
 };
 function setTime(time) {
   EMBED ? yt_player.seekTo(time) : video.currentTime = time;
@@ -513,7 +518,7 @@ function toggleControls(force=undefined) {
   videoContainer.classList.toggle("controls-active", force);
 
   // Set timeout if video is playing
-  if (!getPaused()) {
+  if (!getPaused() && videoContainer.classList.contains("controls-active")) {
     controlsTimeout = setTimeout(() => {
       videoContainer.classList.remove("controls-active");
     }, 2000);
