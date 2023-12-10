@@ -45,10 +45,12 @@ function create_overlay(parent=document.body, class_='', add_close_btn=true, tim
             };
         });
     } else {
-        // Clicking anywhere will close the overlay
-        window.addEventListener('click', function() {
-            overlay_background.remove();
-        });
+        // Clicking anywhere will close the overlay, but wait 100ms to prevent the overlay from closing immediately
+        setTimeout(function() {
+            window.addEventListener('click', function() {
+                overlay_background.remove();
+            });
+        }, 100);
         // Pressing escape will close the overlay
         window.addEventListener('keydown', function(event) {
             if (event.key == 'Escape') {
@@ -70,12 +72,36 @@ function create_overlay(parent=document.body, class_='', add_close_btn=true, tim
     return overlay_content;
 };
 
+// function create_message_overlay(message, parent=document.body, duration=2000) {
+//     let overlay = create_and_append('div', parent, null, 'overlay message_overlay');
+//     // Clicking anywhere will close the overlay
+//     setTimeout(function() {
+//         window.addEventListener('click', function() {
+//             overlay.remove();
+//         }, {once: true});
+//     }, 100);
+//     // When the animation ends, remove the overlay
+//     overlay.addEventListener('animationend', function() {
+//         overlay.remove();
+//     });
+    
+//     let ani_str = `${duration/1000}s ease-in-out 0s 1 normal forwards running slideUpAndAway`;
+//     overlay.style.animation = ani_str;
+
+//     let overlay_content = create_and_append('div', overlay, null, 'overlay_content');
+//     let overlay_message = create_and_append('div', overlay_content, null, 'overlay_message');
+//     overlay_message.innerText = message;
+//     console.log(overlay_message);
+//     return overlay_content;
+// };
+
 function create_message_overlay(message, parent=document.body, duration=2000) {
     let ani_str = `${duration/1000}s ease-in-out 0s 1 normal forwards running slideUpAndAway`;
     let overlay_content = create_overlay(parent, 'message_overlay', false, undefined, false);
     overlay_content.parentElement.style.animation = ani_str;
     let overlay_message = create_and_append('div', overlay_content, null, 'overlay_message');
     overlay_message.innerText = message;
+    console.log(overlay_message);
     return overlay_content;
 };
 

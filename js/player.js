@@ -370,7 +370,7 @@ function toggleFullScreenMode() {
 
 function toggleIOSViewerMode() {
   if (EMBED) {
-    console.log("Can't enter fullscreen on iOS in embed mode");
+    create_message_overlay("Can't enter fullscreen on iOS in embed mode\nTry holding your phone sideways :)", document.body, 5000);
     return;
   }
   let waspaused = video.paused;

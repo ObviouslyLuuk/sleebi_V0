@@ -356,7 +356,7 @@ label:not(:last-child) {
     width: 0;
     height: 0;
 }
-.slider {
+.switch-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -368,7 +368,7 @@ label:not(:last-child) {
     transition: .4s;
     border-radius: 34px;
 }
-.slider:before { /* This is the circle */
+.switch-slider:before { /* This is the circle */
     position: absolute;
     content: "";
     /* height: 26px;
@@ -382,13 +382,13 @@ label:not(:last-child) {
     transition: .4s;
     border-radius: 50%;
 }
-input:checked + .slider {
+input:checked + .switch-slider {
     background-color: var(--primary-color);
 }
-input:focus + .slider {
+input:focus + .switch-slider {
     box-shadow: 0 0 1px var(--primary-color);
 }
-input:checked + .slider:before {
+input:checked + .switch-slider:before {
     -webkit-transform: translateX(calc(var(--switch-width) - var(--switch-height)));
     -ms-transform: translateX(calc(var(--switch-width) - var(--switch-height)));
     transform: translateX(calc(var(--switch-width) - var(--switch-height)));
