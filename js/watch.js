@@ -46,15 +46,6 @@ function load_embed_script() {
     document.body.appendChild(script);
 };
 
-function loadPlayer() {
-    // Load Sleebi player html
-    console.log("loadPlayer: loading player html...");
-    HTML_TEMPLATES['player'] = null;
-    fetch_html('player');
-};
-
-window.addEventListener('watch_html_ready', loadPlayer, {once: true});
-
 window.addEventListener('player_ready', ()=>{
     console.log("player ready");
     prompt_player(VIDEO_ID);
@@ -103,17 +94,16 @@ function placeWatchContent() {
     };
 
     // Load player and rerun
-    if (!HTML_TEMPLATES['player'] && !WATCH_LOAD) {
-        console.log("placeWatchContent: player html not loaded yet, waiting...");
-        window.addEventListener('player_html_ready', placeWatchContent, {once: true});
+    if (!HTML_TEMPLATES['watch'] && !WATCH_LOAD) {
+        console.log("placeWatchContent: watch/player html not loaded yet, waiting...");
+        window.addEventListener('watch_html_ready', placeWatchContent, {once: true});
         return;
     };
     // Place watch overlay and continue
     let watch_overlay = document.querySelector('#watch_overlay');
-    if (HTML_TEMPLATES['player'] && !watch_overlay && !WATCH_LOAD) {
+    if (HTML_TEMPLATES['watch'] && !watch_overlay && !WATCH_LOAD) {
         watch_overlay = create_and_append('div', document.body, 'watch_overlay');
         document.querySelector('#watch_overlay').innerHTML = HTML_TEMPLATES['watch'];
-        document.querySelector('.vid_player_container').innerHTML = HTML_TEMPLATES['player'];
         console.log("placeWatchContent: watch_overlay now created");
         if (!EMBED) {window.dispatchEvent(new Event('player_ready'));}; // Sleebi player is always ready after it's loaded
     } else if (watch_overlay && WATCH_LOAD) {
@@ -219,6 +209,8 @@ function placeWatchContent() {
         let script = document.createElement('script');
         script.src = 'js/util/embed.js';
         script.id = 'embed_script';
+        script.async = true;
+        script.defer = true;
         document.body.appendChild(script);
     };
 

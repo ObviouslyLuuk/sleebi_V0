@@ -50,14 +50,14 @@ window.iOSCheck = function() {
 };
 
 /**
- * Fetches the HTML from 'html/${page}.html' and injects it into the container div.
+ * Fetches the HTML from 'html/min/${page}.min.html' and injects it into the container div.
  * Sets the 'HTML_TEMPLATES[page]' to the html after successful injection.
  * Fires the '{page}_html_ready' event after injection.
  * 
  * @returns {void}
  */
 function fetch_html(page, selector=null) {
-    fetch(`html/${page}.html`)
+    fetch(`html/min/${page}.min.html`)
         .then(response => response.text())
         .then(html => {
             // Inject the HTML into the container
