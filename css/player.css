@@ -691,6 +691,9 @@ body.watch .video-error-div.active {
   height: max(300%, 500px);
   pointer-events: none;
 }
+.video-container.unstarted .video-wrapper iframe {
+  pointer-events: all;
+}
 
 .video-container[data-mode=yt] .video-wrapper video,
 .video-container[data-mode=sleebi] .video-wrapper #main-video-element {

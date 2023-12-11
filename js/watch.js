@@ -264,9 +264,8 @@ function add_rec_vids(query) {
 
 
 function prompt_player(video_id) {
+    console.log("prompt_player with video_id:", video_id);
     let video_container = document.querySelector('.video-container');
-    video_container.classList.add('paused');
-    video_container.classList.add('controls-active');
 
     let t = URLPARAMS.get('t');
     if (!EMBED) {
@@ -276,6 +275,8 @@ function prompt_player(video_id) {
 
         // Prepare video src for when play is requested
         video_container.classList.remove('src-loaded');
+        video_container.classList.add('controls-active');
+        video_container.classList.add('paused');
         if (!PLAY_WHEN_CLICKED) {
             destroyVideo(false);
         } else {
@@ -292,6 +293,7 @@ function prompt_player(video_id) {
         if (!t) {t = 0;};
         yt_player.loadVideoById(VIDEO_ID, t / 1000);
         video_container.dataset.mode = 'yt';
+        video_container.classList.add('unstarted');
     }
     PREV_EMBED = EMBED;
 };
@@ -319,6 +321,7 @@ function load_yt_player() {
             // YT.PlayerState.BUFFERING = 3
             if (event.data == 1) {
                 window.dispatchEvent(new Event('play'));
+                document.querySelector('.video-container').classList.remove('unstarted');
             } else if (event.data == 2) {
                 window.dispatchEvent(new Event('pause'));
             } else if (event.data == 3) {
