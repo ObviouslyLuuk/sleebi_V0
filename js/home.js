@@ -20,6 +20,9 @@ function placeHomeContent() {
         return;
     };
 
+    // Close search bar if open
+    document.querySelector('#navbar').dataset.mode = "default";
+
     // Update page title
     document.title = "Sleebi - for Sleep";
 
