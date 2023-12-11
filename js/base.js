@@ -13,6 +13,21 @@ let search_bar = document.querySelector('#navbar #search_bar');
 search_bar.addEventListener('submit', function(e) {
     e.preventDefault();
     let query = document.querySelector('#navbar #search-input').value;
+
+    // If query is a YouTube link, get the video id and redirect to /?v=VIDEO_ID&embed=true
+    // YouTube URL formats:
+    // https://www.youtube.com/watch?v=VIDEO_ID
+    // https://youtu.be/VIDEO_ID
+    if (query.includes('youtube.com/watch?v=')) {
+        let video_id = query.split('youtube.com/watch?v=')[1].split('&')[0];
+        redirect_watch(video_id, embed=true);
+        return;
+    } else if (query.includes('youtu.be/')) {
+        let video_id = query.split('youtu.be/')[1].split('?')[0];
+        redirect_watch(video_id, embed=true);
+        return;
+    };
+
     console.log("search query entered: ", query);
     redirect_results(query);
 });

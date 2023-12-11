@@ -151,7 +151,12 @@ function placeWatchContent() {
         video_title.innerHTML = "This video is not in Sleebi's database";
         // Set video description
         let video_description = document.querySelector('#vid_description');
-        video_description.innerHTML = "but you can still watch it here :)\n\nKeep in mind that this video's creator will only be compensated if you see an ad.";
+        video_description.innerHTML = `but you can still watch it here${' '}:)<br><br>
+            Keep in mind that this video's creator will only be compensated if you see an ad.<br><br>
+            At the moment it's unclear whether YouTube will serve ads on Sleebi. If they do, the creator${' '}(and YouTube)${' '}
+            will be compensated like normal. Regardless, Sleebi doesn't make any money from this. Also the video will be stopped 
+            just before the end so you won't get any postroll ads.
+        `;
         // Set youtube subscribe button to watch this video on YouTube
         let yt_sub = document.querySelector('#yt_sub');
         yt_sub.href = "https://www.youtube.com/watch?v=" + VIDEO_ID;
