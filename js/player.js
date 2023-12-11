@@ -637,14 +637,14 @@ drag_elems.forEach(e=>{e.addEventListener("touchend", e => {
     let no_pip_change = !document.body.classList.contains("pip");
     window.dispatchEvent(new Event('exitpip'));
     if (no_pip_change) {return;};
-    window.history.back();
-    console.log("Popped state");
+    window.history.pushState({page:"watch",video_id:VIDEO_ID, embed:EMBED}, null, get_video_url(VIDEO_ID, EMBED, undefined, relative=true));
+    console.log("Pushed state with " + VIDEO_ID);
   };
 })});
 drag_elems[0].addEventListener("click", () => {
   window.dispatchEvent(new Event('exitpip'));
-  window.history.back();
-  console.log("Popped state");
+  window.history.pushState({page:"watch",video_id:VIDEO_ID, embed:EMBED}, null, get_video_url(VIDEO_ID, EMBED, undefined, relative=true));
+  console.log("Pushed state with " + VIDEO_ID);
 });
 
 function pip_refresh() {

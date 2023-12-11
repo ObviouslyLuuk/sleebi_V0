@@ -133,9 +133,63 @@ function placeWatchContent() {
         window.addEventListener('videos_info_loaded', placeWatchContent);
         return;
     };
-    let video_info = videos_info[VIDEO_ID];
-    console.log("video_info:", video_info);
 
+    if (Object.keys(videos_info).includes(VIDEO_ID)) {
+        let video_info = videos_info[VIDEO_ID];
+        console.log("video_info:", video_info);
+
+        // Fill video info
+        fill_video_info(video_info);
+
+        add_rec_vids(video_info['title']);
+    } else {
+        console.log("placeWatchContent: video_id not found in videos_info");
+        // Set page title
+        document.title = "Sleebi";
+        // Set video title
+        let video_title = document.querySelector('#vid_title');
+        video_title.innerHTML = "This video is not in Sleebi's database";
+        // Set video description
+        let video_description = document.querySelector('#vid_description');
+        video_description.innerHTML = "but you can still watch it here :)\n\nKeep in mind that this video's creator will only be compensated if you see an ad.";
+        // Set youtube subscribe button to watch this video on YouTube
+        let yt_sub = document.querySelector('#yt_sub');
+        yt_sub.href = "https://www.youtube.com/watch?v=" + VIDEO_ID;
+        // Set video views
+        let video_views = document.querySelector('#vid_viewcount');
+        video_views.innerHTML = "";
+        // Set video upload date
+        let video_date = document.querySelector('#vid_date');
+        video_date.innerHTML = "";
+        // Set video channel name
+        let video_channel = document.querySelector('#vid_channel_name');
+        video_channel.innerHTML = "";
+
+        add_rec_vids("");
+    }
+
+    // Set video share button
+    let share_btn = document.querySelector('#vid_share_btn');
+    share_btn.addEventListener('click', add_share_overlay);
+
+
+    // Add script tag for js/util/embed.js async
+    let embed_script = document.querySelector('#embed_script');
+    if (!embed_script) {
+        console.log("embed.js not loaded yet, loading...");
+        let script = document.createElement('script');
+        script.src = 'js/util/embed.js';
+        script.id = 'embed_script';
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+    };
+
+    PREV_VIDEO_ID = VIDEO_ID;
+};
+
+
+function fill_video_info(video_info) {
     // Update page title
     document.title = video_info['title'];
     
@@ -173,18 +227,17 @@ function placeWatchContent() {
     let yt_sub = document.querySelector('#yt_sub');
     yt_sub.href = `https://www.youtube.com/channel/${video_info['channel_id']}?sub_confirmation=1&feature=subscribe-embed-click`;
 
-    // Set video share button
-    let share_btn = document.querySelector('#vid_share_btn');
-    share_btn.addEventListener('click', add_share_overlay);
-    
     // Set download button href
     // https://stackoverflow.com/questions/62046965/save-as-video-but-how-to-do-it-with-javascript-and-html-instead
     // let download_btn = document.getElementById('vid_download_btn');
     // download_btn.href = get_download_url(video_info);
     // download_btn.setAttribute('download', video_info['id'] + '.mp4');
+};
 
+
+function add_rec_vids(query) {
     // Sort recommended videos by relevance using get_search_results() and title as query
-    let rec_vids = get_search_results(video_info['title'], Object.values(videos_info));
+    let rec_vids = get_search_results(query, Object.values(videos_info));
     let rec_div = document.querySelector('#related_videos');
     empty_element(rec_div);
 
@@ -201,20 +254,6 @@ function placeWatchContent() {
             320,
         );
     };
-
-    // Add script tag for js/util/embed.js
-    let embed_script = document.querySelector('#embed_script');
-    if (!embed_script) {
-        console.log("embed.js not loaded yet, loading...");
-        let script = document.createElement('script');
-        script.src = 'js/util/embed.js';
-        script.id = 'embed_script';
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild(script);
-    };
-
-    PREV_VIDEO_ID = VIDEO_ID;
 };
 
 
