@@ -687,7 +687,7 @@ body.watch .video-error-div.active {
 
 /* YT Iframe */
 .video-wrapper iframe {
-  width: 100%;
+  width: calc(var(--innerHeight) * 16/9);
   height: max(300%, 500px);
   pointer-events: none;
 }
