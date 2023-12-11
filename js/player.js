@@ -82,10 +82,10 @@ timelineContainer.addEventListener("mousemove", handleTimelineUpdate);
 timelineContainer.addEventListener("mousedown", toggleScrubbing);
 document.addEventListener("mouseup", e => {
   if (isScrubbing) toggleScrubbing(e);
-})
+});
 document.addEventListener("mousemove", e => {
   if (isScrubbing) handleTimelineUpdate(e);
-})
+});
 // Add touch events for mobile
 timelineContainer.addEventListener("touchmove", e => {
   // Construct a simulated mouse event from the touch event.
@@ -100,13 +100,13 @@ document.addEventListener("touchend", e => {
   if (isScrubbing) {
     e = {x: e.changedTouches[0].clientX, buttons: 0, preventDefault: ()=>{}, type: 'touchend'};
     toggleScrubbing(e);
-  }
+  };
 });
 document.addEventListener("touchmove", e => {
   if (isScrubbing) {
     e = {x: e.touches[0].clientX, buttons: 1, preventDefault: ()=>{}, type: 'touchmove'};
     handleTimelineUpdate(e);
-  }
+  };
 });
 
 
@@ -183,10 +183,10 @@ function handleTimelineUpdate(e) {
 video.addEventListener("loadeddata", () => {
   totalTimeElem.textContent = formatDuration(getDuration());
 });
-window.addEventListener("yt_player_ready", () => {
+window.addEventListener("loadeddata", () => {
   // Set interval to update as soon as getDuration() is available
   let interval = setInterval(() => {
-    if (getDuration()) {
+    if (yt_player && yt_player.getDuration && getDuration()) {
       totalTimeElem.textContent = formatDuration(getDuration());
       clearInterval(interval);
     }
@@ -447,6 +447,8 @@ function stopVideo() {
   EMBED ? yt_player.stopVideo() : video.pause();
 };
 function destroyVideo(embed=false) {
+  PREV_VIDEO_ID = null;
+  PREV_EMBED = null;
   if (embed && yt_player) {
     clearInterval(ytPlayerTimeUpdateInterval);
     yt_player.destroy();
@@ -627,13 +629,22 @@ drag_elems.forEach(e=>{e.addEventListener("touchend", e => {
   let deltaY = e.changedTouches[0].clientY - startY;
 
   if (deltaY > videoContainer.clientHeight / 3) {
+    let no_pip_change = document.body.classList.contains("pip");
     window.dispatchEvent(new Event('enterpip'));
+    if (no_pip_change) {return;};
+    push_state_behind_watchpage();
   } else {
+    let no_pip_change = !document.body.classList.contains("pip");
     window.dispatchEvent(new Event('exitpip'));
+    if (no_pip_change) {return;};
+    window.history.back();
+    console.log("Popped state");
   };
 })});
 drag_elems[0].addEventListener("click", () => {
   window.dispatchEvent(new Event('exitpip'));
+  window.history.back();
+  console.log("Popped state");
 });
 
 function pip_refresh() {
@@ -644,25 +655,17 @@ function pip_refresh() {
 };
 
 window.addEventListener("enterpip", () => {
-  let content_container = document.querySelector('#content-container');
-  if (content_container.dataset.page == "home") {
-    window.history.replaceState({page:"home"}, null, '/');
-  } else if (content_container.dataset.page == "results") {
-    window.history.replaceState({page:"results",query:QUERY}, null, '/?q=' + QUERY);
-  };
-
   document.body.classList.add("pip");
   watch_overlay.style.top = "";
   pip_refresh();
 });
 window.addEventListener("exitpip", () => {
-  window.history.replaceState({page:"watch",video_id:VIDEO_ID}, null, '/?v=' + VIDEO_ID + (EMBED ? '&embed=true' : ''));
   document.body.classList.remove("pip");
   watch_overlay.style.top = "";
   pip_refresh();
 });
 pipCloseBtn.addEventListener("click", () => { // Close button on pip player
-  destroyVideo(EMBED);
+  stopVideo();
   document.body.classList.remove("pip");
   document.body.classList.remove("watch");
   document.body.style.overflow = "";
@@ -675,6 +678,17 @@ pipCloseBtn.addEventListener("click", () => { // Close button on pip player
     }
   `;
 });
+
+function push_state_behind_watchpage() {
+  let content_container = document.querySelector('#content-container');
+  if (content_container.dataset.page == "home") {
+    window.history.pushState({page:"home"}, null, '/');
+    console.log("Pushed state with /");
+  } else if (content_container.dataset.page == "results") {
+    window.history.pushState({page:"results",query:QUERY}, null, '/?q=' + QUERY);
+    console.log("Pushed state with /?q=" + QUERY);
+  };
+};
 
 
 
@@ -743,11 +757,11 @@ buttons.forEach(button => {
 video.addEventListener("error", () => {
   if (EMBED) {return;};
   console.log("Video error:", video.error);
-  if (video.error.message && video.error.message.includes("Empty src attribute")) {return;};
+  if (video.error.message != undefined && video.error.message.includes("Empty src attribute")) {return;};
 
   destroyVideo(embed=false);
-  redirect_watch(VIDEO_ID, embed=true, replace=true) // Redirect to embed player
-  create_message_overlay("switching to embed player")
+  redirect_watch(VIDEO_ID, embed=true, replace=true); // Redirect to embed player
+  create_message_overlay("switching to embed player");
   return;
 
   videoContainer.classList.remove('src-loading');
@@ -789,3 +803,4 @@ window.addEventListener("pushstate", () => {
 });
 
 window.dispatchEvent(new Event('player_js_ready'));
+if (!EMBED) {video.load();};

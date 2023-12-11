@@ -22,29 +22,35 @@ if (!PLAY_WHEN_CLICKED) {
     });
 };
 
-// Fetch the HTML content
-HTML_TEMPLATES['watch'] = null;
-fetch_html('watch');
 
 var PREV_VIDEO_ID;
 var PREV_EMBED;
 var EMBED;
 var yt_player;
+const WATCH_LOAD = (document.querySelector('#watch_overlay') && 1);
+
+if (!WATCH_LOAD) {
+    // Fetch the HTML content
+    HTML_TEMPLATES['watch'] = null;
+    fetch_html('watch');
+};
+if (EMBED) {
+    load_embed_script();
+};
+function load_embed_script() {
+    // Load youtube embedding JS
+    console.log("loadPlayer: loading yt embedding js...");
+    script = document.createElement('script');
+    script.src = 'js/util/embed.js';
+    script.id = 'embed_script';
+    document.body.appendChild(script);
+};
 
 function loadPlayer() {
     // Load Sleebi player html
     console.log("loadPlayer: loading player html...");
     HTML_TEMPLATES['player'] = null;
     fetch_html('player');
-
-    if (EMBED) {
-        // Load youtube embedding JS
-        console.log("loadPlayer: loading yt embedding js...");
-        script = document.createElement('script');
-        script.src = 'js/util/embed.js';
-        script.id = 'embed_script';
-        document.body.appendChild(script);
-    }
 };
 
 window.addEventListener('watch_html_ready', loadPlayer, {once: true});
@@ -97,22 +103,25 @@ function placeWatchContent() {
     };
 
     // Load player and rerun
-    if (!HTML_TEMPLATES['player']) {
+    if (!HTML_TEMPLATES['player'] && !WATCH_LOAD) {
         console.log("placeWatchContent: player html not loaded yet, waiting...");
         window.addEventListener('player_html_ready', placeWatchContent, {once: true});
         return;
     };
     // Place watch overlay and continue
     let watch_overlay = document.querySelector('#watch_overlay');
-    if (HTML_TEMPLATES['player'] && !watch_overlay) {
+    if (HTML_TEMPLATES['player'] && !watch_overlay && !WATCH_LOAD) {
         watch_overlay = create_and_append('div', document.body, 'watch_overlay');
         document.querySelector('#watch_overlay').innerHTML = HTML_TEMPLATES['watch'];
         document.querySelector('.vid_player_container').innerHTML = HTML_TEMPLATES['player'];
-        if (!EMBED) {window.dispatchEvent(new Event('player_ready'));}; // Sleebi player is always ready after it's loaded
         console.log("placeWatchContent: watch_overlay now created");
+        if (!EMBED) {window.dispatchEvent(new Event('player_ready'));}; // Sleebi player is always ready after it's loaded
+    } else if (watch_overlay && WATCH_LOAD) {
+        console.log("placeWatchContent: watch_overlay already exists");
+        if (!EMBED) {window.dispatchEvent(new Event('player_ready'));};
     };
     // Load player.js and continue
-    if (!document.querySelector('#player_script')) {
+    if (!document.querySelector('#player_script') && !WATCH_LOAD) {
         console.log("player.js not loaded yet, loading...");
         let script = document.createElement('script');
         script.src = 'js/player.js';
@@ -235,6 +244,7 @@ function prompt_player(video_id) {
             destroyVideo(false);
         } else {
             video.src = get_download_url(video_id);
+            video.load();
         };
         // If t is in URL, set video.currentTime to t
         if (t) {
@@ -280,7 +290,7 @@ function load_yt_player() {
             } else if (event.data == 0) {
                 window.dispatchEvent(new Event('ended'));
             } else if (event.data == -1) {
-                // window.dispatchEvent(new Event('unstarted'));
+                window.dispatchEvent(new Event('loadeddata'));
             };
         }
     });
@@ -293,13 +303,15 @@ function add_share_overlay() {
     video.pause();
     let starttime = format_ms_as_time(video.currentTime * 1000);
 
+    let url = get_video_url(VIDEO_ID, EMBED);
+
     let overlay_content = create_overlay(document.body, 'share_overlay', true, null, true);
     overlay_content = create_and_append('div', overlay_content, null, 'share_overlay_content');
     // Include starttime checkbox
     overlay_content.innerHTML = `
     <h5>Share</h5>
     <div id="share_url_container" class="flex-container">
-        <input type="text" id="share_url" class="wide_input" value="${window.location.href}">
+        <input type="text" id="share_url" class="wide_input" value="${url}">
         <button id="copy_url_btn" class="btn">Copy</button>
     </div>
     <div id="share_option_container">

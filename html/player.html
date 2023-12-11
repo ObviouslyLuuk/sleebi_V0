@@ -30,7 +30,7 @@
       </div>
       <span>+5 seconds</span>
     </div>
-    <button class="play-pause-btn big-play-pause-btn clickable_icon">
+    <button class="play-pause-btn big-play-pause-btn clickable_icon" aria-label="play / pause">
       <svg class="play-icon" width="100" viewBox="0 0 24 24">
         <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
       </svg>
@@ -47,7 +47,7 @@
       </div>
       <div class="controls">
         <div id="player_controls_left" class="flex-container flex-grow">
-          <button class="play-pause-btn small-play-pause-btn clickable_icon">
+          <button class="play-pause-btn small-play-pause-btn clickable_icon" aria-label="play / pause">
             <svg class="play-icon" width="100" viewBox="0 0 24 24">
               <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
             </svg>
@@ -56,7 +56,7 @@
             </svg>
           </button>
           <div class="volume-container control-container">
-            <button class="mute-btn clickable_icon">
+            <button class="mute-btn clickable_icon" aria-label="mute">
               <svg class="volume-high-icon" width="100" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
               </svg>
@@ -67,10 +67,10 @@
                 <path fill="currentColor" d="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z" />
               </svg>
             </button>
-            <input class="volume-slider slider" type="range" min="0" max="1" step="any" value="1">
+            <input class="volume-slider slider" type="range" min="0" max="1" step="any" value="1" aria-label="volume slider">
           </div>
           <div class="brightness-container control-container">
-            <button class="brightness-btn clickable_icon">
+            <button class="brightness-btn clickable_icon" aria-label="brightness">
                 <svg class="brightness-high-icon" x="0px" y="0px" width="100" height="100" viewBox="0 0 64 64">
                   <path fill="currentColor" d="M32 19c7.18 0 13 5.82 13 13s-5.82 13-13 13-13-5.82-13-13S24.82 19 32 19zM32 41c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9S27.029 41 32 41zM34 8c0 .366 0 5.634 0 6 0 1.105-.895 2-2 2s-2-.895-2-2c0-.366 0-5.634 0-6 0-1.105.895-2 2-2S34 6.895 34 8zM50.385 16.444c-.259.259-3.984 3.984-4.243 4.243-.781.781-2.047.781-2.828 0-.781-.781-.781-2.047 0-2.828.259-.259 3.984-3.984 4.243-4.243.781-.781 2.047-.781 2.828 0S51.166 15.663 50.385 16.444zM56 34c-.366 0-5.634 0-6 0-1.105 0-2-.895-2-2s.895-2 2-2c.366 0 5.634 0 6 0 1.105 0 2 .895 2 2S57.105 34 56 34zM47.556 50.385c-.259-.259-3.984-3.984-4.243-4.243-.781-.781-.781-2.047 0-2.828s2.047-.781 2.828 0c.259.259 3.984 3.984 4.243 4.243.781.781.781 2.047 0 2.828S48.337 51.166 47.556 50.385zM30 56c0-.366 0-5.634 0-6 0-1.105.895-2 2-2s2 .895 2 2c0 .366 0 5.634 0 6 0 1.105-.895 2-2 2S30 57.105 30 56zM13.615 47.556c.259-.259 3.984-3.984 4.243-4.243.781-.781 2.047-.781 2.828 0 .781.781.781 2.047 0 2.828-.259.259-3.984 3.984-4.243 4.243-.781.781-2.047.781-2.828 0S12.834 48.337 13.615 47.556zM8 30c.366 0 5.634 0 6 0 1.105 0 2 .895 2 2s-.895 2-2 2c-.366 0-5.634 0-6 0-1.105 0-2-.895-2-2S6.895 30 8 30zM16.444 13.615c.259.259 3.984 3.984 4.243 4.243.781.781.781 2.047 0 2.828-.781.781-2.047.781-2.828 0-.259-.259-3.984-3.984-4.243-4.243-.781-.781-.781-2.047 0-2.828S15.663 12.834 16.444 13.615z"></path>
               </svg>
@@ -81,10 +81,10 @@
                 <path fill="currentColor" d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
               </svg>
             </button>
-            <input class="brightness-slider slider" type="range" min="0" max="1" step="any" value="1">
+            <input class="brightness-slider slider" type="range" min="0" max="1" step="any" value="1" aria-label="brightness slider">
           </div>
           <div class="duration-container">
-            <button class="loop-btn clickable_icon">
+            <button class="loop-btn clickable_icon" aria-label="loop video">
               <svg class="icon" width="100" viewBox="0 0 24 24">
                 <use xlink:href="images/sprite.svg#icon-loop" class="icon-loop"></use>
                 <use xlink:href="images/sprite.svg#icon-loop-active" class="icon-loop-active"></use>
@@ -117,13 +117,13 @@
           </svg>
         </button> -->
         <div id="player_controls_right" class="flex-container">
-          <button class="blue-filter-btn clickable_icon">
+          <button class="blue-filter-btn clickable_icon" aria-label="blue light filter">
             <svg class="icon" width="100" viewBox="0 0 24 24" style="width: 30px; height: 30px; transform: translateX(0.5px)">
               <use xlink:href="images/sprite.svg#icon-sunglasses" class="icon-sunglasses"></use>
               <use xlink:href="images/sprite.svg#icon-glasses" class="icon-glasses"></use>
             </svg>
           </button>
-          <button class="full-screen-btn clickable_icon">
+          <button class="full-screen-btn clickable_icon" aria-label="fullscreen">
             <svg class="open" width="100" viewBox="0 0 24 24">
               <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
             </svg>
@@ -153,7 +153,7 @@
         <div class="pip-player-channel-name rec_channel">Channel</div>
       </div>
       <div class="flex">
-        <button class="pip-play-pause-btn play-pause-btn clickable_icon">
+        <button class="pip-play-pause-btn play-pause-btn clickable_icon" aria-label="play / pause">
           <svg class="play-icon" width="100" viewBox="0 0 24 24">
             <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
           </svg>
@@ -161,7 +161,7 @@
             <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
           </svg>
         </button>
-        <button class="pip-close-btn clickable_icon">
+        <button class="pip-close-btn clickable_icon" aria-label="close player">
           <svg class="icon" width="100" viewBox="0 0 24 24">
             <use xlink:href="images/sprite.svg#icon-cross"></use>
           </svg>

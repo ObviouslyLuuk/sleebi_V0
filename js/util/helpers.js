@@ -167,6 +167,22 @@ function empty_element(element) {
 
 
 
+
+function get_video_url(video_id, embed=false, t=0, relative=false, redirect=false) {
+    // Different parts of a url are:
+    //     protocol: https://
+    //     domain: sleebi.net
+    //     path: /videos/
+    //     page: v.html
+    //     query: ?v=video_id
+    //     hash: #t=0
+    let urlend = `/${redirect ? '' : 'v.html'}?v=${video_id}${embed ? '&embed=true' : ''}${t > 0 ? `&t=${t}` : ''}`;
+    if (relative) {
+        return urlend;
+    };
+    return `https://sleebi.net${urlend}`;
+};
+
 function get_thumb_url(video_id) {
     if (video_id == "demo480x852") {
         video_id = "NJoFdZFvfcc";

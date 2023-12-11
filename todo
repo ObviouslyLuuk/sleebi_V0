@@ -1,5 +1,6 @@
 ISSUES:
     no fullscreen on iOS embedded (it's impossible)
+    When in landscape mobile, the URL bar blocks part of the video (probably because the video is set to cover, not contain)
     iOS turns off after 30 seconds??
     scrubbing on firefox not working? (comment on post #1)
     background play not working for iOS? (many comments on post #1, but not sure if they were checking the widget)
@@ -111,6 +112,8 @@ custom right-click menu
 miniplayer title, if too long, should scroll automatically
 
 for the channel and video count, start at 0 and then animate to the actual number
+
+this idea is so extra but.. put a gravity system on the pip player so that it falls down when you let go of it
 
 
 SEO:

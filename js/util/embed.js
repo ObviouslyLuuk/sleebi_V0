@@ -41,7 +41,7 @@ function onPlayerReady(event) {
 function place_player(video_id, elem_id="main-video-element", width=640, height=360, vars={
         'playsinline': 1, // this is needed for iOS
         'autoplay': 1, // this means the video will play as soon as it's ready
-        'loop': 1, // this means the video will loop
+        'loop': 0, // this means the video will loop
         // 'mute': 1, // this means the video will be muted
         'controls': 0, // this means the video will not have controls
         'disablekb': 1, // this means the video will not be able to be controlled by keyboard

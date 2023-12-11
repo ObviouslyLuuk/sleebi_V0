@@ -57,7 +57,9 @@
         <link rel="svg" href="images/sprite.svg">
 
         <!-- Import custom CSS -->
-        <link rel="stylesheet" href="css/styles.min.css">
+        <link rel="stylesheet" href="css/min/styles.min.css">
+        <link id="watch_css" href="css/watch.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link id="player_css" href="css/player.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
         <!-- Style element we want to edit with JS -->
         <style id="pipplayer"></style>
@@ -136,7 +138,7 @@
     <script src="data/video_basics.js"></script>
 
     <!-- Import minified JS -->
-    <script src="js/critical.min.js"></script>
+    <script id="critical_script" src="js/min/critical.min.js"></script>
 
     <!-- Import custom helper functions -->
     <!-- <script src="js/util/redirect.js"></script>

@@ -104,8 +104,13 @@ window.dispatchEvent(new Event('resize'));
 
 
 
-
 function update_page_based_on_url() {
+    if (window.location.href.includes('/v.html')) {
+        let state = window.history.state;
+        window.history.replaceState(state, null, window.location.href.replace('/v.html', '/'));
+        console.log("replaced /v.html with /");
+    }
+
     // Get params from URL
     URLPARAMS = new URLSearchParams(window.location.search);
     PATHNAME = window.location.pathname.split("/").splice(1);
@@ -144,8 +149,7 @@ if (window.location.hostname != "localhost") {
     script.async = true;
     script.defer = true;
     document.body.insertBefore(script, document.body.firstChild);
-}
-
+};
 
 // Every time something is pushed or popped from history, place content
 window.addEventListener('pushstate', update_page_based_on_url);
