@@ -1,22 +1,27 @@
 
 
-// Fetch the HTML content
+const HOME_LOAD = document.querySelector('#home_stats_div');
+
 HTML_TEMPLATES['home'] = null;
-fetch_html('home');
+if (!HOME_LOAD) {
+    // Fetch the HTML content
+    fetch_html('home');
+};
 
 
 function placeHomeContent() {
     let container = document.querySelector('#content-container');
-    container.innerHTML = '<div class="spinner active"><img src="images/logo.svg"></div>';
-    if (!HTML_TEMPLATES['home']) {
+    if (!HTML_TEMPLATES['home'] && !HOME_LOAD) {
+        container.innerHTML = '<div class="spinner active"><img src="images/logo.svg"></div>';
         console.log("placeHomeContent: home html not loaded yet, waiting...");
-        window.addEventListener('home_html_ready', placeHomeContent);
+        window.addEventListener('home_html_ready', placeHomeContent, {once: true});
         return;
+    } else if (HTML_TEMPLATES['home']) {
+        container.innerHTML = HTML_TEMPLATES['home'];
     };
-    container.innerHTML = HTML_TEMPLATES['home'];
     if (!videos_info) {
         console.log("placeHomeContent: videos_info not loaded yet, waiting...");
-        window.addEventListener('videos_info_loaded', placeHomeContent);
+        window.addEventListener('videos_info_loaded', placeHomeContent, {once: true});
         return;
     };
 

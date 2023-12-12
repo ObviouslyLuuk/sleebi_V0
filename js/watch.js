@@ -29,9 +29,9 @@ var EMBED;
 var yt_player;
 const WATCH_LOAD = (document.querySelector('#watch_overlay') && 1);
 
+HTML_TEMPLATES['watch'] = null;
 if (!WATCH_LOAD) {
     // Fetch the HTML content
-    HTML_TEMPLATES['watch'] = null;
     fetch_html('watch');
 };
 if (EMBED) {
