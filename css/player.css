@@ -88,12 +88,16 @@ body[data-mobile=true] .video-controls-container::before {
     visibility: hidden;
     transition: opacity var(--fade_duration) ease-in-out, visibility var(--fade_duration) ease-in-out;
   }
-  .video-container .big-play-pause-btn,
   body[data-tablet=true] .video-controls-container,
   body[data-mobile=true] .video-controls-container {
-    /* We delay on mobile for the double tap (not necessary, but aesthetic) */
-    transition-delay: var(--controls-delay)!important;
+    display: flex;
+    flex-direction: column-reverse; /* Switch timeline and controls */
   }
+  body[data-tablet=true][data-landscape=false] .video-container:not(.full-screen) .video-controls-container,
+  body[data-mobile=true][data-landscape=false] .video-container:not(.full-screen) .video-controls-container {
+    bottom: -10px;
+  }
+
   
   body[data-mobile=false][data-tablet=false] .video-controls-container::before {
     content: "";
@@ -366,7 +370,14 @@ body[data-mobile=true] .video-controls-container::before {
   }
   body[data-tablet=true] .timeline-container,
   body[data-mobile=true] .timeline-container {
-    height: 20px;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    margin-top: 5px;
+  }
+  body[data-tablet=true][data-landscape=false] .video-container:not(.full-screen) .timeline-container,
+  body[data-mobile=true][data-landscape=false] .video-container:not(.full-screen) .timeline-container {
+    padding: 10px;
   }
   
   .timeline {

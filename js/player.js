@@ -23,6 +23,7 @@ const volumeSlider = document.querySelector(".volume-slider");
 const brightnessSlider = document.querySelector(".brightness-slider");
 const videoContainer = document.querySelector(".video-container");
 const timelineContainer = document.querySelector(".timeline-container");
+const timeline = document.querySelector(".timeline");
 const videoWrapper = document.querySelector(".video-wrapper");
 const brightnessWrapper = document.querySelector(".video-brightness-wrapper");
 const video = document.querySelector("video");
@@ -147,7 +148,7 @@ function toggleScrubbing(e) {
     || document.body.dataset.tablet == "true")
     && (e instanceof MouseEvent)) {return}; // If mobile or tablet, don't allow scrubbing with mouse
 
-  const rect = timelineContainer.getBoundingClientRect();
+  const rect = timeline.getBoundingClientRect();
   const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
   isScrubbing = (e.buttons & 1) === 1;
   videoContainer.classList.toggle("scrubbing", isScrubbing);
@@ -165,7 +166,7 @@ function toggleScrubbing(e) {
 };
 
 function handleTimelineUpdate(e) {
-  const rect = timelineContainer.getBoundingClientRect();
+  const rect = timeline.getBoundingClientRect();
   const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
   // const previewImgNumber = Math.max(
   //   1,
@@ -215,7 +216,7 @@ video.addEventListener("loadeddata", () => {
 window.addEventListener("loadeddata", () => {
   // Set interval to update as soon as getDuration() is available
   let interval = setInterval(() => {
-    if (yt_player && yt_player.getDuration && getDuration()) {
+    if (yt_player && yt_player.getDuration && getDuration() > 0) {
       totalTimeElem.textContent = formatDuration(getDuration());
       clearInterval(interval);
     }
@@ -533,7 +534,7 @@ function getTime() {
   return EMBED ? yt_player.getCurrentTime() : video.currentTime;
 };
 function getDuration() {
-  return EMBED ? yt_player.getDuration() : video.duration;
+  return EMBED ? yt_player.getDuration()-2.1 : video.duration;
 };
 var LOOPING = false;
 function setLoop(loop) {
@@ -545,14 +546,14 @@ function getLoop() {
 };
 // We want to stop the yt_player slightly before the end, so we can loop it
 function loopYtPlayer() {
-  if (getDuration() == 0 || !getDuration()) {return;};
-  if (getDuration() - getTime() > 2) {return;};
+  if (getDuration() <= 0 || !getDuration()) {return;};
+  if (getDuration() - getTime() >= 0) {return;};
   if (LOOPING) {
     yt_player.seekTo(0);
     console.log("Looping");
   } else {
     yt_player.pauseVideo();
-    setTime(getDuration() - 2.1);
+    setTime(getDuration());
     console.log("Pausing before end");
     video.dispatchEvent(new Event('ended'))
   };
