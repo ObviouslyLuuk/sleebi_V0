@@ -14,11 +14,6 @@ ADDITIONS:
 sort search results by date, views, like-ratio, etc
 add feedback form
 
-on desktop fullscreen make controls time out after a while because you can't remove the cursor
-add up and down arrow keys to change volume
-can I somehow prevent right and left arrow keys from changing volume? This happens when the user is focused on the volume slider, but I don't want that to happen
-pause when hitting spacebar
-
 add small v button at top of player to engage miniplayer
 
 add email list signup (form) with the footer

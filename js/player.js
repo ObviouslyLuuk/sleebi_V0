@@ -572,18 +572,54 @@ video.addEventListener("ended", () => {
 
 
 
+// Controls on desktop
+// Set controls active on mousemove over video container
+let controlsTimeout;
+let mouseOverControls = false;
+videoContainer.querySelector(".video-controls-container").addEventListener("mouseenter", () => {
+  mouseOverControls = true;
+});
+videoContainer.querySelector(".video-controls-container").addEventListener("mouseleave", () => {
+  videoContainer.classList.remove("controls-active");
+  mouseOverControls = false;
+});
+videoContainer.addEventListener("mousemove", () => {
+  videoContainer.classList.add("controls-active");
+  videoContainer.style.cursor = "unset";
+  clearTimeout(controlsTimeout);
+
+  // If in fullscreen, hide controls after timeout
+  if (document.fullscreenElement && !mouseOverControls) {
+    controlsTimeout = setTimeout(() => {
+      videoContainer.classList.remove("controls-active");
+      videoContainer.style.cursor = "none";
+    }, 2000);
+  };
+});
+// If mouse leaves video container, hide controls
+videoContainer.addEventListener("mouseleave", () => {
+  videoContainer.classList.remove("controls-active");
+});
+// If mouse hits edge of screen, hide controls
+window.addEventListener("mousemove", e => {
+  if (document.fullscreenElement) {
+    if (e.clientX < 2 || e.clientX > window.innerWidth - 2 || e.clientY < 2 || e.clientY > window.innerHeight - 2) {
+      videoContainer.classList.remove("controls-active");
+    };
+  };
+});
+
 
 // Controls on mobile
-let controlsTimeout;
-function toggleControls(force=undefined) {
+function toggleControls(force=undefined, timeout=2000) {
   clearTimeout(controlsTimeout);
   videoContainer.classList.toggle("controls-active", force);
 
   // Set timeout if video is playing
-  if (!getPaused() && videoContainer.classList.contains("controls-active")) {
+  if (timeout && !getPaused() && videoContainer.classList.contains("controls-active")) {
     controlsTimeout = setTimeout(() => {
       videoContainer.classList.remove("controls-active");
-    }, 2000);
+    }, timeout);
   };
 };
 

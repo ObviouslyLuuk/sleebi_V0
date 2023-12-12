@@ -108,8 +108,6 @@ body[data-mobile=true] .video-controls-container::before {
     border-radius: 10px;
   }
   
-  body[data-mobile=false][data-tablet=false] .video-container:hover .video-controls-container,
-  /* .video-container:focus-within .video-controls-container, */
   body[data-mobile=false][data-tablet=false] .video-container.paused .video-controls-container,
   .video-container.controls-active .video-controls-container {
     opacity: 1;
