@@ -463,8 +463,8 @@ document.addEventListener("fullscreenchange", () => {
 // Play/Pause
 playPauseBtns.forEach(e => {e.addEventListener("click", togglePlay)});
 videoWrapper.addEventListener("click", function (e) { // We use parentElement because in fullscreen the video could be smaller than the container
-  if (mobileCheck() || tabletCheck()) {
-    toggleControls();
+  if (document.body.dataset.mobile == "true" || document.body.dataset.tablet == "true") {
+    return; // This is handled by the touchstart event
   } else {
     togglePlay();
   };
@@ -580,6 +580,7 @@ videoContainer.querySelector(".video-controls-container").addEventListener("mous
   mouseOverControls = true;
 });
 videoContainer.querySelector(".video-controls-container").addEventListener("mouseleave", () => {
+  if (document.body.dataset.mobile == "true" || document.body.dataset.tablet == "true") {return;};
   videoContainer.classList.remove("controls-active");
   mouseOverControls = false;
 });
@@ -614,30 +615,32 @@ window.addEventListener("mousemove", e => {
 
 
 // Controls on mobile
-function toggleControls(force=undefined) {
+let controlsEnableDelay;
+function toggleControls(force=undefined, delay=0, timeout=2000, force_timeout=false) {
   clearTimeout(controlsTimeout);
-  videoContainer.classList.toggle("controls-active", force);
+  clearTimeout(controlsEnableDelay);
+  let controls_become_active = !videoContainer.classList.contains("controls-active") || force;
+  controlsEnableDelay = setTimeout(() => {
+    videoContainer.classList.toggle("controls-active", force);
+  }, delay);
 
   // Set timeout if video is playing
-  if (!getPaused() && videoContainer.classList.contains("controls-active")) {
+  if (timeout && (!getPaused() || force_timeout) && controls_become_active) {
     controlsTimeout = setTimeout(() => {
       videoContainer.classList.remove("controls-active");
-    }, 2000);
+    }, timeout+delay);
   };
 };
 
 // When you unpause the video, timeout to hide controls
-video.addEventListener("play", () => {
-  toggleControls(true);
-});
-window.addEventListener("play", () => { // For the embed player
-  toggleControls(true);
-});
-// // Any touch interaction with the controls in videoContainer should reset the timeout
+playPauseBtns.forEach(e => {e.querySelector('.play-icon').addEventListener("click", () => {toggleControls(true, 0, 2000, true)})});
+// When pausing the video, clear the timeout
+playPauseBtns.forEach(e => {e.querySelector('.pause-icon').addEventListener("click", () => {toggleControls(true, 0, false)})});
+// // Any touch interaction with the controls themselves in videoContainer should reset the timeout
 const control_elements = [
   videoContainer.querySelector(".controls"),
   videoContainer.querySelector(".timeline-container"),
-  videoContainer.querySelector(".play-pause-btn"),
+  // videoContainer.querySelector(".play-pause-btn"),
   videoContainer.querySelector(".volume-slider"),
   videoContainer.querySelector(".brightness-slider"),
   // videoContainer.querySelector(".playback-rate-slider"),
@@ -656,25 +659,27 @@ control_elements.forEach(e=>{e.addEventListener("touchstart", () => {toggleContr
 control_elements.forEach(e=>{e.addEventListener("touchmove", () => {toggleControls(true)})});
 control_elements.forEach(e=>{e.addEventListener("touchend", () => {toggleControls(true)})});
 
-// When pausing the video, clear the timeout
-videoWrapper.addEventListener("pause", () => {
-  clearTimeout(controlsTimeout);
-});
 
 
 // Double tap to skip. Tapping on the left side of the video will skip backwards, and tapping on the right side will skip forwards.
 // We listen for touchstart events on the video element, and first determine if there's a double tap in quick succession
 // To do this, we check if the time between the current tap and the last tap is less than 300ms
 let lastTap = 0;
+const TAP_DELAY = 300;
 videoWrapper.addEventListener("touchstart", e => {
   // If in the center third of video, don't count the tap
   const rect = videoWrapper.getBoundingClientRect();
   if (e.touches[0].clientX > rect.width / 3 && e.touches[0].clientX < rect.width * 2 / 3) {
+    toggleControls();
     return;
   };
 
+  toggleControls(undefined, TAP_DELAY);
+
   const timeSinceLastTap = Date.now() - lastTap;
-  if (timeSinceLastTap < 300) {
+  if (timeSinceLastTap < TAP_DELAY) {
+    clearTimeout(controlsTimeout); // Cancel hiding controls
+    clearTimeout(controlsEnableDelay); // Cancel toggling controls
     if (e.touches[0].clientX < rect.width / 2) {
       skip(-5);
     } else {
@@ -684,6 +689,8 @@ videoWrapper.addEventListener("touchstart", e => {
   lastTap = Date.now();
 });
 
+
+// Picture in Picture
 
 // Detect dragging on the video element
 // As user is dragging down, we translate #watch_overlay the same amount.

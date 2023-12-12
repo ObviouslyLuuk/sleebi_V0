@@ -1,7 +1,7 @@
 html {
   /* --player-color: red; */
   --player-color: #f1f1f1;
-  --controls-delay: 200ms;
+  --controls-delay: 0ms;
   --fade_duration: 150ms;
 }
 
