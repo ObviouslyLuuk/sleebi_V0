@@ -584,8 +584,10 @@ videoContainer.querySelector(".video-controls-container").addEventListener("mous
   mouseOverControls = false;
 });
 videoContainer.addEventListener("mousemove", () => {
-  videoContainer.classList.add("controls-active");
   videoContainer.style.cursor = "unset";
+  if (document.body.dataset.mobile == "true" || document.body.dataset.tablet == "true") {return;};
+
+  videoContainer.classList.add("controls-active");
   clearTimeout(controlsTimeout);
 
   // If in fullscreen, hide controls after timeout
@@ -605,21 +607,22 @@ window.addEventListener("mousemove", e => {
   if (document.fullscreenElement) {
     if (e.clientX < 2 || e.clientX > window.innerWidth - 2 || e.clientY < 2 || e.clientY > window.innerHeight - 2) {
       videoContainer.classList.remove("controls-active");
+      videoContainer.style.cursor = "none";
     };
   };
 });
 
 
 // Controls on mobile
-function toggleControls(force=undefined, timeout=2000) {
+function toggleControls(force=undefined) {
   clearTimeout(controlsTimeout);
   videoContainer.classList.toggle("controls-active", force);
 
   // Set timeout if video is playing
-  if (timeout && !getPaused() && videoContainer.classList.contains("controls-active")) {
+  if (!getPaused() && videoContainer.classList.contains("controls-active")) {
     controlsTimeout = setTimeout(() => {
       videoContainer.classList.remove("controls-active");
-    }, timeout);
+    }, 2000);
   };
 };
 
