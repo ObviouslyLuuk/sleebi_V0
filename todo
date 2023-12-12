@@ -5,6 +5,7 @@ ISSUES:
     background play not working for iOS? (many comments on post #1, but not sure if they were checking the widget)
 
 BUGS:
+    when loading non-sleebi video by search, duration didn't update
     can't scroll down when only video is on screen (on mobile, landscape)
     minifying JS makes spaces after commas disappear in strings that are displayed in the UI
         ideally text that will appear in UI should NOT be in JS files, but in a separate file, so that it doesn't suffer from minification
@@ -84,6 +85,20 @@ add share on:
 download button (doesn't work with YT download link but does work with local file)
 
 only play automatically when the user has wifi: https://coyotess.medium.com/how-to-get-information-about-user-network-connection-in-javascript-4d63fd58f15f
+
+
+POTENTIAL IDEAS:
+    At the start there won't be many comments, so below the comments for the video you're watching,
+        have a view of comments for other videos by the same creator
+
+    When it's an app, have a functionality that recommends three videos personalized to the user every night by notification
+
+    On a channel page, have a row for their favs of their own videos, and a row for their favs of other people's videos
+
+    donate button for each channel, look into setting up own payment system to avoid Paypal fees
+        creators should get 100% of the donation because they probably won't get much ad revenue
+
+
 
 
 AESTHETIC:

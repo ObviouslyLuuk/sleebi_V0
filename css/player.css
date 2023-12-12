@@ -480,6 +480,33 @@ body[data-mobile=true] .video-controls-container::before {
     height: 7px;
   }
 
+/* Volume overlay */
+.volume-overlay {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: white;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
+}
+.volume-overlay.active {
+  opacity: 1;
+}
+.volume-overlay svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
 
   /* Skip overlays */
   .skip-overlay {

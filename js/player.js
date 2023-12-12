@@ -34,16 +34,21 @@ const pipCloseBtn = document.querySelector(".pip-close-btn");
 const skipBackOverlay = document.querySelector(".skip-back");
 const skipForwardOverlay = document.querySelector(".skip-forward");
 
+const volumeOverlay = document.querySelector(".volume-overlay");
+
 const videoError = document.querySelector(".video-error-div");
 
-document.addEventListener("keydown", e => {
+window.addEventListener("keydown", e => {
   const tagName = document.activeElement.tagName.toLowerCase();
 
   if (tagName === "input") return;
 
   switch (e.key.toLowerCase()) {
     case " ":
+      e.preventDefault();
       if (tagName === "button") return;
+      togglePlay();
+      break;
     case "k":
       togglePlay();
       break;
@@ -74,8 +79,32 @@ document.addEventListener("keydown", e => {
     // case "c":
     //   toggleCaptions();
     //   break;
+    case "arrowup":
+      e.preventDefault();
+      nudgeVolume(0.1);
+      break;
+    case "arrowdown":
+      e.preventDefault();
+      nudgeVolume(-0.1);
+      break;
   };
 });
+
+// When focused on a slider, disable arrow key navigation on the slider and enable it on the video
+const sliders = document.querySelectorAll("input[type='range']");
+sliders.forEach(slider => {
+  slider.addEventListener("keydown", event => {
+    if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+      event.preventDefault();
+      if (event.key === "ArrowRight") {
+        skip(5);
+      } else {
+        skip(-5);
+      };
+    };
+  });
+});
+
 
 // Timeline
 timelineContainer.addEventListener("mousemove", handleTimelineUpdate);
@@ -244,12 +273,9 @@ function skip(duration) {
 // Volume
 muteBtn.addEventListener("click", toggleMute);
 volumeSlider.addEventListener("input", e => {
+  setVolume(e.target.value);
   if (EMBED) {
-    yt_player.setVolume(e.target.value * 100);
     handleVolumeChange(e.target.value);
-  } else {
-    video.volume = e.target.value;
-    video.muted = e.target.value === 0;
   };
 });
 
@@ -257,11 +283,12 @@ function toggleMute() {
   if (EMBED) {
     let was_muted = yt_player.isMuted();
     was_muted ? yt_player.unMute() : yt_player.mute();
-    handleVolumeChange(!was_muted ? 0 : yt_player.getVolume() / 100); // There's some delay in the volume change, so we base it on the previous isMuted value
+    handleVolumeChange(!was_muted ? 0 : getVolume()); // There's some delay in the volume change, so we base it on the previous isMuted value
   } else {
     video.muted = !video.muted;
   };
 };
+
 
 video.addEventListener("volumechange", () => {
   handleVolumeChange();
@@ -283,6 +310,39 @@ function handleVolumeChange(volume=null) {
   };
 
   videoContainer.dataset.volumeLevel = volumeLevel;
+};
+
+function getVolume() {
+  if (EMBED) {
+    return yt_player.getVolume() / 100;
+  } else {
+    return video.volume;
+  };
+};
+function setVolume(volume) {
+  if (EMBED) {
+    yt_player.setVolume(volume * 100);
+    volume === 0 ? yt_player.mute() : yt_player.unMute();
+  } else {
+    video.volume = volume;
+    video.muted = volume === 0;
+  };
+};
+volumeOverlayTimeout = null;
+function nudgeVolume(amount) {
+  let newVolume = getVolume() + amount;
+  if (newVolume > 1) newVolume = 1;
+  if (newVolume < 0) newVolume = 0;
+  setVolume(newVolume);
+  handleVolumeChange(newVolume);
+
+  // Handle volume change overlay
+  volumeOverlay.querySelector('span').textContent = `${(newVolume*100).toFixed(0)}%`;
+  volumeOverlay.classList.add("active");
+  clearTimeout(volumeOverlayTimeout);
+  volumeOverlayTimeout = setTimeout(() => {
+    volumeOverlay.classList.remove("active");
+  }, 1000);
 };
 
 // Brightness
@@ -729,14 +789,6 @@ video.addEventListener('loadeddata', () => {
 window.addEventListener("yt_player_ready", () => {
   videoContainer.classList.remove('src-loading');
   videoContainer.classList.add('src-loaded');
-});
-
-
-// Make space bar not scroll the page
-window.addEventListener("keydown", e => {
-  if (e.key === " ") {
-    e.preventDefault();
-  };
 });
 
 
