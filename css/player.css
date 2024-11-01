@@ -65,6 +65,7 @@ body[data-mobile=true] .video-controls-container::before {
     transition-delay: var(--controls-delay);
     overflow: hidden;
     border-radius: 10px;
+    user-select: none;
   }
   .video-brightness-wrapper {
     width: 100%;
@@ -351,6 +352,8 @@ body[data-mobile=true] .video-controls-container::before {
     gap: .25rem;
     /* flex-grow: 1; */
     font-size: 0.8em;
+    /* Make not selectable */
+    user-select: none;
   }
   
   .video-container.captions .captions-btn {

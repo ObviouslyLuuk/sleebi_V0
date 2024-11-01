@@ -1,0 +1,61 @@
+let audioContext;
+let whiteNoise;
+
+let factor = 0.01;
+
+function startWhiteNoise() {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+    whiteNoise = audioContext.createBufferSource();
+    const bufferSize = 2 * audioContext.sampleRate;
+    const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+        output[i] = (Math.random() * 2 - 1) * factor;
+    }
+
+    whiteNoise.buffer = noiseBuffer;
+    whiteNoise.loop = true;
+    whiteNoise.connect(audioContext.destination);
+    whiteNoise.start(0);
+}
+
+let lastOut = 0.0;
+let brownNoise;
+
+function startBrownNoise() {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+    brownNoise = audioContext.createBufferSource();
+    const bufferSize = 2 * audioContext.sampleRate;
+    const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+        let noise = (Math.random() * 2 - 1) * factor;
+        output[i] = (lastOut + (0.02 * noise)) / 1.02;
+        lastOut = output[i];
+        output[i] *= 3.5; // (roughly) compensate for gain
+    }
+
+    brownNoise.buffer = noiseBuffer;
+    brownNoise.loop = true;
+    brownNoise.connect(audioContext.destination);
+    brownNoise.start(0);
+}
+
+function stopNoise() {
+    if (whiteNoise) {
+        whiteNoise.stop(0);
+        whiteNoise.disconnect();
+        audioContext.close();
+        whiteNoise = null;
+    }
+    if (brownNoise) {
+        brownNoise.stop(0);
+        brownNoise.disconnect();
+        audioContext.close();
+        brownNoise = null;
+    }
+}

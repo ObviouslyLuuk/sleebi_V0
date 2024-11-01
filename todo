@@ -5,10 +5,15 @@ ISSUES:
     background play not working for iOS? (many comments on post #1, but not sure if they were checking the widget)
 
 BUGS:
-    when loading non-sleebi video by search, duration didn't update
+    when scrubbing on mobile the controls don't time out
+    when loading non-sleebi video by search, duration didn't update (trouble reproducing)
     can't scroll down when only video is on screen (on mobile, landscape)
     minifying JS makes spaces after commas disappear in strings that are displayed in the UI
         ideally text that will appear in UI should NOT be in JS files, but in a separate file, so that it doesn't suffer from minification
+
+LONG TERM:
+    third party cookies phasing out
+    https://developers.google.com/privacy-sandbox/3pcd?utm_source=devtools
 
 ADDITIONS:
 sort search results by date, views, like-ratio, etc
@@ -26,6 +31,18 @@ filter based on triggers
 filter based on duration
 
 optional calming music to play in background of videos, or noise?
+    round button in corner that opens overlay with rowtiles like
+        icon rain                playbtn
+            volumeslider
+        icon wind                playbtn
+            volumeslider
+        icon music               playbtn
+            volumeslider
+        etc
+    and you can favourite them, and you can add a video to it from video settings
+    when a video is covering the screen of course it should only show with the controls
+        rain, wind, music, fireplace, thunder, forest, crickets, waves, brook, noise
+        binaural beats?
 
 video chapters
 
@@ -93,18 +110,20 @@ AESTHETIC:
 add spinner when loading time skip
 
 clean up controls on mobile (maybe with a settings button toggle)
-    keep brightness slider in view? it's nice
-    enable scrubbing at all times
+    move brightness slider to the side and vertical
+    enable scrubbing even when the controls are hidden
     thinner version of fullscreen button
     somehow "comments will be added later" is split into two lines on mobile
     only do scrubbing on mobile when the user is holding down the scrubber and moving their finger
         otherwise it's too easy to accidentally scrub
+    move blue-filter to user settings (because it's not really a per-video setting)
+    move loop button to settings icon in top right
+    also put blue-filter there in addition
+    also move autoplay button there in addition? only there maybe?
 
 put svgs from player into sprite.svg
 
 add a "more" button to the description
-
-make brightness and volume sliders go up instead of sideways
 
 autofill makes the searchbar light
 
@@ -117,6 +136,11 @@ for the channel and video count, start at 0 and then animate to the actual numbe
 this idea is so extra but.. put a gravity system on the pip player so that it falls down when you let go of it
 
 make description box, title and comments take up a fixed amount of space, fixing video at the top
+
+
+EXTRA ACCESSIBILITY:
+make video tiles links
+look at Curtis' tips on Ko-Fi
 
 
 SEO:
@@ -138,6 +162,9 @@ improve load speed
         different min.js and min.css for each page with the rest async loaded
         if necessary could even generate the Sleebi and embed HTML from what we have now with a script so that it's always up to date
 
+    passive touch listeners
+    https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=devtools
+
 
 
 BIGGER STEPS:
@@ -157,6 +184,7 @@ user authentication and database
     notifications
     donation leaderboard
     tingle button, that logs whether the user got tingles at a certain point in the video
+        personal tingle history / playlist
     Server-side rendering for SEO
         remember to update title, meta tags and structured data
 more channels
